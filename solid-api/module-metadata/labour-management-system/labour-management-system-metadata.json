@@ -1,0 +1,2603 @@
+{
+  "moduleMetadata": {
+    "name": "labour-management-system",
+    "displayName": "Labour Management System",
+    "description": "These Module is used all about Labour",
+    "defaultDataSource": "default",
+    "menuIconUrl": null,
+    "menuSequenceNumber": 2,
+    "isSystem": false,
+    "models": [
+      {
+        "singularName": "workType",
+        "pluralName": "workTypes",
+        "displayName": "Work Type",
+        "description": "Work Type",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "work_type",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "authUser",
+        "pluralName": "authUsers",
+        "displayName": "AuthUser",
+        "description": "AuthUser",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "auth_user",
+        "isChild": true,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "parentModelUserKey": "user",
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "userRole",
+            "displayName": "User Role",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "ListOfRolesSelectionProvider",
+            "selectionDynamicProviderCtxt": "{\n  \"filters\": {\n    \"name\": {\n      \"$notIn\": [\n        \"Admin\",\n        \"Internal User\",\n        \"Public\"\n      ]\n    }\n  }\n}",
+            "selectionValueType": "string",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
+          }
+        ]
+      },
+      {
+        "singularName": "labour",
+        "pluralName": "labour",
+        "displayName": "Labour",
+        "description": "Labour Model",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "labour",
+        "userKeyFieldUserKey": "userName",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "userName",
+            "displayName": "UserName",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "WorkTypeSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "workType",
+            "displayName": "Work Type",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "WorkTypeSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isMultiSelect": true
+          },
+          {
+            "name": "site",
+            "displayName": "Site",
+            "description": "Site",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "labour",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "site",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "dateOfJoining",
+            "displayName": "Date of Joining",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "lastWorkingDate",
+            "displayName": "Last Working Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "currentAddress",
+            "displayName": "Current Address",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "permanentAddress",
+            "displayName": "Permanent address",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "documents",
+            "displayName": "Documents",
+            "description": null,
+            "type": "mediaMultiple",
+            "ormType": "varchar",
+            "isSystem": false,
+            "mediaTypes": [
+              "file",
+              "image"
+            ],
+            "mediaMaxSizeKb": 10240,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "mediaStorageProviderUserKey": "default-filesystem"
+          },
+          {
+            "name": "emergencyContactNumber",
+            "displayName": "Emergency Contact Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "dateOfBirth",
+            "displayName": "Date of Birth",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          }
+        ]
+      },
+      {
+        "singularName": "attendance",
+        "pluralName": "attendances",
+        "displayName": "Attendance",
+        "description": "Attendance",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "attendance",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": null,
+            "relationCreateInverse": false,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "attendanceDate",
+            "displayName": "Attendance Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "checkIn",
+            "displayName": "Check in",
+            "description": null,
+            "type": "datetime",
+            "ormType": "timestamp",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "checkOut",
+            "displayName": "Check Out",
+            "description": null,
+            "type": "datetime",
+            "ormType": "timestamp",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "location",
+            "displayName": "Location",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "workingHours",
+            "displayName": "Working Hours",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "remark",
+            "displayName": "Remark",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "overtimeHour",
+            "displayName": "Overtime Hour",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "salary",
+        "pluralName": "salaries",
+        "displayName": "Salary",
+        "description": "Salary",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "salary",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": null,
+            "relationCreateInverse": false,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "salaryMonth",
+            "displayName": "Salary Month",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "salaryYear",
+            "displayName": "Salary Year",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "presentDays",
+            "displayName": "Present Days",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "workingDays",
+            "displayName": "Working Days",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "absent",
+            "displayName": "Absent",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "dailyWages",
+            "displayName": "Daily Wages",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "overtimeAmount",
+            "displayName": "Overtime Amount",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "totalDeduction",
+            "displayName": "Total Deduction",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "totalAmount",
+            "displayName": "Total Amount",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "advancePayment",
+        "pluralName": "advancePayments",
+        "displayName": "Advance Payment",
+        "description": "Advance Payment",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "advance_payment",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": null,
+            "relationCreateInverse": false,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "advanceMonth",
+            "displayName": "Advance Month",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "advanceYear",
+            "displayName": "Advance Year",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "repaymentStatus",
+            "displayName": "Repayment Status",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": "Pending",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "repaymentStartMonth",
+            "displayName": "Repayment Start Month",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "repaymentStartYear",
+            "displayName": "Repayment Start Year",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "monthlyDeduction",
+            "displayName": "Monthly Deduction",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "totalPay",
+            "displayName": "Total pay",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "balanceAmount",
+            "displayName": "Balance Amount",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "remarks",
+            "displayName": "Remarks",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          }
+        ]
+      },
+      {
+        "singularName": "site",
+        "pluralName": "sites",
+        "displayName": "Site",
+        "description": "Site",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "site",
+        "userKeyFieldUserKey": "siteName",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "siteName",
+            "displayName": "Site Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "clientName",
+            "displayName": "Client Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "clientContactNumber",
+            "displayName": "Client Contact Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "sIteManager",
+            "displayName": "SIte Manager",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "labour",
+            "displayName": "Labour",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "site",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          }
+        ]
+      }
+    ]
+  },
+  "roles": [],
+  "users": [],
+  "actions": [
+    {
+      "displayName": "labour-management-system Home",
+      "name": "labour-management-system-home-action",
+      "type": "custom",
+      "domain": "",
+      "context": "",
+      "customComponent": "/admin/core/labour-management-system/home",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": ""
+    },
+    {
+      "displayName": "Work Type List Action",
+      "name": "workType-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "workType-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "workType"
+    },
+    {
+      "displayName": "AuthUser List Action",
+      "name": "authUser-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "authUser-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser"
+    },
+    {
+      "displayName": "Labour List Action",
+      "name": "labour-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "labour-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour"
+    },
+    {
+      "displayName": "Attendance List Action",
+      "name": "attendance-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "attendance-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance"
+    },
+    {
+      "displayName": "Salary List Action",
+      "name": "salary-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "salary-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary"
+    },
+    {
+      "displayName": "Advance Payment List Action",
+      "name": "advancePayment-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "advancePayment-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "advancePayment"
+    },
+    {
+      "displayName": "Site List Action",
+      "name": "site-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "site-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site"
+    }
+  ],
+  "menus": [
+    {
+      "displayName": "Home",
+      "name": "labour-management-system-home-menu",
+      "sequenceNumber": 1,
+      "actionUserKey": "labour-management-system-home-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "home"
+    },
+    {
+      "displayName": "Work Type",
+      "name": "workType-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "workType-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "AuthUser",
+      "name": "authUser-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "authUser-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Labour",
+      "name": "labour-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "labour-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Attendance",
+      "name": "attendance-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "attendance-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Salary",
+      "name": "salary-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "salary-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Advance Payment",
+      "name": "advancePayment-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "advancePayment-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Site",
+      "name": "site-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "site-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    }
+  ],
+  "views": [
+    {
+      "name": "workType-list-view",
+      "displayName": "Work Type",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "workType",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "workType-form-view",
+      "displayName": "Work Type",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "workType",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Work Type",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "Work Type",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "name"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "authUser-list-view",
+      "displayName": "AuthUser",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "fullName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "username"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "mobile"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "userRole"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "authUser-form-view",
+      "displayName": "AuthUser",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "AuthUser",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "Auth Detail",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "fullName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "username"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "mobile"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "password"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "userRole"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": []
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "labour-list-view",
+      "displayName": "Labour",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "userName",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workType",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfBirth",
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfJoining",
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "currentAddress",
+              "isSearchable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "emergencyContactNumber",
+              "isSearchable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "lastWorkingDate",
+              "sortable": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labour-form-view",
+      "displayName": "Labour",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Labour",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1-row-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "column-1",
+                      "label": "Basic Information",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "userName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "workType"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "dateOfBirth"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "dateOfJoining"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "lastWorkingDate"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "documents"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "column-2",
+                      "label": "Contact & Address Details",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "currentAddress"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "permanentAddress"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "emergencyContactNumber"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "site"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "attendance-list-view",
+      "displayName": "Attendance",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "attendanceDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "checkIn"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "checkOut"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "location"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workingHours"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "remark"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "overtimeHour"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "attendance-form-view",
+      "displayName": "Attendance",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Attendance",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "notebook",
+                "attrs": {
+                  "name": "notebook-1"
+                },
+                "children": [
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-1",
+                      "label": "Attendance Details"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-1-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-1",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "name"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "attendanceDate"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "checkIn"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "checkOut"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-2",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "workingHours"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "overtimeHour"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-2",
+                      "label": "Location & Remarks"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-2-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-2-col-1",
+                              "className": "col-12"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "location"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "remark"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "salary-list-view",
+      "displayName": "Salary",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name",
+              "sortable": true,
+              "isSearchable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "presentDays"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workingDays"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "absent"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "overtimeAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalAmount"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "salary-form-view",
+      "displayName": "Salary",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Salary",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "notebook",
+                "attrs": {
+                  "name": "notebook-1"
+                },
+                "children": [
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-1",
+                      "label": "Basic Details"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-1-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-1",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "name"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "salaryMonth"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "salaryYear"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-2",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "presentDays"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "absent"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "workingDays"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-2",
+                      "label": "Salary Calculation"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-2-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-2-col-1",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "dailyWages"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "overtimeAmount"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-2-col-2",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "totalDeduction"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "totalAmount"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "advancePayment-list-view",
+      "displayName": "Advance Payment",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "advancePayment",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "advanceMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "advanceYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStatus"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStartMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStartYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "monthlyDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalPay"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "balanceAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "remarks"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "advancePayment-form-view",
+      "displayName": "Advance Payment",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "advancePayment",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Advance Payment",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "name"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "advanceYear"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "repaymentStartMonth"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "monthlyDeduction"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "balanceAmount"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "advanceMonth"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "repaymentStatus"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "repaymentStartYear"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "totalPay"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "remarks"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "site-list-view",
+      "displayName": "Site",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientContactNumber"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "sIteManager"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "site-form-view",
+      "displayName": "Site",
+      "type": "form",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Create Site",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "notebook",
+                "attrs": {
+                  "name": "notebook-1"
+                },
+                "children": [
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-1",
+                      "label": "Site Details"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-1-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-1",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "siteName"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "clientContactNumber"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-2",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "clientName"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "siteManager"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-2",
+                      "label": "Labour Assignment"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-2-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-2-col-1",
+                              "className": "col-12"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labour"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "emailTemplates": [],
+  "smsTemplates": [],
+  "mediaStorageProviders": [],
+  "securityRules": []
+}
