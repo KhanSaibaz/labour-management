@@ -3,6 +3,6 @@ import { ChildEntity, Column } from 'typeorm'
 
 @ChildEntity()
 export class AuthUser extends User {
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     userRole: string;
 }

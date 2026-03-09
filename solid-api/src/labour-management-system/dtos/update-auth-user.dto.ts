@@ -7,8 +7,7 @@ export class UpdateAuthUserDto extends UpdateUserDto {
     @IsOptional()
     @IsInt()
     id: number;
-
-    @IsNotEmpty()
+    // @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()

@@ -44,9 +44,14 @@ export class CreateAttendanceDto {
     @ApiProperty()
     remark: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    overtimeHour: number;
+
 @IsOptional()
 @IsInt()
 @ApiProperty()
-overtimeHour: number;
+noOfTries: number;
 
 }

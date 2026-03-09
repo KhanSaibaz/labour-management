@@ -1,10 +1,10 @@
 import { CreateUserDto } from '@solidxai/core';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString } from 'class-validator';
+import { IsOptional, IsString } from 'class-validator';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreateAuthUserDto extends CreateUserDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @ApiProperty()
     userRole: string;

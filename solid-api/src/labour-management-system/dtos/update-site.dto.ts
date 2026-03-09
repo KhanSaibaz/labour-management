@@ -1,4 +1,4 @@
-import { IsInt,IsOptional, IsString, ValidateNested, IsArray, IsNotEmpty } from 'class-validator';
+import { IsInt,IsOptional, IsString, ValidateNested, IsArray, IsNotEmpty, IsDate } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { UpdateLabourDto } from 'src/labour-management-system/dtos/update-labour.dto';
@@ -45,4 +45,29 @@ export class UpdateSiteDto {
     @IsOptional()
     @ApiProperty()
     labourCommand: string;
+
+    @IsOptional()
+    @IsDate()
+    @ApiProperty()
+    siteStartDate: Date;
+
+    @IsOptional()
+    @IsDate()
+    @ApiProperty()
+    siteEndDate: Date;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    projectValue: number;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    status: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    siteManager: string;
 }

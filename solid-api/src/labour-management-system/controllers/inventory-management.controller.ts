@@ -1,11 +1,9 @@
 import { Controller, Post, Body, Param, UploadedFiles, UseInterceptors, Put, Get, Query, Delete, Patch } from '@nestjs/common';
 import { AnyFilesInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { AuthUserService } from '../services/auth-user.service';
-import { CreateAuthUserDto } from '../dtos/create-auth-user.dto';
-import { UpdateAuthUserDto } from '../dtos/update-auth-user.dto';
-import { AuthenticationService } from '@solidxai/core';
-import { AuthUserRepository } from '../repositories/auth-user.repository';
+import { InventoryManagementService } from '../services/inventory-management.service';
+import { CreateInventoryManagementDto } from '../dtos/create-inventory-management.dto';
+import { UpdateInventoryManagementDto } from '../dtos/update-inventory-management.dto';
 
 enum ShowSoftDeleted {
   INCLUSIVE = "inclusive",
@@ -13,28 +11,21 @@ enum ShowSoftDeleted {
 }
 
 @ApiTags('Labour Management System')
-@Controller('auth-user')
-export class AuthUserController {
-  constructor(
-    private readonly service: AuthUserService,
-    private readonly authenticationService: AuthenticationService,
-    private readonly repo: AuthUserRepository,
-
-  ) { }
+@Controller('inventory-management')
+export class InventoryManagementController {
+  constructor(private readonly service: InventoryManagementService) {}
 
   @ApiBearerAuth("jwt")
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
-  create(@Body() createDto: CreateAuthUserDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-    const signupDto = this.service.toSignUpDto(createDto);
-    return this.authenticationService.signupForExtensionUser(signupDto, createDto, this.repo);
-    // return this.service.create(createDto, files);
+  create(@Body() createDto: CreateInventoryManagementDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+    return this.service.create(createDto, files);
   }
 
   @ApiBearerAuth("jwt")
   @Post('/bulk')
   @UseInterceptors(AnyFilesInterceptor())
-  insertMany(@Body() createDtos: CreateAuthUserDto[], @UploadedFiles() filesArray: Express.Multer.File[][] = []) {
+  insertMany(@Body() createDtos: CreateInventoryManagementDto[], @UploadedFiles() filesArray: Express.Multer.File[][] = []) {
     return this.service.insertMany(createDtos, filesArray);
   }
 
@@ -42,14 +33,14 @@ export class AuthUserController {
   @ApiBearerAuth("jwt")
   @Put(':id')
   @UseInterceptors(AnyFilesInterceptor())
-  update(@Param('id') id: number, @Body() updateDto: UpdateAuthUserDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+  update(@Param('id') id: number, @Body() updateDto: UpdateInventoryManagementDto, @UploadedFiles() files: Array<Express.Multer.File>) {
     return this.service.update(id, updateDto, files);
   }
 
   @ApiBearerAuth("jwt")
   @Patch(':id')
   @UseInterceptors(AnyFilesInterceptor())
-  partialUpdate(@Param('id') id: number, @Body() updateDto: UpdateAuthUserDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+  partialUpdate(@Param('id') id: number, @Body() updateDto: UpdateInventoryManagementDto, @UploadedFiles() files: Array<Express.Multer.File>) {
     return this.service.update(id, updateDto, files, true);
   }
 
@@ -64,20 +55,20 @@ export class AuthUserController {
   async recover(@Param('id') id: number) {
     return this.service.recover(id);
   }
-
+    
   @ApiBearerAuth("jwt")
   @ApiQuery({ name: 'showSoftDeleted', required: false, enum: ShowSoftDeleted })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiQuery({ name: 'offset', required: false, type: Number })
   @ApiQuery({ name: 'fields', required: false, type: Array })
-  @ApiQuery({ name: 'sort', required: false, type: Array })
+  @ApiQuery({ name: 'sort', required: false, type: Array }) 
   @ApiQuery({ name: 'groupBy', required: false, type: Array })
   @ApiQuery({ name: 'populate', required: false, type: Array })
   @ApiQuery({ name: 'populateMedia', required: false, type: Array })
   @ApiQuery({ name: 'filters', required: false, type: Array })
   @Get()
-  async findMany(@Query() query: any) {
-    return this.service.find(query);
+  async findMany(@Query() query: any) { 
+    return this.service.find(query);  
   }
 
   @ApiBearerAuth("jwt")

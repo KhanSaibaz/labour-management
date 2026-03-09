@@ -1,14 +1,11 @@
 import { registerExtensionComponent, registerExtensionFunction } from "@solidxai/core-ui";
-import callLogsDispositionHandler from "./venue/call-log/form-event-listeners/callLogsDispositionHandler";
-import { ImportHierarchyComponent } from "./venue/hierarchy-import-transaction/form-buttons/ImportHierarchyComponent";
-import onHierarchyImportFormLayoutLoadHandler from "./venue/hierarchy-import-transaction/form-event-listeners/onHierarchyImportFormLoadHandler";
-import handleVenueUserFormViewChange from "./venue/venue-user/form-event-listeners/venueUserFormViewChangeHandler";
-import handleVenueUserFormViewLoad from "./venue/venue-user/form-event-listeners/venueUserFormViewLoadHandler";
+import InventoryAskOnBeforeListDataLoad from "./labour-management-system/inventory-ask/list-event-listeners/InventoryAskOnBeforeDataLoad";
 
-// Module - venue 
+
+// Module - Labour Management System 
 
 // - - - - - - - - - - - - - - - - - - - -
-// Model - call-log 
+// Model - Inventory Ask
 // - - - - - - - - - - - - - - - - - - - -
 
 // custom-widgets 
@@ -16,7 +13,7 @@ import handleVenueUserFormViewLoad from "./venue/venue-user/form-event-listeners
 // form-buttons
 
 // form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('callLogsDispositionHandler', callLogsDispositionHandler);
+registerExtensionFunction('inventoryAskOnBeforeListDataLoad', InventoryAskOnBeforeListDataLoad);
 
 // list-buttons
 
@@ -26,57 +23,3 @@ registerExtensionFunction('callLogsDispositionHandler', callLogsDispositionHandl
 
 
 
-// - - - - - - - - - - - - - - - - - - - -
-// Model - hierarchy-import-transaction
-// - - - - - - - - - - - - - - - - - - - -
-
-// custom-widgets 
-
-// form-buttons
-registerExtensionComponent('ImportHierarchyComponent', ImportHierarchyComponent);
-
-// form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('onHierarchyImportFormLayoutLoadHandler', onHierarchyImportFormLayoutLoadHandler);
-
-// list-buttons
-
-// list-event-listeners (onListLoad, onBeforeListDataLoad)
-
-// row-buttons
-
-
-
-// - - - - - - - - - - - - - - - - - - - -
-// Model - venue-user
-// - - - - - - - - - - - - - - - - - - - -
-
-// custom-widgets 
-
-// form-buttons
-
-// form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('venueUserFormViewChangeHandler', handleVenueUserFormViewChange);
-
-// list-buttons
-
-// list-event-listeners (onListLoad, onBeforeListDataLoad)
-
-// row-buttons
-
-
-// - - - - - - - - - - - - - - - - - - - -
-// Model - venue-master
-// - - - - - - - - - - - - - - - - - - - -
-
-// custom-widgets 
-
-// form-buttons
-
-// form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('venueUserFormViewLoadHandler', handleVenueUserFormViewLoad);
-
-// list-buttons
-
-// list-event-listeners (onListLoad, onBeforeListDataLoad)
-
-// row-buttons

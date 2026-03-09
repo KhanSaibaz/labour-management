@@ -15,4 +15,14 @@ export class Site extends CommonEntity {
     sIteManager: string;
     @OneToMany(() => Labour, labour => labour.site, { cascade: true })
     labour: Labour[];
+    @Column({ type: "date", nullable: true })
+    siteStartDate: Date;
+    @Column({ type: "date", nullable: true })
+    siteEndDate: Date;
+    @Column({ type: "integer", nullable: true })
+    projectValue: number;
+    @Column({ type: "varchar", nullable: true })
+    status: string;
+    @Column({ type: "varchar", nullable: true })
+    siteManager: string;
 }

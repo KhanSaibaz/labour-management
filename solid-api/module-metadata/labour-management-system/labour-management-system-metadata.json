@@ -57,8 +57,6 @@
         "dataSourceType": "postgres",
         "tableName": "auth_user",
         "isChild": true,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "parentModelUserKey": "user",
         "enableAuditTracking": true,
         "enableSoftDelete": false,
@@ -73,9 +71,9 @@
             "ormType": "varchar",
             "isSystem": false,
             "selectionDynamicProvider": "ListOfRolesSelectionProvider",
-            "selectionDynamicProviderCtxt": "{\n  \"filters\": {\n    \"name\": {\n      \"$notIn\": [\n        \"Admin\",\n        \"Internal User\",\n        \"Public\"\n      ]\n    }\n  }\n}",
+            "selectionDynamicProviderCtxt": "{\n  \"filters\": {\n    \"name\": {\n      \"$notIn\": [\n        \"Admin\",\n        \"Internal User\",\n        \"Public\",\n        \"Labour  Admin\"\n      ]\n    }\n  }\n}",
             "selectionValueType": "string",
-            "required": true,
+            "required": false,
             "unique": false,
             "index": false,
             "private": false,
@@ -111,7 +109,7 @@
             "type": "selectionDynamic",
             "ormType": "varchar",
             "isSystem": false,
-            "selectionDynamicProvider": "WorkTypeSelectionProvider",
+            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
             "selectionDynamicProviderCtxt": "{}",
             "selectionValueType": "string",
             "required": true,
@@ -499,6 +497,27 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "noOfTries",
+            "displayName": "No of Tries",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
             "isPrimaryKey": false
           }
         ]
@@ -1098,12 +1117,500 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
+          },
+          {
+            "name": "siteStartDate",
+            "displayName": "Site Start Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "siteEndDate",
+            "displayName": "Site End Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "projectValue",
+            "displayName": "Project Value",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "status",
+            "displayName": "Status",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "Planing:Planing",
+              "OnHold:OnHold",
+              "Active:Active",
+              "Completed:Completed",
+              "Cancelled:Cancelled"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "siteManager",
+            "displayName": "Site Manager",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "LabourManagerNameSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isMultiSelect": true
+          }
+        ]
+      },
+      {
+        "singularName": "inventoryManagement",
+        "pluralName": "inventoryManagements",
+        "displayName": "Inventory Management",
+        "description": "These Mode Is for Inventory Management ",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "inventory_management",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "productName",
+            "displayName": "Product Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": true,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "productQuantity",
+            "displayName": "Product Quantity",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "inventoryAsk",
+        "pluralName": "inventoryAsks",
+        "displayName": "Inventory Ask",
+        "description": "These Mode in Inventory Ask",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "inventory_ask",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "managerName",
+            "displayName": "Manager Name",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": null,
+            "relationCreateInverse": false,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": "",
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": "",
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "productName",
+            "displayName": "Product Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "projectQuantity",
+            "displayName": "Project Quantity",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "status",
+            "displayName": "Status",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": "Pending",
+            "selectionStaticValues": [
+              "Pending:Pending",
+              "InProgress:InProgress",
+              "Completed:Completed"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "sIteName",
+            "displayName": "SIte Name",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": null,
+            "relationCreateInverse": false,
+            "relationCoModelSingularName": "site",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       }
     ]
   },
-  "roles": [],
+  "roles": [
+    {
+      "name": "Labour  Admin",
+      "permissions": [
+        "AuthUserController.create",
+        "AuthUserController.update",
+        "AuthUserController.findMany",
+        "AuthUserController.insertMany",
+        "AuthUserController.findOne",
+        "AuthUserController.recoverMany",
+        "AuthUserController.partialUpdate",
+        "AuthUserController.delete",
+        "AuthUserController.recover",
+        "AuthUserController.deleteMany",
+        "LabourController.create",
+        "LabourController.update",
+        "LabourController.findMany",
+        "LabourController.insertMany",
+        "LabourController.findOne",
+        "LabourController.recoverMany",
+        "LabourController.partialUpdate",
+        "LabourController.delete",
+        "LabourController.recover",
+        "LabourController.deleteMany",
+        "WorkTypeController.create",
+        "WorkTypeController.update",
+        "WorkTypeController.findMany",
+        "WorkTypeController.insertMany",
+        "WorkTypeController.findOne",
+        "WorkTypeController.recoverMany",
+        "WorkTypeController.partialUpdate",
+        "WorkTypeController.delete",
+        "WorkTypeController.recover",
+        "WorkTypeController.deleteMany",
+        "AttendanceController.create",
+        "AttendanceController.update",
+        "AttendanceController.findMany",
+        "AttendanceController.insertMany",
+        "AttendanceController.findOne",
+        "AttendanceController.recoverMany",
+        "AttendanceController.partialUpdate",
+        "AttendanceController.delete",
+        "AttendanceController.recover",
+        "AttendanceController.deleteMany",
+        "SalaryController.create",
+        "SalaryController.update",
+        "SalaryController.findMany",
+        "SalaryController.insertMany",
+        "SalaryController.findOne",
+        "SalaryController.recoverMany",
+        "SalaryController.partialUpdate",
+        "SalaryController.delete",
+        "SalaryController.recover",
+        "SalaryController.deleteMany",
+        "AdvancePaymentController.create",
+        "AdvancePaymentController.update",
+        "AdvancePaymentController.findMany",
+        "AdvancePaymentController.insertMany",
+        "AdvancePaymentController.findOne",
+        "AdvancePaymentController.recoverMany",
+        "AdvancePaymentController.partialUpdate",
+        "AdvancePaymentController.delete",
+        "AdvancePaymentController.recover",
+        "AdvancePaymentController.deleteMany",
+        "SiteController.create",
+        "SiteController.update",
+        "SiteController.findMany",
+        "SiteController.insertMany",
+        "SiteController.findOne",
+        "SiteController.recoverMany",
+        "SiteController.partialUpdate",
+        "SiteController.delete",
+        "SiteController.recover",
+        "SiteController.deleteMany",
+        "InventoryManagementController.create",
+        "InventoryManagementController.update",
+        "InventoryManagementController.findMany",
+        "InventoryManagementController.insertMany",
+        "InventoryManagementController.findOne",
+        "InventoryManagementController.recoverMany",
+        "InventoryManagementController.partialUpdate",
+        "InventoryManagementController.delete",
+        "InventoryManagementController.recover",
+        "InventoryManagementController.deleteMany",
+        "AdvancePaymentController.deleteMany",
+        "InventoryAskController.create",
+        "InventoryAskController.update",
+        "InventoryAskController.findMany",
+        "InventoryAskController.insertMany",
+        "InventoryAskController.findOne",
+        "InventoryAskController.recoverMany",
+        "InventoryAskController.partialUpdate",
+        "InventoryAskController.delete",
+        "InventoryAskController.recover",
+        "InventoryAskController.deleteMany"
+      ]
+    },
+    {
+      "name": "Manager",
+      "permissions": [
+        "InventoryAskController.create",
+        "InventoryAskController.update",
+        "InventoryAskController.findMany",
+        "InventoryAskController.insertMany",
+        "InventoryAskController.findOne",
+        "InventoryAskController.recoverMany",
+        "InventoryAskController.partialUpdate",
+        "InventoryAskController.recover",
+        "AttendanceController.create",
+        "AttendanceController.update",
+        "AttendanceController.findMany",
+        "AttendanceController.insertMany",
+        "AttendanceController.findOne",
+        "AttendanceController.recoverMany",
+        "AttendanceController.partialUpdate",
+        "AttendanceController.recover",
+        "SalaryController.create",
+        "SalaryController.update",
+        "SalaryController.findMany",
+        "SalaryController.insertMany",
+        "SalaryController.findOne",
+        "SalaryController.recoverMany",
+        "SalaryController.partialUpdate",
+        "SalaryController.recover",
+        "AdvancePaymentController.create",
+        "AdvancePaymentController.update",
+        "AdvancePaymentController.findMany",
+        "AdvancePaymentController.insertMany",
+        "AdvancePaymentController.findOne",
+        "AdvancePaymentController.recoverMany",
+        "AdvancePaymentController.partialUpdate",
+        "AdvancePaymentController.recover",
+        "SiteController.create",
+        "SiteController.update",
+        "SiteController.findMany",
+        "SiteController.insertMany",
+        "SiteController.findOne",
+        "SiteController.recoverMany",
+        "SiteController.partialUpdate",
+        "SiteController.recover"
+      ]
+    },
+    {
+      "name": "Labour",
+      "permissions": [
+        "AttendanceController.create",
+        "AttendanceController.update",
+        "AttendanceController.findMany",
+        "AttendanceController.insertMany",
+        "AttendanceController.findOne",
+        "AttendanceController.recoverMany",
+        "AttendanceController.partialUpdate",
+        "AttendanceController.recover",
+        "SalaryController.create",
+        "SalaryController.update",
+        "SalaryController.findMany",
+        "SalaryController.insertMany",
+        "SalaryController.findOne",
+        "SalaryController.recoverMany",
+        "SalaryController.partialUpdate",
+        "SalaryController.recover",
+        "AdvancePaymentController.create",
+        "AdvancePaymentController.update",
+        "AdvancePaymentController.findMany",
+        "AdvancePaymentController.insertMany",
+        "AdvancePaymentController.findOne",
+        "AdvancePaymentController.recoverMany",
+        "AdvancePaymentController.partialUpdate",
+        "AdvancePaymentController.recover",
+        "SiteController.create",
+        "SiteController.update",
+        "SiteController.findMany",
+        "SiteController.insertMany",
+        "SiteController.findOne",
+        "SiteController.recoverMany",
+        "SiteController.partialUpdate",
+        "SiteController.recover"
+      ]
+    }
+  ],
   "users": [],
   "actions": [
     {
@@ -1209,6 +1716,71 @@
       "viewUserKey": "site-list-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "site"
+    },
+    {
+      "displayName": "Inventory Management List Action",
+      "name": "inventoryManagement-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryManagement-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement"
+    },
+    {
+      "displayName": "All Inventory Ask ",
+      "name": "inventoryAsk-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryAsk-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk"
+    },
+    {
+      "displayName": "Inventory Ask Pending ",
+      "name": "inventoryAsk-withPending-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryAsk-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk"
+    },
+    {
+      "displayName": "Inventory Ask InProgress",
+      "name": "inventoryAsk-withInProgress-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryAsk-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk"
+    },
+    {
+      "displayName": "Inventory Ask  Completed",
+      "name": "inventoryAsk-withCompleted-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryAsk-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk"
     }
   ],
   "menus": [
@@ -1219,70 +1791,166 @@
       "actionUserKey": "labour-management-system-home-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": "home"
+      "iconName": "home",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Work Type",
       "name": "workType-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 2,
       "actionUserKey": "workType-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "work",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "AuthUser",
       "name": "authUser-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 3,
       "actionUserKey": "authUser-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "admin_panel_settings",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Labour",
       "name": "labour-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 4,
       "actionUserKey": "labour-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "group",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Attendance",
       "name": "attendance-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 5,
       "actionUserKey": "attendance-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "event_note",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Salary",
       "name": "salary-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 6,
       "actionUserKey": "salary-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "attach_money",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Advance Payment",
       "name": "advancePayment-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 7,
       "actionUserKey": "advancePayment-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "payment",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Site",
       "name": "site-menu-item",
-      "sequenceNumber": 1,
+      "sequenceNumber": 8,
       "actionUserKey": "site-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
-      "iconName": ""
+      "iconName": "location_on",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Inventory Management",
+      "name": "inventoryManagement-menu-item",
+      "sequenceNumber": 9,
+      "actionUserKey": "inventoryManagement-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "inventory_2",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Inventory Ask Master",
+      "name": "inventoryAskMaster",
+      "sequenceNumber": 10,
+      "actionUserKey": "masters-root",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "inbox",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "All",
+      "name": "inventoryAsk-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "inventoryAsk-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "inventoryAskMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Pending",
+      "name": "inventoryAsk-withPending-menu-item",
+      "sequenceNumber": 2,
+      "actionUserKey": "inventoryAsk-withPending-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "inventoryAskMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "InProgress",
+      "name": "inventoryAsk-withInProgress-menu-item",
+      "sequenceNumber": 3,
+      "actionUserKey": "inventoryAsk-withInProgress-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "inventoryAskMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Completed",
+      "name": "inventoryAsk-withCompleted-menu-item",
+      "sequenceNumber": 4,
+      "actionUserKey": "inventoryAsk-withCompleted-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "inventoryAskMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
     }
   ],
   "views": [
@@ -1361,7 +2029,9 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "name"
+                          "name": "name",
+                          "isSearchable": true,
+                          "sortable": true
                         }
                       }
                     ]
@@ -1413,7 +2083,9 @@
           {
             "type": "field",
             "attrs": {
-              "name": "fullName"
+              "name": "fullName",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
@@ -1425,7 +2097,9 @@
           {
             "type": "field",
             "attrs": {
-              "name": "mobile"
+              "name": "mobile",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
@@ -1489,7 +2163,17 @@
                         "attrs": {
                           "name": "mobile"
                         }
-                      },
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
                       {
                         "type": "field",
                         "attrs": {
@@ -1503,15 +2187,6 @@
                         }
                       }
                     ]
-                  },
-                  {
-                    "type": "column",
-                    "attrs": {
-                      "name": "group-2",
-                      "label": "",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
-                    },
-                    "children": []
                   }
                 ]
               }
@@ -1562,6 +2237,12 @@
               "name": "workType",
               "isSearchable": true,
               "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "documents"
             }
           },
           {
@@ -1781,7 +2462,9 @@
           {
             "type": "field",
             "attrs": {
-              "name": "location"
+              "name": "location",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
@@ -1849,7 +2532,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-1",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Punch Record"
                             },
                             "children": [
                               {
@@ -1882,7 +2566,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-2",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Dailys Hours"
                             },
                             "children": [
                               {
@@ -1920,7 +2605,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-2-col-1",
-                              "className": "col-12"
+                              "className": "col-12",
+                              "label": "Additional Info"
                             },
                             "children": [
                               {
@@ -1987,13 +2673,17 @@
           {
             "type": "field",
             "attrs": {
-              "name": "salaryMonth"
+              "name": "salaryMonth",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "salaryYear"
+              "name": "salaryYear",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
@@ -2085,7 +2775,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-1",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Employee & Salary Information"
                             },
                             "children": [
                               {
@@ -2112,7 +2803,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-2",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Attendance Details"
                             },
                             "children": [
                               {
@@ -2156,7 +2848,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-2-col-1",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Wage Details"
                             },
                             "children": [
                               {
@@ -2177,7 +2870,8 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-2-col-2",
-                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6",
+                              "label": "Final Salary Details"
                             },
                             "children": [
                               {
@@ -2236,25 +2930,33 @@
           {
             "type": "field",
             "attrs": {
-              "name": "name"
+              "name": "name",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "advanceMonth"
+              "name": "advanceMonth",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "advanceYear"
+              "name": "advanceYear",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "repaymentStatus"
+              "name": "repaymentStatus",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
@@ -2327,7 +3029,7 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-1",
-                      "label": "",
+                      "label": "Advance Information",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
@@ -2367,7 +3069,7 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-2",
-                      "label": "",
+                      "label": "Repayment Details",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
@@ -2435,37 +3137,49 @@
           {
             "type": "field",
             "attrs": {
-              "name": "id"
+              "name": "id",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "siteName"
+              "name": "siteName",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "clientName"
+              "name": "clientName",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "clientContactNumber"
+              "name": "clientContactNumber",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "sIteManager"
+              "name": "sIteManager",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "labour"
+              "name": "labour",
+              "isSearchable": true,
+              "sortable": true
             }
           }
         ]
@@ -2514,19 +3228,40 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-1",
+                              "label": "Basic Information",
                               "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                             },
                             "children": [
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "siteName"
+                                  "name": "siteName",
+                                  "isSearchable": true,
+                                  "sortable": true
                                 }
                               },
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "clientContactNumber"
+                                  "name": "clientName",
+                                  "isSearchable": true,
+                                  "sortable": true
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "clientContactNumber",
+                                  "isSearchable": true,
+                                  "sortable": true
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "siteManager",
+                                  "isSearchable": true,
+                                  "sortable": true
                                 }
                               }
                             ]
@@ -2535,19 +3270,34 @@
                             "type": "column",
                             "attrs": {
                               "name": "page-1-col-2",
+                              "label": "Project Timeline & Value",
                               "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                             },
                             "children": [
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "clientName"
+                                  "name": "siteStartDate"
                                 }
                               },
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "siteManager"
+                                  "name": "siteEndDate"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "projectValue"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "status",
+                                  "isSearchable": true,
+                                  "sortable": true
                                 }
                               }
                             ]
@@ -2579,7 +3329,8 @@
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "labour"
+                                  "name": "labour",
+                                  "create": false
                                 }
                               }
                             ]
@@ -2594,10 +3345,282 @@
           }
         ]
       }
+    },
+    {
+      "name": "inventoryManagement-list-view",
+      "displayName": "Inventory Management",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productQuantity"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventoryManagement-form-view",
+      "displayName": "Inventory Management",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Inventory Management",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "productName"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "productQuantity"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventoryAsk-list-view",
+      "displayName": "Inventory Ask",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk",
+      "layout": {
+        "onBeforeListDataLoad": "inventoryAskOnBeforeListDataLoad",
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "managerName",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "projectQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "sIteName",
+              "isSearchable": true,
+              "sortable": true
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventoryAsk-form-view",
+      "displayName": "Inventory Ask",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Inventory Ask",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "managerName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "projectQuantity"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "sIteName"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "productName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "status"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     }
   ],
   "emailTemplates": [],
   "smsTemplates": [],
   "mediaStorageProviders": [],
-  "securityRules": []
+  "securityRules": [],
+  "dashboards": [
+    {
+      "name": "TestDashBoard",
+      "layoutJson": {},
+      "moduleUserKey": "labour-management-system",
+      "dashboardVariables": [],
+      "questions": []
+    }
+  ]
 }

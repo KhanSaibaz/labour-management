@@ -1,9 +1,0 @@
-============================================================
-  SYSTEM ADMIN USER CREATED
-------------------------------------------------------------
-  Username : sa
-  Password : 6e870a0b-7dc7-43fb-9ac3-51f97c58c67f
-
-  Copy and store this password securely now.
-  It is shown only once during seeding.
-============================================================

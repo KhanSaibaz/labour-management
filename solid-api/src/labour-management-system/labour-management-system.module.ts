@@ -9,7 +9,7 @@ import { AuthUserService } from './services/auth-user.service';
 import { AuthUserController } from './controllers/auth-user.controller';
 import { AuthUserRepository } from './repositories/auth-user.repository';
 import { LabourUserNameSelectionProvider } from './providers/labour-username-selection-provider';
-import { WorkTypelSelectionProvider } from './providers/work-type-selection-provider';
+import { WorkTypeSelectionProvider } from './providers/work-type-selection-provider';
 import { Labour } from './entities/labour.entity';
 import { LabourService } from './services/labour.service';
 import { LabourController } from './controllers/labour.controller';
@@ -30,11 +30,20 @@ import { Site } from './entities/site.entity';
 import { SiteService } from './services/site.service';
 import { SiteController } from './controllers/site.controller';
 import { SiteRepository } from './repositories/site.repository';
+import { LabourManagerNameSelectionProvider } from './providers/labour-manager-user-provider';
+import { InventoryManagement } from './entities/inventory-management.entity';
+import { InventoryManagementService } from './services/inventory-management.service';
+import { InventoryManagementController } from './controllers/inventory-management.controller';
+import { InventoryManagementRepository } from './repositories/inventory-management.repository';
+import { InventoryAsk } from './entities/inventory-ask.entity';
+import { InventoryAskService } from './services/inventory-ask.service';
+import { InventoryAskController } from './controllers/inventory-ask.controller';
+import { InventoryAskRepository } from './repositories/inventory-ask.repository';
 
 
 @Module({
-    imports: [TypeOrmModule.forFeature([WorkType]), TypeOrmModule.forFeature([AuthUser]), TypeOrmModule.forFeature([Labour]), TypeOrmModule.forFeature([Attendance]), TypeOrmModule.forFeature([Salary]), TypeOrmModule.forFeature([AdvancePayment]), TypeOrmModule.forFeature([Site])],
-    controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController],
-    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypelSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository],
+    imports: [TypeOrmModule.forFeature([WorkType]), TypeOrmModule.forFeature([AuthUser]), TypeOrmModule.forFeature([Labour]), TypeOrmModule.forFeature([Attendance]), TypeOrmModule.forFeature([Salary]), TypeOrmModule.forFeature([AdvancePayment]), TypeOrmModule.forFeature([Site]), TypeOrmModule.forFeature([InventoryManagement]), TypeOrmModule.forFeature([InventoryAsk])],
+    controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController, InventoryManagementController, InventoryAskController],
+    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository, InventoryAskService, InventoryAskRepository],
 })
 export class LabourManagementSystemModule {}

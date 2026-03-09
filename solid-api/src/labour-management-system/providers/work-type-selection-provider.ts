@@ -16,7 +16,7 @@ const DEFAULT_LIMIT = 10000;
 
 @SelectionProvider()
 @Injectable()
-export class WorkTypelSelectionProvider
+export class WorkTypeSelectionProvider
   implements ISelectionProvider<WorkTypeProviderContext>
 {
   constructor(private readonly workTypeService: WorkTypeService) {}
