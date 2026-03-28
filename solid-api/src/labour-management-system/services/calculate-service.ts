@@ -138,9 +138,7 @@ export class AttendanceService {
     await this.attendanceRepo.save(attendance);
 
     // ✅ 7. SALARY CALCULATE (Final checkout hone par)
-    if (attendance.noOfTries === 2) {
-      await this.calculateSalary(labourId, attendance, labour);
-    }
+    await this.calculateSalary(labourId, attendance, labour);
 
     return {
       status: 'success',
@@ -154,7 +152,6 @@ export class AttendanceService {
     };
   }
 
-  // ✅ SALARY CALCULATION (Private method)
   private async calculateSalary(
     labourId: number,
     attendance: Attendance,
@@ -183,7 +180,7 @@ export class AttendanceService {
       const presentDays = monthAttendances.filter(
         (a) => a.checkIn && a.checkOut,
       ).length;
-      const workingDays = 26;
+      const workingDays = 26; // No of days in the moth 
       const absent = workingDays - presentDays;
       const totalOvertimeHours = monthAttendances.reduce(
         (sum, a) => sum + (a.overtimeHour || 0),

@@ -56,4 +56,12 @@ export class UpdateLabourDto {
     @IsDate()
     @ApiProperty()
     dateOfBirth: Date;
+
+
+@IsNotEmpty()
+@IsOptional()
+@IsInt()
+@ApiProperty()
+dailyWages: number;
+
 }

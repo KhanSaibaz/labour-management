@@ -314,6 +314,27 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": true
+          },
+          {
+            "name": "dailyWages",
+            "displayName": "Daily Wages",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -1515,7 +1536,6 @@
         "InventoryManagementController.delete",
         "InventoryManagementController.recover",
         "InventoryManagementController.deleteMany",
-        "AdvancePaymentController.deleteMany",
         "InventoryAskController.create",
         "InventoryAskController.update",
         "InventoryAskController.findMany",
@@ -2107,6 +2127,12 @@
             "attrs": {
               "name": "userRole"
             }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "active"
+            }
           }
         ]
       }
@@ -2184,6 +2210,12 @@
                         "type": "field",
                         "attrs": {
                           "name": "userRole"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "active"
                         }
                       }
                     ]
@@ -2285,6 +2317,13 @@
             "type": "field",
             "attrs": {
               "name": "lastWorkingDate",
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyWages",
               "sortable": true
             }
           }
@@ -2394,6 +2433,12 @@
                         "type": "field",
                         "attrs": {
                           "name": "site"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "dailyWages"
                         }
                       }
                     ]

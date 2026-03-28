@@ -52,4 +52,11 @@ export class CreateLabourDto {
     @IsDate()
     @ApiProperty()
     dateOfBirth: Date;
+
+
+@IsNotEmpty()
+@IsInt()
+@ApiProperty()
+dailyWages: number;
+
 }

@@ -54,9 +54,9 @@ export class CreateSalaryDto {
     @ApiProperty()
     totalDeduction: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-totalAmount: number;
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    totalAmount: number;
 
 }
