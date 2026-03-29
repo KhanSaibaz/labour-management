@@ -92,7 +92,6 @@ export class AttendanceController {
   }
 
 
-  // ✅ CHECK-IN
   @ApiBearerAuth("jwt")
   @Post('/check-in')
   async checkIn(
@@ -102,7 +101,6 @@ export class AttendanceController {
     return this.service.checkIn(labourId, checkInLocation);
   }
 
-  // ✅ CHECK-OUT
   @ApiBearerAuth("jwt")
   @Post('/check-out')
   async checkOut(
@@ -112,7 +110,6 @@ export class AttendanceController {
     return this.service.checkOut(labourId, checkOutLocation);
   }
 
-  // ✅ STATUS — Post before generic routes
   @ApiBearerAuth("jwt")
   @Post('/status')
   async getStatus(@Body('labourId') labourId: number) {
