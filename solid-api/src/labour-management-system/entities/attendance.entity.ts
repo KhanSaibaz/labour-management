@@ -33,6 +33,6 @@ export class Attendance extends CommonEntity {
     checkOutLocation: string;
 
 
-    @Column({ type: "integer", nullable: true })
-    workingHours: number;
+@Column({ type: "decimal", nullable: true })
+workingHours: number;
 }

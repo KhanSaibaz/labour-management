@@ -29,33 +29,43 @@ export class AttendanceService extends CRUDService<Attendance> {
   }
 
   async checkIn(labourId: number, checkInLocation: string): Promise<any> {
-    // 1. Check if labour exists
-    const labour = await this.labourRepo.findOne({ where: { id: labourId } });
+    // 1. Check labour exists
+    const labour = await this.labourRepo.findOne({
+      where: { id: labourId },
+    });
 
     if (!labour) {
       throw new NotFoundException('Labour not found');
     }
 
-    // 2. Get today's date (without time)
+    // 2. Get today's date (ONLY date, no time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 3. Find today's attendance record
-    let attendance = await this.attendanceRepo
-      .createQueryBuilder('a')
-      .leftJoin('a.name', 'labour')
-      .where('labour.id = :labourId', { labourId })
-      .andWhere('a.attendanceDate = :today', { today })
-      .getOne();
+    // 3. Find existing attendance (STRICT: one per day)
+    let attendance = await this.attendanceRepo.findOne({
+      where: {
+        name: { id: labourId },
+        attendanceDate: today,
+      },
+      relations: ['name'],
+    });
 
-    // 4. If no record → create new attendance
+    // 4. If not exists → CREATE (ONLY ONCE PER DAY)
     if (!attendance) {
-      attendance = new Attendance();
-      attendance.name = labour; // ✅ FIXED (important)
-      attendance.attendanceDate = today;
-      attendance.noOfTries = 1;
-      attendance.checkIn = new Date();
-      attendance.checkInLocation = checkInLocation;
+      const now = new Date(); // full timestamp (hh:mm:ss)
+
+      attendance = this.attendanceRepo.create({
+        name: labour,                  // ✅ relation fix
+        attendanceDate: today,         // ✅ only date
+        checkIn: now,                  // ✅ full time
+        checkInLocation: checkInLocation,
+        noOfTries: 1,
+        workingHours: 0,
+        overtimeHour: 0,
+      });
+
+
 
       await this.attendanceRepo.save(attendance);
 
@@ -64,14 +74,14 @@ export class AttendanceService extends CRUDService<Attendance> {
         message: 'Check-in successful (1/2)',
         checkInTime: attendance.checkIn,
         checkInLocation: attendance.checkInLocation,
-        noOfTries: 1,
+        noOfTries: attendance.noOfTries,
       };
     }
 
-    // 5. Already checked in twice?
+    // 5. Prevent more than 2 check-ins
     if (attendance.noOfTries >= 2) {
       throw new BadRequestException(
-        'Maximum 2 check-ins per day reached. Already at limit.'
+        'Maximum 2 check-ins per day reached'
       );
     }
 
@@ -82,8 +92,8 @@ export class AttendanceService extends CRUDService<Attendance> {
       );
     }
 
-    // 7. Second check-in
-    attendance.checkIn = new Date();
+    // 7. Second check-in (NO NEW RECORD → UPDATE SAME)
+    attendance.checkIn = new Date(); // ✅ new time
     attendance.checkInLocation = checkInLocation;
     attendance.checkOut = null;
     attendance.checkOutLocation = null;
@@ -103,71 +113,78 @@ export class AttendanceService extends CRUDService<Attendance> {
 
   async checkOut(labourId: number, checkOutLocation: string): Promise<any> {
     // 1. Check labour exists
-    const labour = await this.labourRepo.findOne({ where: { id: labourId } });
+    const labour = await this.labourRepo.findOne({
+      where: { id: labourId },
+    });
 
     if (!labour) {
       throw new NotFoundException('Labour not found');
     }
 
-    // 2. Get today's date (no time)
+    // 2. Get today's date
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 3. Get today's attendance (FIXED JOIN + DATE)
-    const attendance = await this.attendanceRepo
-      .createQueryBuilder('a')
-      .leftJoin('a.name', 'labour')
-      .where('labour.id = :labourId', { labourId })
-      .andWhere('a.attendanceDate = :today', { today })
-      .getOne();
+    // 3. Get today's attendance
+    const attendance = await this.attendanceRepo.findOne({
+      where: {
+        name: { id: labourId },
+        attendanceDate: today,
+      },
+      relations: ['name'],
+    });
 
     if (!attendance) {
       throw new BadRequestException('Please check in first');
     }
 
-    // 4. Validate check-in exists
+    // 4. Must have active check-in
     if (!attendance.checkIn) {
-      throw new BadRequestException('Invalid attendance record');
+      throw new BadRequestException('Please check in before checkout');
     }
 
-    // 5. Already checked out?
-    if (attendance.checkOut) {
-      throw new BadRequestException('Already checked out');
+    // 5. Prevent double checkout for same session
+    if (attendance.checkOut && attendance.noOfTries === 1) {
+      throw new BadRequestException('Already checked out. Please check in again.');
     }
 
-    // 6. Calculate working hours
+    // 6. Calculate session hours
     const checkInTime = new Date(attendance.checkIn).getTime();
     const checkOutTime = new Date().getTime();
 
-    const hours = (checkOutTime - checkInTime) / (1000 * 60 * 60);
+    const sessionHours = (checkOutTime - checkInTime) / (1000 * 60 * 60);
 
-    // ✅ FIXED: no parseFloat needed
-    const previousHours = attendance.workingHours || 0;
-    const totalHours = previousHours + hours;
+    // 7. Add previous hours
+    const previousHours = Number(attendance.workingHours) || 0;
+    const totalHours = previousHours + sessionHours;
 
-    // 7. Update attendance
-    attendance.checkOut = new Date();
+    // 8. Update attendance
+    attendance.checkOut = new Date(); // ✅ hh:mm:ss automatically stored
     attendance.checkOutLocation = checkOutLocation;
     attendance.workingHours = Number(totalHours.toFixed(2));
     attendance.overtimeHour = Math.max(0, totalHours - 8);
 
     await this.attendanceRepo.save(attendance);
 
-    // 8. Salary calculation
-    await this.calculateSalary(labourId, attendance, labour);
+    // 9. Salary calculation after second session
+    if (attendance.noOfTries === 2) {
+      await this.calculateSalary(labourId, attendance, labour);
+    }
 
     return {
       status: 'success',
       message:
         attendance.noOfTries === 2
-          ? 'Check-out successful. Salary calculated.'
-          : 'Check-out successful',
+          ? 'Final check-out successful. Salary calculated.'
+          : 'Check-out successful. Please check in again for next session.',
       checkOutTime: attendance.checkOut,
       checkOutLocation: attendance.checkOutLocation,
       workingHours: attendance.workingHours,
       overtimeHours: attendance.overtimeHour,
     };
   }
+
+  
   private async calculateSalary(
     labourId: number,
     attendance: Attendance,

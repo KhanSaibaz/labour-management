@@ -545,8 +545,8 @@
             "name": "workingHours",
             "displayName": "Working Hours",
             "description": null,
-            "type": "int",
-            "ormType": "integer",
+            "type": "decimal",
+            "ormType": "decimal",
             "isSystem": false,
             "defaultValue": null,
             "min": null,
@@ -559,8 +559,7 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
-            "enableAuditTracking": false,
-            "isPrimaryKey": false
+            "enableAuditTracking": false
           }
         ]
       },
@@ -2652,7 +2651,15 @@
           {
             "type": "field",
             "attrs": {
-              "name": "location",
+              "name": "checkInLocation",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "checkOutLocation",
               "isSearchable": true,
               "sortable": true
             }

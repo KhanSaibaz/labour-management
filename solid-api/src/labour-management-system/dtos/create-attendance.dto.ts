@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt } from 'class-validator';
 import { IsOptional } from 'class-validator';
-import { IsString, IsDate } from 'class-validator';
+import { IsString, IsDate, IsNumber } from 'class-validator';
 
 export class CreateAttendanceDto {
     @IsOptional()
@@ -56,7 +56,7 @@ export class CreateAttendanceDto {
 
 
 @IsOptional()
-@IsInt()
+@IsNumber()
 @ApiProperty()
 workingHours: number;
 
