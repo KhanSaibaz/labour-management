@@ -2332,6 +2332,12 @@
                       {
                         "type": "field",
                         "attrs": {
+                          "name": "email"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
                           "name": "mobile"
                         }
                       }
