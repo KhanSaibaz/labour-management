@@ -39,11 +39,14 @@ import { InventoryAsk } from './entities/inventory-ask.entity';
 import { InventoryAskService } from './services/inventory-ask.service';
 import { InventoryAskController } from './controllers/inventory-ask.controller';
 import { InventoryAskRepository } from './repositories/inventory-ask.repository';
+import { DashBoardController } from './controllers/dashboard.controller';
+import { DashBoardService } from './services/dashboard.service';
+
 
 
 @Module({
     imports: [TypeOrmModule.forFeature([WorkType]), TypeOrmModule.forFeature([AuthUser]), TypeOrmModule.forFeature([Labour]), TypeOrmModule.forFeature([Attendance]), TypeOrmModule.forFeature([Salary]), TypeOrmModule.forFeature([AdvancePayment]), TypeOrmModule.forFeature([Site]), TypeOrmModule.forFeature([InventoryManagement]), TypeOrmModule.forFeature([InventoryAsk])],
-    controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController, InventoryManagementController, InventoryAskController],
-    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository, InventoryAskService, InventoryAskRepository],
+    controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController, InventoryManagementController, InventoryAskController,DashBoardController],
+    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository, InventoryAskService, InventoryAskRepository,DashBoardService],
 })
 export class LabourManagementSystemModule {}

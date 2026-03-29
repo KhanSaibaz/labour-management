@@ -36,6 +36,6 @@ export class Salary extends CommonEntity {
     status: string = "Pending";
 
 
-@Column({ type: "varchar" })
-salaryMonth: string;
+    @Column({ type: "varchar" })
+    salaryMonth: string;
 }

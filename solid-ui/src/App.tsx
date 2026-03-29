@@ -6,23 +6,22 @@ import { useMemo } from "react";
 import { BrowserRouter } from "react-router-dom";
 import { PrimeReactProvider } from "primereact/api";
 import { LayoutProvider, SolidThemeProvider, StoreProvider, AppEventListener } from "@solidxai/core-ui";
-import { hierarchyImportTransactionApi } from "./redux/hierarchyImportTransactionApi";
-
 import { AppRoutes } from "./routes/AppRoutes";
 import "./extensions/solid-extensions";
 import "./index.css";
+import { DashBoardApi } from "./redux/dasboardApi";
 
 function App() {
 
   // custom reducers and middlewares can be added to the StoreProvider
   const venueReducers = useMemo(
     () => ({
-      [hierarchyImportTransactionApi.reducerPath]: hierarchyImportTransactionApi.reducer,
+      [DashBoardApi.reducerPath]: DashBoardApi.reducer,
     }),
     []
   );
   const venueMiddlewares = useMemo(
-    () => [hierarchyImportTransactionApi.middleware],
+    () => [DashBoardApi.middleware],
     []
   );
 

@@ -1,9 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { DashBoardService } from '../services/dashboard.service';
-import { AuthenticationService } from '@solidxai/core';
-
-
+import { DashBoardService, DashboardData } from '../services/dashboard.service';
+import { Public } from '@solidxai/core';
 
 @ApiTags('Labour Management System')
 @Controller('dashboard')
@@ -12,9 +10,10 @@ export class DashBoardController {
         private readonly service: DashBoardService,
     ) { }
 
+    @Public()
     @ApiBearerAuth("jwt")
-    @Get('/recover')
-    async recover() {
+    @Get('/get-record')
+    async getDashBoardRecord(): Promise<DashboardData> {
         return this.service.getDashBoardRecord();
     }
 }
