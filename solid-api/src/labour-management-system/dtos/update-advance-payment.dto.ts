@@ -19,22 +19,12 @@ export class UpdateAdvancePaymentDto {
     @IsOptional()
     @IsDate()
     @ApiProperty()
-    advanceMonth: Date;
-
-    @IsOptional()
-    @IsDate()
-    @ApiProperty()
     advanceYear: Date;
 
     @IsOptional()
     @IsString()
     @ApiProperty()
     repaymentStatus: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    repaymentStartMonth: string;
 
     @IsOptional()
     @IsString()
@@ -60,4 +50,18 @@ export class UpdateAdvancePaymentDto {
     @IsString()
     @ApiProperty()
     remarks: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+repaymentStartMonth: string;
+
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+advanceMonth: string;
+
 }

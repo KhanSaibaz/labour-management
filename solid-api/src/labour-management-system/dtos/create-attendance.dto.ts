@@ -32,16 +32,6 @@ export class CreateAttendanceDto {
     @IsOptional()
     @IsString()
     @ApiProperty()
-    location: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    workingHours: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
     remark: string;
 
     @IsOptional()
@@ -49,9 +39,25 @@ export class CreateAttendanceDto {
     @ApiProperty()
     overtimeHour: number;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    noOfTries: number;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    checkInLocation: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    checkOutLocation: string;
+
+
 @IsOptional()
 @IsInt()
 @ApiProperty()
-noOfTries: number;
+workingHours: number;
 
 }

@@ -13,7 +13,9 @@ enum ShowSoftDeleted {
 @ApiTags('Labour Management System')
 @Controller('attendance')
 export class AttendanceController {
-  constructor(private readonly service: AttendanceService) {}
+  constructor(
+    private readonly service: AttendanceService
+  ) { }
 
   @ApiBearerAuth("jwt")
   @Post()
@@ -55,20 +57,20 @@ export class AttendanceController {
   async recover(@Param('id') id: number) {
     return this.service.recover(id);
   }
-    
+
   @ApiBearerAuth("jwt")
   @ApiQuery({ name: 'showSoftDeleted', required: false, enum: ShowSoftDeleted })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiQuery({ name: 'offset', required: false, type: Number })
   @ApiQuery({ name: 'fields', required: false, type: Array })
-  @ApiQuery({ name: 'sort', required: false, type: Array }) 
+  @ApiQuery({ name: 'sort', required: false, type: Array })
   @ApiQuery({ name: 'groupBy', required: false, type: Array })
   @ApiQuery({ name: 'populate', required: false, type: Array })
   @ApiQuery({ name: 'populateMedia', required: false, type: Array })
   @ApiQuery({ name: 'filters', required: false, type: Array })
   @Get()
-  async findMany(@Query() query: any) { 
-    return this.service.find(query);  
+  async findMany(@Query() query: any) {
+    return this.service.find(query);
   }
 
   @ApiBearerAuth("jwt")
@@ -90,4 +92,30 @@ export class AttendanceController {
   }
 
 
+  // ✅ CHECK-IN
+  @ApiBearerAuth("jwt")
+  @Post('/check-in')
+  async checkIn(
+    @Body('labourId') labourId: number,
+    @Body('checkInLocation') checkInLocation: string,
+  ) {
+    return this.service.checkIn(labourId, checkInLocation);
+  }
+
+  // ✅ CHECK-OUT
+  @ApiBearerAuth("jwt")
+  @Post('/check-out')
+  async checkOut(
+    @Body('labourId') labourId: number,
+    @Body('checkOutLocation') checkOutLocation: string,
+  ) {
+    return this.service.checkOut(labourId, checkOutLocation);
+  }
+
+  // ✅ STATUS — Post before generic routes
+  @ApiBearerAuth("jwt")
+  @Post('/status')
+  async getStatus(@Body('labourId') labourId: number) {
+    return this.service.getStatus(labourId);
+  }
 }

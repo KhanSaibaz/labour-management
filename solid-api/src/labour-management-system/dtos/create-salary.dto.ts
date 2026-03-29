@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt } from 'class-validator';
 import { IsOptional } from 'class-validator';
-import { IsString } from 'class-validator';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 export class CreateSalaryDto {
     @IsOptional()
@@ -13,11 +13,6 @@ export class CreateSalaryDto {
     @IsOptional()
     @ApiProperty()
     nameUserKey: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    salaryMonth: string;
 
     @IsOptional()
     @IsString()
@@ -58,5 +53,16 @@ export class CreateSalaryDto {
     @IsInt()
     @ApiProperty()
     totalAmount: number;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    status: string = "Pending";
+
+
+@IsNotEmpty()
+@IsString()
+@ApiProperty()
+salaryMonth: string;
 
 }

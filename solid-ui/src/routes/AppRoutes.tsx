@@ -3,6 +3,8 @@ import { getSolidRoutes } from "@solidxai/core-ui";
 import { HelloAuthPage } from "../pages/auth/HelloAuthPage";
 import { AboutPage } from "../pages/static/AboutPage";
 import { AdminInfoPage } from "../pages/admin/AdminInfoPage";
+import { DashBoardPage } from "../pages/dashbord/page";
+
 
 export function AppRoutes() {
   // Example of adding an extra route that uses the AuthLayout...
@@ -12,6 +14,7 @@ export function AppRoutes() {
   // Example of adding an extra route that uses the AdminLayout...
   const extraAdminRoutes = [
     { path: "/admin/info", element: <AdminInfoPage /> },
+    { path: "/admin/core/labour-management-system/dashboard", element: <DashBoardPage /> },
   ];
   // Example of adding an extra route that uses the MainLayout...
   const extraRoutes = [

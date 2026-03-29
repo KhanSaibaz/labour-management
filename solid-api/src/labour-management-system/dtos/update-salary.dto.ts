@@ -1,4 +1,4 @@
-import { IsInt,IsOptional, IsString } from 'class-validator';
+import { IsInt,IsOptional, IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateSalaryDto {
@@ -15,11 +15,6 @@ export class UpdateSalaryDto {
     @IsOptional()
     @ApiProperty()
     nameUserKey: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    salaryMonth: string;
 
     @IsOptional()
     @IsString()
@@ -56,9 +51,21 @@ export class UpdateSalaryDto {
     @ApiProperty()
     totalDeduction: number;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    totalAmount: number;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    status: string;
+
+
+@IsNotEmpty()
 @IsOptional()
-@IsInt()
+@IsString()
 @ApiProperty()
-totalAmount: number;
+salaryMonth: string;
 
 }

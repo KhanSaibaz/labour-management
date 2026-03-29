@@ -17,22 +17,12 @@ export class CreateAdvancePaymentDto {
     @IsOptional()
     @IsDate()
     @ApiProperty()
-    advanceMonth: Date;
-
-    @IsOptional()
-    @IsDate()
-    @ApiProperty()
     advanceYear: Date;
 
     @IsOptional()
     @IsString()
     @ApiProperty()
     repaymentStatus: string = "Pending";
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    repaymentStartMonth: string;
 
     @IsOptional()
     @IsString()
@@ -58,4 +48,18 @@ export class CreateAdvancePaymentDto {
     @IsString()
     @ApiProperty()
     remarks: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+repaymentStartMonth: string;
+
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+advanceMonth: string;
+
 }

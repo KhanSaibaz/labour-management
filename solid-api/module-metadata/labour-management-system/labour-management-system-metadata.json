@@ -434,50 +434,6 @@
             "enableAuditTracking": true
           },
           {
-            "name": "location",
-            "displayName": "Location",
-            "description": null,
-            "type": "longText",
-            "ormType": "text",
-            "isSystem": false,
-            "regexPattern": "",
-            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "enableAuditTracking": true
-          },
-          {
-            "name": "workingHours",
-            "displayName": "Working Hours",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
-          },
-          {
             "name": "remark",
             "displayName": "Remark",
             "description": null,
@@ -540,6 +496,71 @@
             "columnName": null,
             "enableAuditTracking": false,
             "isPrimaryKey": false
+          },
+          {
+            "name": "checkInLocation",
+            "displayName": "Check In Location",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "checkOutLocation",
+            "displayName": "Check Out Location",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "workingHours",
+            "displayName": "Working Hours",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -583,28 +604,6 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
-          },
-          {
-            "name": "salaryMonth",
-            "displayName": "Salary Month",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
           },
           {
             "name": "salaryYear",
@@ -774,6 +773,64 @@
             "columnName": null,
             "enableAuditTracking": true,
             "isPrimaryKey": false
+          },
+          {
+            "name": "status",
+            "displayName": "Status",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": "Pending",
+            "selectionStaticValues": [
+              "Pending:Pending",
+              "Complete:Complete"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "salaryMonth",
+            "displayName": "Salary Month",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "January:January",
+              "Feburary:Feburary",
+              "March:March",
+              "April:April",
+              "May:May",
+              "June:June",
+              "July:July",
+              "August:August",
+              "September:September",
+              "October:October",
+              "November:November",
+              "December:December"
+            ],
+            "selectionValueType": "string",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
           }
         ]
       },
@@ -786,8 +843,6 @@
         "dataSourceType": "postgres",
         "tableName": "advance_payment",
         "isChild": false,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
@@ -821,24 +876,6 @@
             "enableAuditTracking": true
           },
           {
-            "name": "advanceMonth",
-            "displayName": "Advance Month",
-            "description": null,
-            "type": "date",
-            "ormType": "date",
-            "isSystem": false,
-            "defaultValue": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "enableAuditTracking": true
-          },
-          {
             "name": "advanceYear",
             "displayName": "Advance Year",
             "description": null,
@@ -864,28 +901,6 @@
             "ormType": "varchar",
             "isSystem": false,
             "defaultValue": "Pending",
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
-          },
-          {
-            "name": "repaymentStartMonth",
-            "displayName": "Repayment Start Month",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
             "min": null,
             "max": null,
             "required": false,
@@ -1006,6 +1021,73 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": true
+          },
+          {
+            "name": "repaymentStartMonth",
+            "displayName": "Repayment Start Month",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "January:January",
+              "Feburary:Feburary",
+              "March:March",
+              "April:April",
+              "May:May",
+              "June:June",
+              "July:July",
+              "August:August",
+              "September:September",
+              "October:October",
+              "November:November",
+              "December:December"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
+          },
+          {
+            "name": "advanceMonth",
+            "displayName": "Advance Month",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "January:January",
+              "Feburary:Feburary",
+              "March:March",
+              "April:April",
+              "May:May",
+              "June:June",
+              "July:July",
+              "August:August",
+              "September:September",
+              "November:November",
+              "December:December"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
           }
         ]
       },
@@ -1634,12 +1716,12 @@
   "users": [],
   "actions": [
     {
-      "displayName": "labour-management-system Home",
-      "name": "labour-management-system-home-action",
+      "displayName": "labour-management-system DashBoard",
+      "name": "labour-management-system-dashboard-action",
       "type": "custom",
       "domain": "",
       "context": "",
-      "customComponent": "/admin/core/labour-management-system/home",
+      "customComponent": "/admin/core/labour-management-system/dashboard",
       "customIsModal": true,
       "serverEndpoint": "",
       "viewUserKey": "",
@@ -1699,8 +1781,21 @@
       "modelUserKey": "attendance"
     },
     {
-      "displayName": "Salary List Action",
-      "name": "salary-list-action",
+      "displayName": "All Salary List Action",
+      "name": "All-salary-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "salary-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary"
+    },
+    {
+      "displayName": "Current Month Salary List Action",
+      "name": "current-month-salary-list-action",
       "type": "solid",
       "domain": "",
       "context": "",
@@ -1801,14 +1896,40 @@
       "viewUserKey": "inventoryAsk-list-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "inventoryAsk"
+    },
+    {
+      "displayName": "Advance Payment Tree View Action",
+      "name": "advancePayment-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "advancePayment-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "advancePayment"
+    },
+    {
+      "displayName": "Attendance Tree View Action",
+      "name": "attendance-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "attendance-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance"
     }
   ],
   "menus": [
     {
-      "displayName": "Home",
-      "name": "labour-management-system-home-menu",
+      "displayName": "Dashboard",
+      "name": "labour-dashboard-menu-items",
       "sequenceNumber": 1,
-      "actionUserKey": "labour-management-system-home-action",
+      "actionUserKey": "labour-management-system-dashboard-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
       "iconName": "home",
@@ -1865,21 +1986,9 @@
       ]
     },
     {
-      "displayName": "Salary",
-      "name": "salary-menu-item",
-      "sequenceNumber": 6,
-      "actionUserKey": "salary-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "attach_money",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
       "displayName": "Advance Payment",
       "name": "advancePayment-menu-item",
-      "sequenceNumber": 7,
+      "sequenceNumber": 6,
       "actionUserKey": "advancePayment-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -1891,11 +2000,47 @@
     {
       "displayName": "Site",
       "name": "site-menu-item",
-      "sequenceNumber": 8,
+      "sequenceNumber": 7,
       "actionUserKey": "site-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
       "iconName": "location_on",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Salary",
+      "name": "salaryMaster",
+      "sequenceNumber": 8,
+      "actionUserKey": "masters-root",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "attach_money",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "All Salary ",
+      "name": "all-salary-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "All-salary-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "salaryMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Current Month ",
+      "name": "current-month-salary-menu-item",
+      "sequenceNumber": 2,
+      "actionUserKey": "current-month-salary-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "salaryMaster",
+      "iconName": "",
       "roles": [
         "Labour  Admin"
       ]
@@ -2687,6 +2832,7 @@
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "salary",
       "layout": {
+        "onBeforeListDataLoad": "currentMonthSalaryDataLoad",
         "type": "list",
         "attrs": {
           "pagination": true,
@@ -2729,6 +2875,12 @@
               "name": "salaryYear",
               "isSearchable": true,
               "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
             }
           },
           {
@@ -2907,6 +3059,12 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "overtimeAmount"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "status"
                                 }
                               }
                             ]
@@ -3650,6 +3808,182 @@
                 ]
               }
             ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "advancePayment-tree-view",
+      "displayName": "Advance Payment",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "advancePayment",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "advanceYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStatus"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStartYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "monthlyDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalPay"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "balanceAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "remarks"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "advanceMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "repaymentStartMonth"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "attendance-tree-view",
+      "displayName": "Attendance",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "remark"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "overtimeHour"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "noOfTries"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workingHours"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "checkOut"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "checkIn"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "attendanceDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "location"
+            }
           }
         ]
       }
