@@ -28,26 +28,31 @@ export class AttendanceService extends CRUDService<Attendance> {
     super(entityManager, repo, 'attendance', 'labour-management-system', moduleRef);
   }
 
-  // ✅ CHECK-IN
   async checkIn(labourId: number, checkInLocation: string): Promise<any> {
-    // 1. Labour exist karo
+    // 1. Check if labour exists
     const labour = await this.labourRepo.findOne({ where: { id: labourId } });
+
     if (!labour) {
       throw new NotFoundException('Labour not found');
     }
 
-    // 2. Aaj ka record nikal (Bug Fix: removed useless first query)
+    // 2. Get today's date (without time)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // 3. Find today's attendance record
     let attendance = await this.attendanceRepo
       .createQueryBuilder('a')
-      .where('a.name.id = :labourId', { labourId })
-      .andWhere('DATE(a.attendanceDate) = CURDATE()')
+      .leftJoin('a.name', 'labour')
+      .where('labour.id = :labourId', { labourId })
+      .andWhere('a.attendanceDate = :today', { today })
       .getOne();
 
-    // 3. Agar naya din hai to naya record
+    // 4. If no record → create new attendance
     if (!attendance) {
       attendance = new Attendance();
-      attendance.name = { id: labourId } as any;
-      attendance.attendanceDate = new Date();
+      attendance.name = labour; // ✅ FIXED (important)
+      attendance.attendanceDate = today;
       attendance.noOfTries = 1;
       attendance.checkIn = new Date();
       attendance.checkInLocation = checkInLocation;
@@ -63,21 +68,25 @@ export class AttendanceService extends CRUDService<Attendance> {
       };
     }
 
-    // 4. Check karo - already 2 check-in ho gaye?
+    // 5. Already checked in twice?
     if (attendance.noOfTries >= 2) {
-      throw new BadRequestException('Maximum 2 check-ins per day reached. Already at limit.');
+      throw new BadRequestException(
+        'Maximum 2 check-ins per day reached. Already at limit.'
+      );
     }
 
-    // 5. Last checkout hua?
+    // 6. Must checkout before next check-in
     if (!attendance.checkOut) {
-      throw new BadRequestException('Please check out before checking in again');
+      throw new BadRequestException(
+        'Please check out before checking in again'
+      );
     }
 
-    // 6. Dobara check-in
+    // 7. Second check-in
     attendance.checkIn = new Date();
     attendance.checkInLocation = checkInLocation;
-    attendance.checkOut = null;           // reset checkout for new session
-    attendance.checkOutLocation = null;   // reset checkout location
+    attendance.checkOut = null;
+    attendance.checkOutLocation = null;
     attendance.noOfTries += 1;
 
     await this.attendanceRepo.save(attendance);
@@ -91,67 +100,74 @@ export class AttendanceService extends CRUDService<Attendance> {
     };
   }
 
-  // ✅ CHECK-OUT
+
   async checkOut(labourId: number, checkOutLocation: string): Promise<any> {
-    // 1. Labour check
+    // 1. Check labour exists
     const labour = await this.labourRepo.findOne({ where: { id: labourId } });
+
     if (!labour) {
       throw new NotFoundException('Labour not found');
     }
 
-    // 2. Aaj ka record nikal (Bug Fix: removed unused 'today' variable)
+    // 2. Get today's date (no time)
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    // 3. Get today's attendance (FIXED JOIN + DATE)
     const attendance = await this.attendanceRepo
       .createQueryBuilder('a')
-      .where('a.name.id = :labourId', { labourId })
-      .andWhere('DATE(a.attendanceDate) = CURDATE()')
+      .leftJoin('a.name', 'labour')
+      .where('labour.id = :labourId', { labourId })
+      .andWhere('a.attendanceDate = :today', { today })
       .getOne();
 
     if (!attendance) {
       throw new BadRequestException('Please check in first');
     }
 
-    // 3. Check-in hua?
+    // 4. Validate check-in exists
     if (!attendance.checkIn) {
       throw new BadRequestException('Invalid attendance record');
     }
 
-    // 4. Already checkout?
+    // 5. Already checked out?
     if (attendance.checkOut) {
       throw new BadRequestException('Already checked out');
     }
 
-    // 5. Calculate working hours
+    // 6. Calculate working hours
     const checkInTime = new Date(attendance.checkIn).getTime();
     const checkOutTime = new Date().getTime();
+
     const hours = (checkOutTime - checkInTime) / (1000 * 60 * 60);
 
-    // Bug Fix: accumulate previous hours for 2nd session
-    const previousHours = parseFloat(attendance.workingHours as any || '0');
+    // ✅ FIXED: no parseFloat needed
+    const previousHours = attendance.workingHours || 0;
     const totalHours = previousHours + hours;
 
-    // 6. Update attendance
+    // 7. Update attendance
     attendance.checkOut = new Date();
     attendance.checkOutLocation = checkOutLocation;
-    attendance.workingHours = parseFloat(totalHours.toFixed(2)); // Bug Fix: number not string
-    attendance.overtimeHour = Math.max(0, totalHours - 8);       // Bug Fix: based on total hours
+    attendance.workingHours = Number(totalHours.toFixed(2));
+    attendance.overtimeHour = Math.max(0, totalHours - 8);
 
     await this.attendanceRepo.save(attendance);
 
-    // 7. Salary calculate
+    // 8. Salary calculation
     await this.calculateSalary(labourId, attendance, labour);
 
     return {
       status: 'success',
-      message: attendance.noOfTries === 2
-        ? 'Check-out successful. Salary calculated.'
-        : 'Check-out successful',
+      message:
+        attendance.noOfTries === 2
+          ? 'Check-out successful. Salary calculated.'
+          : 'Check-out successful',
       checkOutTime: attendance.checkOut,
       checkOutLocation: attendance.checkOutLocation,
       workingHours: attendance.workingHours,
       overtimeHours: attendance.overtimeHour,
     };
   }
-
   private async calculateSalary(
     labourId: number,
     attendance: Attendance,
@@ -240,7 +256,7 @@ export class AttendanceService extends CRUDService<Attendance> {
     const attendance = await this.attendanceRepo
       .createQueryBuilder('a')
       .where('a.name.id = :labourId', { labourId })
-      .andWhere('DATE(a.attendanceDate) = CURDATE()')
+      .andWhere('a.attendanceDate = CURRENT_DATE')
       .getOne();
 
     if (!attendance) {
