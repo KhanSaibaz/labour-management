@@ -1708,7 +1708,9 @@
         "SiteController.findOne",
         "SiteController.recoverMany",
         "SiteController.partialUpdate",
-        "SiteController.recover"
+        "SiteController.recover",
+        "AttendanceController.checkOut",
+        "AttendanceController.checkIn"
       ]
     }
   ],
