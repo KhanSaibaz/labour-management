@@ -1,6 +1,7 @@
 import { CommonEntity } from '@solidxai/core';
 import { Entity, Column, OneToMany, Index } from 'typeorm';
-import { Labour } from 'src/labour-management-system/entities/labour.entity'
+import { Labour } from 'src/labour-management-system/entities/labour.entity';
+import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
 
 @Entity('site')
 export class Site extends CommonEntity {
@@ -34,4 +35,6 @@ export class Site extends CommonEntity {
 
     @Column({ type: "varchar", nullable: true })
     siteManager: string;
+
+
 }
