@@ -95,35 +95,13 @@
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "labour",
-        "userKeyFieldUserKey": "userName",
+        "userKeyFieldUserKey": "labourCode",
         "isChild": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "userName",
-            "displayName": "UserName",
-            "description": null,
-            "type": "selectionDynamic",
-            "ormType": "varchar",
-            "isSystem": false,
-            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
-            "selectionDynamicProviderCtxt": "{}",
-            "selectionValueType": "string",
-            "required": true,
-            "unique": true,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": true,
-            "enableAuditTracking": true,
-            "isMultiSelect": false
-          },
           {
             "name": "workType",
             "displayName": "Work Type",
@@ -335,6 +313,58 @@
             "columnName": null,
             "enableAuditTracking": true,
             "isPrimaryKey": false
+          },
+          {
+            "name": "labourCode",
+            "displayName": "Labour Code",
+            "description": null,
+            "type": "computed",
+            "ormType": "varchar",
+            "isSystem": false,
+            "computedFieldValueType": "string",
+            "computedFieldTriggerConfig": [
+              {
+                "moduleName": "labour-management-system",
+                "modelName": "labour",
+                "operations": [
+                  "before-insert"
+                ]
+              }
+            ],
+            "computedFieldValueProvider": "LabourSequenceProvider",
+            "computedFieldValueProviderCtxt": "{\n  \"sequenceName\": \"LABOUR_CODE\"\n}",
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "labourName",
+            "displayName": "Labour Name",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
           }
         ]
       },
@@ -1337,8 +1367,6 @@
         "dataSourceType": "postgres",
         "tableName": "inventory_management",
         "isChild": false,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
@@ -1386,6 +1414,28 @@
             "columnName": null,
             "isUserKey": false,
             "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "hsnCode",
+            "displayName": "HSN Code",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
             "isPrimaryKey": false
           }
         ]
@@ -1921,6 +1971,45 @@
       "viewUserKey": "attendance-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "attendance"
+    },
+    {
+      "displayName": "Labour Tree View Action",
+      "name": "labour-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "labour-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour"
+    },
+    {
+      "displayName": "Site Tree View Action",
+      "name": "site-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "site-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site"
+    },
+    {
+      "displayName": "Inventory Management Tree View Action",
+      "name": "inventoryManagement-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryManagement-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement"
     }
   ],
   "menus": [
@@ -2402,7 +2491,15 @@
           {
             "type": "field",
             "attrs": {
-              "name": "userName",
+              "name": "labourCode",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourName",
               "isSearchable": true,
               "sortable": true
             }
@@ -2512,7 +2609,7 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "userName"
+                          "name": "labourName"
                         }
                       },
                       {
@@ -3587,6 +3684,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "hsnCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "productName",
               "isSearchable": true,
               "sortable": true
@@ -3632,26 +3735,22 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-1",
-                      "label": "",
+                      "label": "Product Detail",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
                       {
                         "type": "field",
                         "attrs": {
+                          "name": "hsnCode"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
                           "name": "productName"
                         }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "column",
-                    "attrs": {
-                      "name": "group-2",
-                      "label": "",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
-                    },
-                    "children": [
+                      },
                       {
                         "type": "field",
                         "attrs": {
@@ -3990,6 +4089,249 @@
             "type": "field",
             "attrs": {
               "name": "location"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labour-tree-view",
+      "displayName": "Labour",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "userName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workType"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfJoining"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "lastWorkingDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "currentAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "permanentAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "documents"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "emergencyContactNumber"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfBirth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "site-tree-view",
+      "displayName": "Site",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientContactNumber"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "sIteManager"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteStartDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteEndDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "projectValue"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteManager"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventoryManagement-tree-view",
+      "displayName": "Inventory Management",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "hsnCode"
             }
           }
         ]

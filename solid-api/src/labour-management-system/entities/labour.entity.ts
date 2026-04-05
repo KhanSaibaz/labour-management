@@ -4,10 +4,6 @@ import { Site } from 'src/labour-management-system/entities/site.entity'
 
 @Entity('labour')
 export class Labour extends CommonEntity {
-    @Index({ unique: true })
-    @Column({ type: "varchar" })
-    userName: string;
-
     @Column({ type: "varchar", nullable: true })
     workType: string;
 
@@ -33,7 +29,14 @@ export class Labour extends CommonEntity {
     @Column({ type: "date", nullable: true })
     dateOfBirth: Date;
 
+    @Column({ type: "integer" })
+    dailyWages: number;
 
-@Column({ type: "integer" })
-dailyWages: number;
+    @Index({ unique: true })
+    @Column({ type: "varchar" })
+    labourCode: string;
+
+
+@Column({ type: "varchar" })
+labourName: string;
 }

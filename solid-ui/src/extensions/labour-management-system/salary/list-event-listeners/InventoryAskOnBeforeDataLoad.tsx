@@ -1,10 +1,9 @@
 import { SolidBeforeListDataLoad, SolidListUiEventResponse } from '@solidxai/core-ui';
 
-const CurrentMonthSalaryDataLoad = async (event: SolidBeforeListDataLoad): Promise<SolidListUiEventResponse> => {
-    const { viewMetadata, filter, user, session, queryParams } = event;
-
-    console.log('Event',event);
-    
+const CurrentMonthSalaryDataLoad = async (
+    event: SolidBeforeListDataLoad
+): Promise<SolidListUiEventResponse> => {
+    const { filter, queryParams } = event;
 
     const newFilter = { ...filter };
     newFilter.filters = newFilter.filters || {};
@@ -12,23 +11,36 @@ const CurrentMonthSalaryDataLoad = async (event: SolidBeforeListDataLoad): Promi
 
     const { menuItemName: menuName } = queryParams;
 
+    const now = new Date();
+
+    const currentYear = now.getFullYear().toString();
+
+    const months = [
+        "january", "february", "march", "april",
+        "may", "june", "july", "august",
+        "september", "october", "november", "december"
+    ];
+
+    const currentMonth = months[now.getMonth()];
+
     switch (menuName) {
         case "all-salary-menu-item":
             break;
 
         case "current-month-salary-menu-item":
-            newFilter.filters.$and.push({ status: { $eq: "Pending" } });
-            break;
+            newFilter.filters.$and.push({ salaryYear: { $eq: currentYear } });
+            newFilter.filters.$and.push({ salaryMonth: { $eq: currentMonth } });
 
+            break;
 
         default:
             break;
     }
 
     return {
-        newFilter: newFilter,
+        newFilter,
         filterApplied: true
-    }
-}
+    };
+};
 
 export default CurrentMonthSalaryDataLoad;

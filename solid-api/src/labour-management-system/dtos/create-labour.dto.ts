@@ -3,11 +3,6 @@ import { IsString } from 'class-validator';
 import { IsNotEmpty, IsOptional, IsInt, IsDate } from 'class-validator';
 
 export class CreateLabourDto {
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    userName: string;
-
     @IsOptional()
     @IsString()
     @ApiProperty()
@@ -53,10 +48,15 @@ export class CreateLabourDto {
     @ApiProperty()
     dateOfBirth: Date;
 
+    @IsNotEmpty()
+    @IsInt()
+    @ApiProperty()
+    dailyWages: number;
+
 
 @IsNotEmpty()
-@IsInt()
+@IsString()
 @ApiProperty()
-dailyWages: number;
+labourName: string;
 
 }

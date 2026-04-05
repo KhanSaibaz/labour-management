@@ -6,12 +6,6 @@ export class UpdateLabourDto {
     @IsInt()
     id: number;
 
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    userName: string;
-
     @IsOptional()
     @IsString()
     @ApiProperty()
@@ -57,11 +51,17 @@ export class UpdateLabourDto {
     @ApiProperty()
     dateOfBirth: Date;
 
+    @IsNotEmpty()
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    dailyWages: number;
+
 
 @IsNotEmpty()
 @IsOptional()
-@IsInt()
+@IsString()
 @ApiProperty()
-dailyWages: number;
+labourName: string;
 
 }
