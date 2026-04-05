@@ -56,14 +56,15 @@ const MONTH_NAMES_SHORT = [
 
 function getMonthRange(year: number, monthIndex: number): { startDate: Date; endDate: Date } {
   const startDate = new Date(year, monthIndex, 1);
-  const endDate = new Date(year, monthIndex + 1, 0); // last day of month
+  const endDate = new Date(year, monthIndex + 1, 0);
   endDate.setHours(23, 59, 59, 999);
   return { startDate, endDate };
 }
 
-function getLastSixMonthsMeta(): { label: string; monthFull: string; year: string; monthIndex: number }[] {
+function getLastSixMonthsMeta() {
   return Array.from({ length: 6 }, (_, i) => {
     const date = new Date();
+    date.setDate(1);  // ← yeh line add karo
     date.setMonth(date.getMonth() - (5 - i));
     return {
       label: MONTH_NAMES_SHORT[date.getMonth()],
@@ -92,6 +93,135 @@ export class DashBoardService {
   ) { }
 
   async getDashBoardRecord(): Promise<DashboardData> {
+
+    // ══════════════════════════════════════════════════════════════════════════
+    // 🧪 DUMMY DATA — uncomment karne ke liye neeche wala block restore karna
+    // ══════════════════════════════════════════════════════════════════════════
+    // return {
+    //   lastRefreshed: new Date().toLocaleTimeString("en-IN", {
+    //     hour: "2-digit", minute: "2-digit", second: "2-digit",
+    //   }),
+    //   stats: [
+    //     {
+    //       label: "Total Labours", value: "248",
+    //       sub: "Across 6 sites", subColor: "#185FA5",
+    //       icon: "pi pi-users", iconBg: "#E6F1FB", iconColor: "#185FA5",
+    //     },
+    //     {
+    //       label: "Present Today", value: "193",
+    //       sub: "77.8% attendance", subColor: "#3B6D11",
+    //       icon: "pi pi-check-circle", iconBg: "#EAF3DE", iconColor: "#3B6D11",
+    //     },
+    //     {
+    //       label: "Absent Today", value: "55",
+    //       sub: "22.2% absent", subColor: "#A32D2D",
+    //       icon: "pi pi-times-circle", iconBg: "#FCEBEB", iconColor: "#A32D2D",
+    //     },
+    //     {
+    //       label: "Salary Paid", value: "₹12.4L",
+    //       sub: "8 pending", subColor: "#854F0B",
+    //       icon: "pi pi-wallet", iconBg: "#FAEEDA", iconColor: "#854F0B",
+    //     },
+    //     {
+    //       label: "Inventory Pending", value: "14",
+    //       sub: "5 new requests", subColor: "#A32D2D",
+    //       icon: "pi pi-box", iconBg: "#FCEBEB", iconColor: "#A32D2D",
+    //     },
+    //     {
+    //       label: "Active Sites", value: "6",
+    //       sub: "All operational", subColor: "#3B6D11",
+    //       icon: "pi pi-map-marker", iconBg: "#EAF3DE", iconColor: "#3B6D11",
+    //     },
+    //   ],
+    //   attendanceData: {
+    //     labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+    //     datasets: [
+    //       {
+    //         label: "Present",
+    //         data: [210, 198, 175, 220, 205, 193],
+    //         backgroundColor: "#378ADD", borderRadius: 4, barPercentage: 0.65,
+    //       },
+    //       {
+    //         label: "Absent",
+    //         data: [38, 50, 73, 28, 43, 55],
+    //         backgroundColor: "#E24B4A", borderRadius: 4, barPercentage: 0.65,
+    //       },
+    //     ],
+    //   },
+    //   donutData: {
+    //     labels: ["Pending", "In Progress", "Completed"],
+    //     datasets: [{
+    //       data: [14, 9, 42],
+    //       backgroundColor: ["#EF9F27", "#378ADD", "#639922"],
+    //       borderWidth: 0,
+    //       hoverOffset: 6,
+    //     }],
+    //   },
+    //   salaryData: {
+    //     labels: ["Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+    //     datasets: [{
+    //       label: "Salary Paid (₹)",
+    //       data: [980000, 1050000, 870000, 1240000, 1180000, 1240000],
+    //       borderColor: "#378ADD",
+    //       backgroundColor: "rgba(55,138,221,0.08)",
+    //       borderWidth: 2,
+    //       pointBackgroundColor: "#378ADD",
+    //       pointRadius: 4,
+    //       fill: true,
+    //       tension: 0.4,
+    //     }],
+    //   },
+    //   advancePayments: [
+    //     {
+    //       labourName: "Ramesh Kumar",
+    //       site: "Site A - Andheri",
+    //       advanceMonth: "March 2025",
+    //       repaymentStatus: "In Progress",
+    //       totalPay: 15000,
+    //       balanceAmount: 9000,
+    //       monthlyDeduction: 3000,
+    //     },
+    //     {
+    //       labourName: "Suresh Patil",
+    //       site: "Site B - Thane",
+    //       advanceMonth: "February 2025",
+    //       repaymentStatus: "Pending",
+    //       totalPay: 10000,
+    //       balanceAmount: 10000,
+    //       monthlyDeduction: 2500,
+    //     },
+    //     {
+    //       labourName: "Mahesh Yadav",
+    //       site: "Site C - Pune",
+    //       advanceMonth: "January 2025",
+    //       repaymentStatus: "Completed",
+    //       totalPay: 8000,
+    //       balanceAmount: 0,
+    //       monthlyDeduction: 2000,
+    //     },
+    //     {
+    //       labourName: "Dinesh Singh",
+    //       site: "Site A - Andheri",
+    //       advanceMonth: "March 2025",
+    //       repaymentStatus: "Pending",
+    //       totalPay: 20000,
+    //       balanceAmount: 20000,
+    //       monthlyDeduction: 4000,
+    //     },
+    //   ],
+    //   inventory: [
+    //     { siteName: "Site A - Andheri", productName: "Cement Bags", productQuantity: 200 },
+    //     { siteName: "Site B - Thane", productName: "Steel Rods", productQuantity: 50 },
+    //     { siteName: "Site C - Pune", productName: "Sand (tons)", productQuantity: 15 },
+    //     { siteName: "Site D - Navi Mumbai", productName: "Bricks", productQuantity: 5000 },
+    //     { siteName: "Site A - Andheri", productName: "Paint Buckets", productQuantity: 30 },
+    //   ],
+    // };
+    // ══════════════════════════════════════════════════════════════════════════
+    // 🔴 REAL DB CODE — Yahan se uncomment karna jab dummy hatana ho
+    // ══════════════════════════════════════════════════════════════════════════
+
+  
     const now = new Date();
     const today = new Date(now); today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
@@ -99,7 +229,6 @@ export class DashBoardService {
     const currentMonth = MONTH_NAMES_FULL[now.getMonth()];
     const currentYear = now.getFullYear().toString();
 
-    // ── 1. Run all independent queries in parallel ──────────────────────────
     const [
       totalLabours,
       activeSites,
@@ -130,15 +259,13 @@ export class DashBoardService {
       this.getMonthlySalaryData(),
     ]);
 
-    // ── 2. Derived values ───────────────────────────────────────────────────
     const absentToday = Math.max(0, totalLabours - presentToday);
     const attendancePct = totalLabours > 0 ? ((presentToday / totalLabours) * 100).toFixed(1) : "0.0";
     const absentPct = (100 - parseFloat(attendancePct)).toFixed(1);
     const salaryPaidAmount = currentMonthSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
 
-    // ── 3. Map relations ────────────────────────────────────────────────────
     const mappedAdvancePayments: AdvancePayment[] = advancePayments.map((ap) => ({
-      labourName: ap?.name?.userName || "Unknown",
+      labourName: ap?.name?.labourName || "Unknown",
       site: "-",
       advanceMonth: ap.advanceMonth || "-",
       repaymentStatus: ap.repaymentStatus || "Pending",
@@ -153,7 +280,6 @@ export class DashBoardService {
       productQuantity: parseInt(inv.projectQuantity as any) || 0,
     }));
 
-    // ── 4. Build response ───────────────────────────────────────────────────
     return {
       lastRefreshed: now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
       stats: [
@@ -202,6 +328,7 @@ export class DashBoardService {
       advancePayments: mappedAdvancePayments,
       inventory: mappedInventory,
     };
+    
   }
 
   // ── Chart helpers ─────────────────────────────────────────────────────────
@@ -209,7 +336,6 @@ export class DashBoardService {
   private async getMonthlyAttendanceData(): Promise<ChartData> {
     const months = getLastSixMonthsMeta();
 
-    // All 12 queries in parallel (6 months x present/absent)
     const results = await Promise.all(
       months.map(async ({ monthIndex, label, year }) => {
         const { startDate, endDate } = getMonthRange(parseInt(year), monthIndex);
@@ -249,7 +375,6 @@ export class DashBoardService {
   private async getMonthlySalaryData(): Promise<ChartData> {
     const months = getLastSixMonthsMeta();
 
-    // All 6 salary queries in parallel
     const results = await Promise.all(
       months.map(async ({ monthFull, year }) => {
         const salaries = await this.salaryRepo.find({

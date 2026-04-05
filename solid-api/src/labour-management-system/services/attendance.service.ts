@@ -257,7 +257,7 @@ export class AttendanceService extends CRUDService<Attendance> {
 
       await this.salaryRepo.save(salary);
 
-      console.log(`✅ Salary calculated for ${labour.userName} - ${month}/${year}`);
+      console.log(`✅ Salary calculated for ${labour.labourName} - ${month}/${year}`);
     } catch (error) {
       console.error('Error calculating salary:', error);
     }

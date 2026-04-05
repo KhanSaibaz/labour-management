@@ -1,7 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt } from 'class-validator';
 import { IsOptional } from 'class-validator';
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
+import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 
 export class CreateSalaryDto {
     @IsOptional()
@@ -59,10 +61,25 @@ export class CreateSalaryDto {
     @ApiProperty()
     status: string = "Pending";
 
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    salaryMonth: string;
 
-@IsNotEmpty()
-@IsString()
-@ApiProperty()
-salaryMonth: string;
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
 
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipCommand: string;
 }

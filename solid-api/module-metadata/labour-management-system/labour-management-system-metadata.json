@@ -95,35 +95,13 @@
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "labour",
-        "userKeyFieldUserKey": "userName",
+        "userKeyFieldUserKey": "labourCode",
         "isChild": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "userName",
-            "displayName": "UserName",
-            "description": null,
-            "type": "selectionDynamic",
-            "ormType": "varchar",
-            "isSystem": false,
-            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
-            "selectionDynamicProviderCtxt": "{}",
-            "selectionValueType": "string",
-            "required": true,
-            "unique": true,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": true,
-            "enableAuditTracking": true,
-            "isMultiSelect": false
-          },
           {
             "name": "workType",
             "displayName": "Work Type",
@@ -335,6 +313,139 @@
             "columnName": null,
             "enableAuditTracking": true,
             "isPrimaryKey": false
+          },
+          {
+            "name": "labourCode",
+            "displayName": "Labour Code",
+            "description": null,
+            "type": "computed",
+            "ormType": "varchar",
+            "isSystem": false,
+            "computedFieldValueType": "string",
+            "computedFieldTriggerConfig": [
+              {
+                "moduleName": "labour-management-system",
+                "modelName": "labour",
+                "operations": [
+                  "before-insert"
+                ]
+              }
+            ],
+            "computedFieldValueProvider": "LabourSequenceProvider",
+            "computedFieldValueProviderCtxt": "{\n  \"sequenceName\": \"LABOUR_CODE\"\n}",
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "labourName",
+            "displayName": "Labour Name",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
+            "selectionDynamicProviderCtxt": "{}",
+            "selectionValueType": "string",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
+          },
+          {
+            "name": "LabourMonthlyExpenses",
+            "displayName": "LabourMonthlyExpenses",
+            "description": "LabourMonthlyExpenses",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "labourCode",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labourMonthlyExpense",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "governmentSalarySlip",
+            "displayName": "GovernmentSalarySlip",
+            "description": "GovernmentSalarySlip",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "labourName",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "governmentSalarySlip",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "governmentSalarySlips",
+            "displayName": "GovernmentSalarySlips",
+            "description": "GovernmentSalarySlips",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "labour",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "governmentSalarySlip",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -830,6 +941,33 @@
             "columnName": null,
             "enableAuditTracking": false,
             "isMultiSelect": false
+          },
+          {
+            "name": "governmentSalarySlip",
+            "displayName": "GovernmentSalarySlip",
+            "description": "GovernmentSalarySlip",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "salary",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "governmentSalarySlip",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -1325,6 +1463,33 @@
             "isUserKey": false,
             "enableAuditTracking": true,
             "isMultiSelect": true
+          },
+          {
+            "name": "governmentSalarySlips",
+            "displayName": "GovernmentSalarySlips",
+            "description": "GovernmentSalarySlips",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "site",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "governmentSalarySlip",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -1337,8 +1502,6 @@
         "dataSourceType": "postgres",
         "tableName": "inventory_management",
         "isChild": false,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
@@ -1386,6 +1549,28 @@
             "columnName": null,
             "isUserKey": false,
             "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "hsnCode",
+            "displayName": "HSN Code",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
             "isPrimaryKey": false
           }
         ]
@@ -1527,6 +1712,430 @@
             "relationJoinTableName": null,
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          }
+        ]
+      },
+      {
+        "singularName": "labourMonthlyExpense",
+        "pluralName": "labourMonthlyExpenses",
+        "displayName": "Labour Monthly Expense",
+        "description": "These Model is use to store labour monthly expense",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "labour_monthly_expense",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "labourCode",
+            "displayName": "Labour Code",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "LabourMonthlyExpenses",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "labourName",
+            "displayName": "Labour Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "amount",
+            "displayName": "Amount",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "governmentSalarySlip",
+        "pluralName": "governmentSalarySlips",
+        "displayName": "Government Salary SLip",
+        "description": "These Model is for government salary slip",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "government_salary_slip",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "uanNo",
+            "displayName": "UAN NO",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "otherAllowance",
+            "displayName": "Other Allowance",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": "0",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "incentive",
+            "displayName": "Incentive",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": "0",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "professionalTax",
+            "displayName": "Professional Tax",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": "0",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "esic",
+            "displayName": "Esic",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": "0",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "otherDeduction",
+            "displayName": "Other Deduction",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": "0",
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "category",
+            "displayName": "Category",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "basicWages",
+            "displayName": "Basic Wages",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "hra",
+            "displayName": "HRA",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "pf",
+            "displayName": "PF",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "salaryMonth",
+            "displayName": "Salary Month",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "daysWorked",
+            "displayName": "Days Worked",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "salaryYear",
+            "displayName": "Salary Year",
+            "description": null,
+            "type": "int",
+            "ormType": "integer",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": true,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "labour",
+            "displayName": "Labour",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "governmentSalarySlips",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "dailyRate",
+            "displayName": "Daily Rate",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
             "enableAuditTracking": false
           }
         ]
@@ -1923,6 +2532,123 @@
       "viewUserKey": "attendance-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "attendance"
+    },
+    {
+      "displayName": "Labour Tree View Action",
+      "name": "labour-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "labour-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour"
+    },
+    {
+      "displayName": "Site Tree View Action",
+      "name": "site-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "site-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site"
+    },
+    {
+      "displayName": "Inventory Management Tree View Action",
+      "name": "inventoryManagement-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryManagement-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement"
+    },
+    {
+      "displayName": "Labour Monthly Expense List Action",
+      "name": "labourMonthlyExpense-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "labourMonthlyExpense-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labourMonthlyExpense"
+    },
+    {
+      "displayName": "Labour Monthly Expense Tree View Action",
+      "name": "labourMonthlyExpense-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "labourMonthlyExpense-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labourMonthlyExpense"
+    },
+    {
+      "displayName": "Government Salary SLip List Action",
+      "name": "governmentSalarySlip-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "governmentSalarySlip-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip"
+    },
+    {
+      "displayName": "Government Salary SLip Tree View Action",
+      "name": "governmentSalarySlip-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "governmentSalarySlip-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip"
+    },
+    {
+      "displayName": "Salary List Action",
+      "name": "salary-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "salary-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary"
+    },
+    {
+      "displayName": "Salary Tree View Action",
+      "name": "salary-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "salary-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary"
     }
   ],
   "menus": [
@@ -2045,6 +2771,24 @@
       "roles": [
         "Labour  Admin"
       ]
+    },
+    {
+      "displayName": "Labour Monthly Expense",
+      "name": "labourMonthlyExpense-menu-item",
+      "sequenceNumber": 3,
+      "actionUserKey": "labourMonthlyExpense-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "salaryMaster",
+      "iconName": ""
+    },
+    {
+      "displayName": "Government Salary Slip",
+      "name": "governmentSalarySlip-menu-item",
+      "sequenceNumber": 4,
+      "actionUserKey": "governmentSalarySlip-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "salaryMaster",
+      "iconName": ""
     },
     {
       "displayName": "Inventory Management",
@@ -2410,7 +3154,15 @@
           {
             "type": "field",
             "attrs": {
-              "name": "userName",
+              "name": "labourCode",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourName",
               "isSearchable": true,
               "sortable": true
             }
@@ -2520,7 +3272,7 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "userName"
+                          "name": "labourName"
                         }
                       },
                       {
@@ -3595,6 +4347,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "hsnCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "productName",
               "isSearchable": true,
               "sortable": true
@@ -3640,26 +4398,22 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-1",
-                      "label": "",
+                      "label": "Product Detail",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
                       {
                         "type": "field",
                         "attrs": {
+                          "name": "hsnCode"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
                           "name": "productName"
                         }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "column",
-                    "attrs": {
-                      "name": "group-2",
-                      "label": "",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
-                    },
-                    "children": [
+                      },
                       {
                         "type": "field",
                         "attrs": {
@@ -3998,6 +4752,1046 @@
             "type": "field",
             "attrs": {
               "name": "location"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labour-tree-view",
+      "displayName": "Labour",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "userName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workType"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfJoining"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "lastWorkingDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "currentAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "permanentAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "documents"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "emergencyContactNumber"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dateOfBirth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "site-tree-view",
+      "displayName": "Site",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "site",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "clientContactNumber"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "sIteManager"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteStartDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteEndDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "projectValue"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "siteManager"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "inventoryManagement-tree-view",
+      "displayName": "Inventory Management",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryManagement",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "hsnCode"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labourMonthlyExpense-list-view",
+      "displayName": "Labour Monthly Expense",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labourMonthlyExpense",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "amount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "createdAt"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labourMonthlyExpense-tree-view",
+      "displayName": "Labour Monthly Expense",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labourMonthlyExpense",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "amount"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "labourMonthlyExpense-form-view",
+      "displayName": "Labour Monthly Expense",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labourMonthlyExpense",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Labour Monthly Expense",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "labourCode"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "amount"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "labourName"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "governmentSalarySlip-list-view",
+      "displayName": "Government Salary Slip",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true,
+          "headerButtons": [
+            {
+              "attrs": {
+                "label": "Generate",
+                "action": "generateGovernmentSalarySlip",
+                "actionInContextMenu": false,
+                "openInPopup": true,
+                "icon": "pi pi-file",
+                "closable": true
+              }
+            }
+          ]
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "employeeName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "department"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "location"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "category"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "basicWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "hra"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "grossEarnings"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "pf"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "netPay"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "netPayInWords"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "daysWorked"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "companyAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "companyName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "otherDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "esic"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "professionalTax"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "incentive"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "otherAllowance"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyRate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salary"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "uanNo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "governmentSalarySlip-tree-view",
+      "displayName": "Government Salary SLip",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "employeeName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "department"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "location"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "category"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "basicWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "hra"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "grossEarnings"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "pf"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "netPay"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "netPayInWords"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "daysWorked"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "companyAddress"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "companyName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "otherDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "esic"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "professionalTax"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "incentive"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "otherAllowance"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyRate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salary"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "uanNo"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "governmentSalarySlip-form-view",
+      "displayName": "Government Salary SLip",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Government Salary SLip",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "employee-details",
+                      "label": "Employee Details",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "labour"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "uanNo"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "category"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "salaryMonth"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "salaryYear"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "daysWorked"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "dailyRate"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "basicWages"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "payment-details",
+                      "label": "Payment Details",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "hra"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "otherAllowance"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "incentive"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "pf"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "professionalTax"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "esic"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "otherDeduction"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "salary-tree-view",
+      "displayName": "Salary",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "salary",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalDeduction"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "totalAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "overtimeAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyWages"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "absent"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workingDays"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "presentDays"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "governmentSalarySlip"
             }
           }
         ]

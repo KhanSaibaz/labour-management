@@ -3,6 +3,7 @@ import { IsString } from 'class-validator';
 import { IsOptional, ValidateNested, IsArray, IsNotEmpty, IsDate, IsInt } from 'class-validator';
 import { Type } from 'class-transformer';
 import { UpdateLabourDto } from 'src/labour-management-system/dtos/update-labour.dto';
+import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 
 export class CreateSiteDto {
     @IsNotEmpty()
@@ -66,4 +67,21 @@ export class CreateSiteDto {
     @IsString()
     @ApiProperty()
     siteManager: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlips: UpdateGovernmentSalarySlipDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsCommand: string;
 }

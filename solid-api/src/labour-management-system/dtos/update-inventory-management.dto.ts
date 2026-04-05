@@ -1,4 +1,4 @@
-import { IsInt,IsOptional, IsString } from 'class-validator';
+import { IsInt,IsOptional, IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateInventoryManagementDto {
@@ -15,4 +15,12 @@ export class UpdateInventoryManagementDto {
     @IsString()
     @ApiProperty()
     productQuantity: string;
+
+
+@IsNotEmpty()
+@IsOptional()
+@IsString()
+@ApiProperty()
+hsnCode: string;
+
 }

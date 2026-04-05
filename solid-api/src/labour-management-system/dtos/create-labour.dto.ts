@@ -1,13 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { IsNotEmpty, IsOptional, IsInt, IsDate } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsInt, IsDate, ValidateNested, IsArray } from 'class-validator';
+import { Type } from 'class-transformer';
+import { UpdateLabourMonthlyExpenseDto } from 'src/labour-management-system/dtos/update-labour-monthly-expense.dto';
+import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 
 export class CreateLabourDto {
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    userName: string;
-
     @IsOptional()
     @IsString()
     @ApiProperty()
@@ -53,10 +51,64 @@ export class CreateLabourDto {
     @ApiProperty()
     dateOfBirth: Date;
 
+    @IsNotEmpty()
+    @IsInt()
+    @ApiProperty()
+    dailyWages: number;
 
-@IsNotEmpty()
-@IsInt()
-@ApiProperty()
-dailyWages: number;
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    labourName: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "LabourMonthlyExpenses" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateLabourMonthlyExpenseDto)
+    LabourMonthlyExpenses: UpdateLabourMonthlyExpenseDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "LabourMonthlyExpenses" })
+    LabourMonthlyExpensesIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "LabourMonthlyExpenses" })
+    LabourMonthlyExpensesCommand: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipCommand: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlips: UpdateGovernmentSalarySlipDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsCommand: string;
 }

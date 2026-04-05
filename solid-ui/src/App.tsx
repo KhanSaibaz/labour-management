@@ -10,6 +10,7 @@ import { AppRoutes } from "./routes/AppRoutes";
 import "./extensions/solid-extensions";
 import "./index.css";
 import { DashBoardApi } from "./redux/dasboardApi";
+import { governmentSalarySlipApi } from "./redux/governmentSalarySlipApi";
 
 function App() {
 
@@ -17,11 +18,13 @@ function App() {
   const venueReducers = useMemo(
     () => ({
       [DashBoardApi.reducerPath]: DashBoardApi.reducer,
+      [governmentSalarySlipApi.reducerPath]: governmentSalarySlipApi
+        .reducer,
     }),
     []
   );
   const venueMiddlewares = useMemo(
-    () => [DashBoardApi.middleware],
+    () => [DashBoardApi.middleware, governmentSalarySlipApi.middleware],
     []
   );
 

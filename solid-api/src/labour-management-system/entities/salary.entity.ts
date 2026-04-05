@@ -1,7 +1,9 @@
 import { CommonEntity } from '@solidxai/core';
-import { Entity, JoinColumn, ManyToOne, Column } from 'typeorm';
-import { Labour } from 'src/labour-management-system/entities/labour.entity'
+import { Entity, JoinColumn, ManyToOne, Column, OneToMany } from 'typeorm';
+import { Labour } from 'src/labour-management-system/entities/labour.entity';
+import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
 
+// import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity'
 @Entity('salary')
 export class Salary extends CommonEntity {
     @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
@@ -35,7 +37,8 @@ export class Salary extends CommonEntity {
     @Column({ type: "varchar", nullable: true, default: "Pending" })
     status: string = "Pending";
 
-
     @Column({ type: "varchar" })
     salaryMonth: string;
+
+
 }

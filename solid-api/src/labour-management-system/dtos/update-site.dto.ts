@@ -2,6 +2,9 @@ import { IsInt,IsOptional, IsString, ValidateNested, IsArray, IsNotEmpty, IsDate
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { UpdateLabourDto } from 'src/labour-management-system/dtos/update-labour.dto';
+import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
+
+// import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 
 export class UpdateSiteDto {
     @IsOptional()
@@ -70,4 +73,21 @@ export class UpdateSiteDto {
     @IsString()
     @ApiProperty()
     siteManager: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlips: UpdateGovernmentSalarySlipDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipsCommand: string;
 }

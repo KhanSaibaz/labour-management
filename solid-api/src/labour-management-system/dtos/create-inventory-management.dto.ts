@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { IsOptional } from 'class-validator';
+import { IsOptional, IsNotEmpty } from 'class-validator';
 
 export class CreateInventoryManagementDto {
     @IsOptional()
@@ -12,4 +12,11 @@ export class CreateInventoryManagementDto {
     @IsString()
     @ApiProperty()
     productQuantity: string;
+
+
+@IsNotEmpty()
+@IsString()
+@ApiProperty()
+hsnCode: string;
+
 }

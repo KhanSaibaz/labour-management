@@ -1,0 +1,115 @@
+{
+    "type": "row",
+    "children": [
+        {
+            "type": "column",
+            "attrs": {
+                "name": "employee-details",
+                "label": "Employee Details",
+                "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+            },
+            "children": [
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "labour"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "uanNo"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "category"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "salaryMonth"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "salaryYear"
+                    }
+                }
+            ]
+        },
+        {
+            "type": "column",
+            "attrs": {
+                "name": "payment-details",
+                "label": "Payment Details",
+                "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+            },
+            "children": [
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "daysWorked"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "dailyRate"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "basicWages"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "hra"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "otherAllowance"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "incentive"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "pf"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "professionalTax"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "esic"
+                    }
+                },
+                {
+                    "type": "field",
+                    "attrs": {
+                        "name": "otherDeduction"
+                    }
+                }
+            ]
+        }
+    ]
+}
