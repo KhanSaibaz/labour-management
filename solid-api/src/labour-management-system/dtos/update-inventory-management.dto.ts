@@ -16,11 +16,9 @@ export class UpdateInventoryManagementDto {
     @ApiProperty()
     productQuantity: string;
 
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-hsnCode: string;
-
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    hsnCode: string;
 }

@@ -13,10 +13,8 @@ export class CreateInventoryManagementDto {
     @ApiProperty()
     productQuantity: string;
 
-
-@IsNotEmpty()
-@IsString()
-@ApiProperty()
-hsnCode: string;
-
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    hsnCode: string;
 }
