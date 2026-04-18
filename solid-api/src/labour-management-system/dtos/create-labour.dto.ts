@@ -4,6 +4,8 @@ import { IsNotEmpty, IsOptional, IsInt, IsDate, ValidateNested, IsArray } from '
 import { Type } from 'class-transformer';
 import { UpdateLabourMonthlyExpenseDto } from 'src/labour-management-system/dtos/update-labour-monthly-expense.dto';
 import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
+import { UpdateAttendanceDto } from 'src/labour-management-system/dtos/update-attendance.dto';
+import { UpdateAuthUserDto } from 'src/labour-management-system/dtos/update-auth-user.dto';
 
 export class CreateLabourDto {
     @IsOptional()
@@ -59,7 +61,7 @@ export class CreateLabourDto {
     @IsNotEmpty()
     @IsString()
     @ApiProperty()
-    labourName: string;
+    labour: string;
 
     @IsOptional()
     @ApiProperty({ description: "LabourMonthlyExpenses" })
@@ -96,19 +98,41 @@ export class CreateLabourDto {
     governmentSalarySlipCommand: string;
 
     @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
+    @ApiProperty({ description: "LabourAttendances" })
     @IsArray()
     @ValidateNested({ each: true })
-    @Type(() => UpdateGovernmentSalarySlipDto)
-    governmentSalarySlips: UpdateGovernmentSalarySlipDto[];
+    @Type(() => UpdateAttendanceDto)
+    labourAttendances: UpdateAttendanceDto[];
 
     @IsOptional()
     @IsArray()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipsIds: number[];
+    @ApiProperty({ description: "LabourAttendances" })
+    labourAttendancesIds: number[];
 
     @IsString()
     @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipsCommand: string;
+    @ApiProperty({ description: "LabourAttendances" })
+    labourAttendancesCommand: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    labourName: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "AuthUser" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateAuthUserDto)
+    authUser: UpdateAuthUserDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "AuthUser" })
+    authUserIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "AuthUser" })
+    authUserCommand: string;
 }

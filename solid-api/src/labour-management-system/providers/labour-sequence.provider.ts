@@ -67,7 +67,7 @@ export class LabourSequenceProvider<T extends CommonEntity>
         }
 
         const seq = seqResult[0];
-        const nextVal = parseInt(seq.current_value, 10) + 1; // ✅ current_value
+        const nextVal = parseInt(seq.current_value, 10) + 1; 
         const padding = seq.padding || 2;
         const paddedNumber = String(nextVal).padStart(padding, '0');
         const labourCode = `${seq.prefix || ''}${seq.separator || ''}${paddedNumber}`;

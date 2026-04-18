@@ -51,4 +51,8 @@ export class GovernmentSalarySlip extends CommonEntity {
 
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
     dailyRate: number;
+
+    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    labourName: Labour;
 }

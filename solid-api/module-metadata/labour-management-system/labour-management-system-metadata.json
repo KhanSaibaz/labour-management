@@ -64,15 +64,19 @@
         "internationalisation": false,
         "fields": [
           {
-            "name": "userRole",
-            "displayName": "User Role",
+            "name": "labour",
+            "displayName": "Labour",
             "description": null,
-            "type": "selectionDynamic",
-            "ormType": "varchar",
+            "type": "relation",
+            "ormType": "integer",
             "isSystem": false,
-            "selectionDynamicProvider": "ListOfRolesSelectionProvider",
-            "selectionDynamicProviderCtxt": "{\n  \"filters\": {\n    \"name\": {\n      \"$notIn\": [\n        \"Admin\",\n        \"Internal User\",\n        \"Public\",\n        \"Labour  Admin\"\n      ]\n    }\n  }\n}",
-            "selectionValueType": "string",
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "authUser",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": "",
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
             "required": false,
             "unique": false,
             "index": false,
@@ -81,9 +85,10 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": false,
-            "isMultiSelect": false
+            "relationJoinTableName": "",
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -311,7 +316,7 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
-            "enableAuditTracking": true,
+            "enableAuditTracking": false,
             "isPrimaryKey": false
           },
           {
@@ -343,28 +348,6 @@
             "columnName": null,
             "isUserKey": true,
             "enableAuditTracking": false
-          },
-          {
-            "name": "labourName",
-            "displayName": "Labour Name",
-            "description": null,
-            "type": "selectionDynamic",
-            "ormType": "varchar",
-            "isSystem": false,
-            "selectionDynamicProvider": "LabourUserNameSelectionProvider",
-            "selectionDynamicProviderCtxt": "{}",
-            "selectionValueType": "string",
-            "required": true,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": false,
-            "isMultiSelect": false
           },
           {
             "name": "LabourMonthlyExpenses",
@@ -401,7 +384,7 @@
             "ormType": "integer",
             "isSystem": false,
             "relationType": "one-to-many",
-            "relationCoModelFieldName": "labourName",
+            "relationCoModelFieldName": "labour",
             "relationCreateInverse": true,
             "relationCoModelSingularName": "governmentSalarySlip",
             "relationCoModelColumnName": null,
@@ -421,19 +404,46 @@
             "enableAuditTracking": false
           },
           {
-            "name": "governmentSalarySlips",
-            "displayName": "GovernmentSalarySlips",
-            "description": "GovernmentSalarySlips",
+            "name": "labourAttendances",
+            "displayName": "LabourAttendances",
+            "description": "LabourAttendances",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "labourCode",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "attendance",
+            "relationCoModelColumnName": "",
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "authUser",
+            "displayName": "AuthUser",
+            "description": "AuthUser",
             "type": "relation",
             "ormType": "integer",
             "isSystem": false,
             "relationType": "one-to-many",
             "relationCoModelFieldName": "labour",
             "relationCreateInverse": true,
-            "relationCoModelSingularName": "governmentSalarySlip",
-            "relationCoModelColumnName": null,
+            "relationCoModelSingularName": "authUser",
+            "relationCoModelColumnName": "",
             "relationModelModuleName": "labour-management-system",
-            "relationCascade": "set null",
+            "relationCascade": "cascade",
             "required": false,
             "unique": false,
             "index": false,
@@ -463,33 +473,6 @@
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "name",
-            "displayName": "Name",
-            "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": null,
-            "relationCreateInverse": false,
-            "relationCoModelSingularName": "labour",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": true,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": true
-          },
           {
             "name": "attendanceDate",
             "displayName": "Attendance Date",
@@ -671,6 +654,80 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": false
+          },
+          {
+            "name": "workUnits",
+            "displayName": "Work Units",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "Single:Single",
+              "One And Half:One And Half",
+              "Double:Double"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "labourCode",
+            "displayName": "Labour Code",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "labourAttendances",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": "",
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": "",
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -1465,7 +1522,7 @@
             "isMultiSelect": true
           },
           {
-            "name": "governmentSalarySlips",
+            "name": "governmentSalarySlip",
             "displayName": "GovernmentSalarySlips",
             "description": "GovernmentSalarySlips",
             "type": "relation",
@@ -1778,8 +1835,6 @@
         "dataSourceType": "postgres",
         "tableName": "labour_monthly_expense",
         "isChild": false,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
@@ -1799,7 +1854,7 @@
             "relationCoModelColumnName": null,
             "relationModelModuleName": "labour-management-system",
             "relationCascade": "set null",
-            "required": false,
+            "required": true,
             "unique": false,
             "index": false,
             "private": false,
@@ -2189,6 +2244,33 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
+            "enableAuditTracking": false
+          },
+          {
+            "name": "labourName",
+            "displayName": "LabourName",
+            "description": "LabourName",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "governmentSalarySlip",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
             "enableAuditTracking": false
           }
         ]
@@ -2710,6 +2792,19 @@
       "viewUserKey": "salary-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "salary"
+    },
+    {
+      "displayName": "AuthUser Tree View Action",
+      "name": "authUser-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "authUser-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser"
     }
   ],
   "menus": [
@@ -3446,6 +3541,14 @@
           {
             "type": "field",
             "attrs": {
+              "name": "labourCode",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "name",
               "isSearchable": true,
               "sortable": true
@@ -3501,6 +3604,18 @@
             "type": "field",
             "attrs": {
               "name": "overtimeHour"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "noOfTries"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "workUnits"
             }
           }
         ]
@@ -3558,6 +3673,12 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "name"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labourCode"
                                 }
                               },
                               {
@@ -5867,6 +5988,49 @@
             "type": "field",
             "attrs": {
               "name": "governmentSalarySlip"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "authUser-tree-view",
+      "displayName": "AuthUser",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "userRole"
             }
           }
         ]

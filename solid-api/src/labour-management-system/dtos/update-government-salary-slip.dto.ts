@@ -88,4 +88,14 @@ export class UpdateGovernmentSalarySlipDto {
     @IsNumber()
     @ApiProperty()
     dailyRate: number;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty({ description: "LabourName" })
+    labourNameId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "LabourName" })
+    labourNameUserKey: string;
 }

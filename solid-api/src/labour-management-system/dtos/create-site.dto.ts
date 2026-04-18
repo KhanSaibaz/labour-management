@@ -84,4 +84,21 @@ export class CreateSiteDto {
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlips" })
     governmentSalarySlipsCommand: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlips" })
+    governmentSalarySlipCommand: string;
 }

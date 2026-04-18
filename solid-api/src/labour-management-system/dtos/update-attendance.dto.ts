@@ -1,20 +1,10 @@
-import { IsInt,IsOptional, IsString, IsDate, IsNumber } from 'class-validator';
+import { IsInt,IsOptional, IsString, IsDate, IsNumber, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateAttendanceDto {
     @IsOptional()
     @IsInt()
     id: number;
-
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    nameId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    nameUserKey: string;
 
     @IsOptional()
     @IsDate()
@@ -56,10 +46,29 @@ export class UpdateAttendanceDto {
     @ApiProperty()
     checkOutLocation: string;
 
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    workingHours: number;
 
-@IsOptional()
-@IsNumber()
-@ApiProperty()
-workingHours: number;
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    workUnits: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
+
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    name: string;
 }

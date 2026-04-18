@@ -37,4 +37,6 @@ export class Site extends CommonEntity {
     siteManager: string;
 
 
+// @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
+// governmentSalarySlip: GovernmentSalarySlip[];
 }

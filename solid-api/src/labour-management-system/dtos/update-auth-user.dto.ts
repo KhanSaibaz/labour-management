@@ -1,4 +1,4 @@
-import { IsInt,IsOptional, IsString, IsNotEmpty } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
 
 import { UpdateUserDto } from '@solidxai/core';
 import { ApiProperty } from '@nestjs/swagger';
@@ -7,9 +7,14 @@ export class UpdateAuthUserDto extends UpdateUserDto {
     @IsOptional()
     @IsInt()
     id: number;
-    // @IsNotEmpty()
+
     @IsOptional()
-    @IsString()
+    @IsInt()
     @ApiProperty()
-    userRole: string;
+    labourId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourUserKey: string;
 }

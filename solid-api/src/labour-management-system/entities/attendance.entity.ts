@@ -4,10 +4,6 @@ import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('attendance')
 export class Attendance extends CommonEntity {
-    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-    @JoinColumn()
-    name: Labour;
-
     @Column({ type: "date", nullable: true })
     attendanceDate: Date;
 
@@ -32,7 +28,16 @@ export class Attendance extends CommonEntity {
     @Column({ type: "text", nullable: true })
     checkOutLocation: string;
 
+    @Column({ type: "decimal", nullable: true })
+    workingHours: number;
 
-@Column({ type: "decimal", nullable: true })
-workingHours: number;
+    @Column({ type: "varchar", nullable: true })
+    workUnits: string;
+
+    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    labourCode: Labour;
+
+    @Column({ type: "varchar" })
+    name: string;
 }

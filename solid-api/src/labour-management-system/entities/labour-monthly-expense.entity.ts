@@ -4,7 +4,7 @@ import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('labour_monthly_expense')
 export class LabourMonthlyExpense extends CommonEntity {
-    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
+    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: false })
     @JoinColumn()
     labourCode: Labour;
 

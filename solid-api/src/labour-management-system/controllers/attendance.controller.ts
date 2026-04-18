@@ -110,9 +110,9 @@ export class AttendanceController {
     return this.service.checkOut(labourId, checkOutLocation);
   }
 
-  @ApiBearerAuth("jwt")
-  @Post('/status')
-  async getStatus(@Body('labourId') labourId: number) {
-    return this.service.getStatus(labourId);
-  }
+  // @ApiBearerAuth("jwt")
+  // @Post('/status')
+  // async getStatus(@Body('labourId') labourId: number) {
+  //   return this.service.getStatus(labourId);
+  // }
 }

@@ -264,15 +264,15 @@ export class DashBoardService {
     const absentPct = (100 - parseFloat(attendancePct)).toFixed(1);
     const salaryPaidAmount = currentMonthSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
 
-    const mappedAdvancePayments: AdvancePayment[] = advancePayments.map((ap) => ({
-      labourName: ap?.name?.labourName || "Unknown",
-      site: "-",
-      advanceMonth: ap.advanceMonth || "-",
-      repaymentStatus: ap.repaymentStatus || "Pending",
-      totalPay: ap.totalPay || 0,
-      balanceAmount: ap.balanceAmount || 0,
-      monthlyDeduction: ap.monthlyDeduction || 0,
-    }));
+    // const mappedAdvancePayments: AdvancePayment[] = advancePayments.map((ap) => ({
+    //   // labourName: ap?.name?.labourName || "Unknown",
+    //   site: "-",
+    //   advanceMonth: ap.advanceMonth || "-",
+    //   repaymentStatus: ap.repaymentStatus || "Pending",
+    //   totalPay: ap.totalPay || 0,
+    //   balanceAmount: ap.balanceAmount || 0,
+    //   monthlyDeduction: ap.monthlyDeduction || 0,
+    // }));
 
     const mappedInventory: InventoryItem[] = recentInventoryAsks.map((inv) => ({
       siteName: inv.sIteName?.siteName || "-",
@@ -325,7 +325,8 @@ export class DashBoardService {
         }],
       },
       salaryData: monthlySalaryData,
-      advancePayments: mappedAdvancePayments,
+      // advancePayments: mappedAdvancePayments,
+      advancePayments: null,
       inventory: mappedInventory,
     };
     

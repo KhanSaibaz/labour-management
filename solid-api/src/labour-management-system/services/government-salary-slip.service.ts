@@ -151,7 +151,7 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
       },
 
       employee: {
-        name: slip.labour?.labourName,
+        // name: slip.labour?.labourName,
         department: slip.labour?.workType,
         location: slip.labour?.site?.clientName,
         uan: slip.uanNo,
