@@ -10,7 +10,7 @@ export class InventoryManagement extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     productQuantity: string;
 
-
-@Column({ type: "varchar" })
-hsnCode: string;
+    @Index({ unique: true })
+    @Column({ type: "varchar" })
+    hsnCode: string;
 }

@@ -40,4 +40,18 @@ export class UpdateInventoryAskDto {
     @IsOptional()
     @ApiProperty()
     sIteNameUserKey: string;
+
+
+@IsOptional()
+@IsInt()
+@ApiProperty()
+hsnCodeId: number;
+
+
+
+@IsString()
+@IsOptional()
+@ApiProperty()
+hsnCodeUserKey: string;
+
 }
