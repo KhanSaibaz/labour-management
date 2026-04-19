@@ -4,10 +4,6 @@ import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('advance_payment')
 export class AdvancePayment extends CommonEntity {
-    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-    @JoinColumn()
-    name: Labour;
-
     @Column({ type: "date", nullable: true })
     advanceYear: Date;
 
@@ -29,11 +25,18 @@ export class AdvancePayment extends CommonEntity {
     @Column({ type: "text", nullable: true })
     remarks: string;
 
+    @Column({ type: "varchar", nullable: true })
+    repaymentStartMonth: string;
 
-@Column({ type: "varchar", nullable: true })
-repaymentStartMonth: string;
+    @Column({ type: "varchar", nullable: true })
+    advanceMonth: string;
 
 
-@Column({ type: "varchar", nullable: true })
-advanceMonth: string;
+@ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
+@JoinColumn()
+labourCode: Labour;
+
+
+@Column({ type: "varchar" })
+name: string;
 }

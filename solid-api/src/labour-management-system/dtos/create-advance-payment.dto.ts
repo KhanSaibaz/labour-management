@@ -1,19 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsInt } from 'class-validator';
 import { IsOptional } from 'class-validator';
-import { IsString, IsDate } from 'class-validator';
+import { IsString, IsDate, IsNotEmpty } from 'class-validator';
 
 export class CreateAdvancePaymentDto {
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    nameId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    nameUserKey: string;
-
     @IsOptional()
     @IsDate()
     @ApiProperty()
@@ -49,17 +39,34 @@ export class CreateAdvancePaymentDto {
     @ApiProperty()
     remarks: string;
 
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    repaymentStartMonth: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    advanceMonth: string;
+
 
 @IsOptional()
-@IsString()
+@IsInt()
 @ApiProperty()
-repaymentStartMonth: string;
+labourCodeId: number;
 
 
 
+@IsString()
 @IsOptional()
+@ApiProperty()
+labourCodeUserKey: string;
+
+
+
+@IsNotEmpty()
 @IsString()
 @ApiProperty()
-advanceMonth: string;
+name: string;
 
 }

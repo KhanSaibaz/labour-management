@@ -6,6 +6,7 @@
     import { Attendance } from 'src/labour-management-system/entities/attendance.entity';
     import { AuthUser } from 'src/labour-management-system/entities/auth-user.entity';
 import { Salary } from 'src/labour-management-system/entities/salary.entity';
+import { AdvancePayment } from 'src/labour-management-system/entities/advance-payment.entity';
 
 // import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity'
 @Entity('labour')
@@ -69,7 +70,10 @@ export class Labour extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     contactNumber: string;
 
+    @OneToMany(() => Salary, salary => salary.labourCode, { cascade: true })
+    labourSalary: Salary[];
 
-@OneToMany(() => Salary, salary => salary.labourCode, { cascade: true })
-labourSalary: Salary[];
+
+@OneToMany(() => AdvancePayment, advancePayment => advancePayment.labourCode, { cascade: true })
+labourAdvancePayment: AdvancePayment[];
 }
