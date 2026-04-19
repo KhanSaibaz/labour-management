@@ -52,7 +52,8 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
 
       for (const slip of slips) {
 
-        const labour = slip.labour;
+        // const labour = slip.labour;
+        const labour = null;
         if (!labour) continue;
 
         const salary = salaryMap.get(labour.id);
@@ -152,8 +153,8 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
 
       employee: {
         // name: slip.labour?.labourName,
-        department: slip.labour?.workType,
-        location: slip.labour?.site?.clientName,
+        // department: slip.labour?.workType,
+        // location: slip.labour?.site?.clientName,
         uan: slip.uanNo,
         category: slip.category,
         daysWorked: slip.daysWorked,

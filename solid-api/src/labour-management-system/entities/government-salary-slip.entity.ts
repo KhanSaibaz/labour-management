@@ -1,9 +1,10 @@
 import { CommonEntity } from '@solidxai/core';
 import { Entity, Column, JoinColumn, ManyToOne, Index } from 'typeorm';
-import { Labour } from 'src/labour-management-system/entities/labour.entity'
+import { Labour } from 'src/labour-management-system/entities/labour.entity';
+import { Salary } from 'src/labour-management-system/entities/salary.entity'
 
 @Entity('government_salary_slip')
-@Index(['labour', 'salaryMonth', 'salaryYear'], { unique: true })
+@Index(['salaryMonth', 'salaryYear'], { unique: true })
 export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "varchar" })
     uanNo: string;
@@ -45,14 +46,19 @@ export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "integer", nullable: true })
     salaryYear: number;
 
-    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
-    @JoinColumn()
-    labour: Labour;
-
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
     dailyRate: number;
 
-    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
+    @ManyToOne(() => Salary, { onDelete: "CASCADE", nullable: true })
     @JoinColumn()
-    labourName: Labour;
+    salary: Salary;
+
+
+@ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
+@JoinColumn()
+labourCode: Labour;
+
+
+@Column({ type: "varchar" })
+name: string;
 }

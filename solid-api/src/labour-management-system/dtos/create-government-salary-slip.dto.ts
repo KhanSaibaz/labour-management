@@ -68,16 +68,6 @@ export class CreateGovernmentSalarySlipDto {
     @ApiProperty()
     salaryYear: number;
 
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    labourId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    labourUserKey: string;
-
     @IsNotEmpty()
     @IsNumber()
     @ApiProperty()
@@ -85,11 +75,32 @@ export class CreateGovernmentSalarySlipDto {
 
     @IsOptional()
     @IsInt()
-    @ApiProperty({ description: "LabourName" })
-    labourNameId: number;
+    @ApiProperty({ description: "Salary" })
+    salaryId: number;
 
     @IsString()
     @IsOptional()
-    @ApiProperty({ description: "LabourName" })
-    labourNameUserKey: string;
+    @ApiProperty({ description: "Salary" })
+    salaryUserKey: string;
+
+
+@IsOptional()
+@IsInt()
+@ApiProperty()
+labourCodeId: number;
+
+
+
+@IsString()
+@IsOptional()
+@ApiProperty()
+labourCodeUserKey: string;
+
+
+
+@IsNotEmpty()
+@IsString()
+@ApiProperty()
+name: string;
+
 }

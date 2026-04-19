@@ -99,23 +99,6 @@ export class UpdateLabourDto {
     labourAttendancesCommand: string;
 
     @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateGovernmentSalarySlipDto)
-    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    governmentSalarySlipIds: number[];
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    governmentSalarySlipCommand: string;
-
-    @IsOptional()
     @ApiProperty({ description: "AuthUser" })
     @IsArray()
     @ValidateNested({ each: true })
@@ -181,26 +164,45 @@ export class UpdateLabourDto {
     @ApiProperty({ description: "LabourSalary" })
     labourSalaryCommand: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "LabourAdvancePayment" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateAdvancePaymentDto)
+    labourAdvancePayment: UpdateAdvancePaymentDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "LabourAdvancePayment" })
+    labourAdvancePaymentIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "LabourAdvancePayment" })
+    labourAdvancePaymentCommand: string;
+
+
+
 
 @IsOptional()
-@ApiProperty({ description: "LabourAdvancePayment" })
+@ApiProperty({ description: "GovernmentSalarySlip" })
 @IsArray()
 @ValidateNested({ each : true })
-@Type(() => UpdateAdvancePaymentDto)
-labourAdvancePayment: UpdateAdvancePaymentDto[];
+@Type(() => UpdateGovernmentSalarySlipDto)
+governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
 
 
 
 @IsOptional()
 @IsArray()
-@ApiProperty({ description: "LabourAdvancePayment" })
-labourAdvancePaymentIds: number[];
+@ApiProperty({ description: "GovernmentSalarySlip" })
+governmentSalarySlipIds: number[];
 
 
 
 @IsString()
 @IsOptional()
-@ApiProperty({ description: "LabourAdvancePayment" })
-labourAdvancePaymentCommand: string;
+@ApiProperty({ description: "GovernmentSalarySlip" })
+governmentSalarySlipCommand: string;
 
 }

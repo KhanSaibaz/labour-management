@@ -1,10 +1,10 @@
-    import { CommonEntity } from '@solidxai/core';
-    import { Entity, Column, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
-    import { Site } from 'src/labour-management-system/entities/site.entity';
-    import { LabourMonthlyExpense } from 'src/labour-management-system/entities/labour-monthly-expense.entity';
-    import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
-    import { Attendance } from 'src/labour-management-system/entities/attendance.entity';
-    import { AuthUser } from 'src/labour-management-system/entities/auth-user.entity';
+import { CommonEntity } from '@solidxai/core';
+import { Entity, Column, Index, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Site } from 'src/labour-management-system/entities/site.entity';
+import { LabourMonthlyExpense } from 'src/labour-management-system/entities/labour-monthly-expense.entity';
+import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
+import { Attendance } from 'src/labour-management-system/entities/attendance.entity';
+import { AuthUser } from 'src/labour-management-system/entities/auth-user.entity';
 import { Salary } from 'src/labour-management-system/entities/salary.entity';
 import { AdvancePayment } from 'src/labour-management-system/entities/advance-payment.entity';
 
@@ -49,9 +49,6 @@ export class Labour extends CommonEntity {
     @OneToMany(() => Attendance, attendance => attendance.labourCode, { cascade: true })
     labourAttendances: Attendance[];
 
-    @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.labour, { cascade: true })
-    governmentSalarySlip: GovernmentSalarySlip[];
-
     @OneToMany(() => AuthUser, authUser => authUser.labour, { cascade: true })
     authUser: AuthUser[];
 
@@ -73,7 +70,11 @@ export class Labour extends CommonEntity {
     @OneToMany(() => Salary, salary => salary.labourCode, { cascade: true })
     labourSalary: Salary[];
 
+    @OneToMany(() => AdvancePayment, advancePayment => advancePayment.labourCode, { cascade: true })
+    labourAdvancePayment: AdvancePayment[];
 
-@OneToMany(() => AdvancePayment, advancePayment => advancePayment.labourCode, { cascade: true })
-labourAdvancePayment: AdvancePayment[];
+
+
+    @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.labourCode, { cascade: true })
+    governmentSalarySlip: GovernmentSalarySlip[];
 }
