@@ -44,7 +44,7 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
 
       // Map labourId → salary
       const salaryMap = new Map(
-        salaryData.map(s => [s.name?.id, s])
+        // salaryData.map(s => [s.name?.id, s])
       );
 
       // ================= STEP 4: PROCESS EACH EMPLOYEE =================

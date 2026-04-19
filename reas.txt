@@ -3,3 +3,26 @@ eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic2EiLCJlbWFpbCI
 
 
 eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoic2EiLCJlbWFpbCI6InNhQHNvbGlkeGFpLmNvbSIsInJvbGVzIjpbIkFkbWluIiwiSW50ZXJuYWwgVXNlciJdLCJpYXQiOjE3NzQ3OTM5MDksImV4cCI6MTc3NDg4MDMwOSwiYXVkIjoiaHR0cDovL2xvY2FsaG9zdDozMDAwIiwiaXNzIjoibGJfbWFuYWdlciJ9.h-M5iWOjcKOS_qfXg4_aPC1FFzmFC550iVvsT6SCvMg
+
+    {
+            "name": "userRole",
+            "displayName": "User Role",
+            "description": null,
+            "type": "selectionDynamic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "selectionDynamicProvider": "ListOfRolesSelectionProvider",
+            "selectionDynamicProviderCtxt": "{\n  \"filters\": {\n    \"name\": {\n      \"$notIn\": [\n        \"Admin\",\n        \"Internal User\",\n        \"Public\",\n        \"Labour  Admin\"\n      ]\n    }\n  }\n}",
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isMultiSelect": false
+          },

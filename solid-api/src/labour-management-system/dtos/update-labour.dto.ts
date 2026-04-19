@@ -1,10 +1,11 @@
-import { IsInt,IsOptional, IsString, IsNotEmpty, IsDate, ValidateNested, IsArray } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsNotEmpty, IsDate, ValidateNested, IsArray, IsBoolean } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { UpdateLabourMonthlyExpenseDto } from 'src/labour-management-system/dtos/update-labour-monthly-expense.dto';
 import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 import { UpdateAttendanceDto } from 'src/labour-management-system/dtos/update-attendance.dto';
 import { UpdateAuthUserDto } from 'src/labour-management-system/dtos/update-auth-user.dto';
+import { UpdateSalaryDto } from 'src/labour-management-system/dtos/update-salary.dto';
 
 export class UpdateLabourDto {
     @IsOptional()
@@ -62,12 +63,6 @@ export class UpdateLabourDto {
     @ApiProperty()
     dailyWages: number;
 
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    labour: string;
-
     @IsOptional()
     @ApiProperty({ description: "LabourMonthlyExpenses" })
     @IsArray()
@@ -84,6 +79,23 @@ export class UpdateLabourDto {
     @IsOptional()
     @ApiProperty({ description: "LabourMonthlyExpenses" })
     LabourMonthlyExpensesCommand: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "LabourAttendances" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateAttendanceDto)
+    labourAttendances: UpdateAttendanceDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "LabourAttendances" })
+    labourAttendancesIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "LabourAttendances" })
+    labourAttendancesCommand: string;
 
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlip" })
@@ -103,29 +115,6 @@ export class UpdateLabourDto {
     governmentSalarySlipCommand: string;
 
     @IsOptional()
-    @ApiProperty({ description: "LabourAttendances" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateAttendanceDto)
-    labourAttendances: UpdateAttendanceDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "LabourAttendances" })
-    labourAttendancesIds: number[];
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "LabourAttendances" })
-    labourAttendancesCommand: string;
-
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    labourName: string;
-
-    @IsOptional()
     @ApiProperty({ description: "AuthUser" })
     @IsArray()
     @ValidateNested({ each: true })
@@ -141,4 +130,59 @@ export class UpdateLabourDto {
     @IsOptional()
     @ApiProperty({ description: "AuthUser" })
     authUserCommand: string;
+
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    role: string;
+
+    @IsOptional()
+    @IsBoolean()
+    @ApiProperty()
+    active: boolean;
+
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    name: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    labourPassword: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    labourPasswordConfirm: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    contactNumber: string;
+
+
+@IsOptional()
+@ApiProperty({ description: "LabourSalary" })
+@IsArray()
+@ValidateNested({ each : true })
+@Type(() => UpdateSalaryDto)
+labourSalary: UpdateSalaryDto[];
+
+
+
+@IsOptional()
+@IsArray()
+@ApiProperty({ description: "LabourSalary" })
+labourSalaryIds: number[];
+
+
+
+@IsString()
+@IsOptional()
+@ApiProperty({ description: "LabourSalary" })
+labourSalaryCommand: string;
+
 }

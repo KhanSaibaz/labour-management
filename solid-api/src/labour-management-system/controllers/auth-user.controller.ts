@@ -26,9 +26,9 @@ export class AuthUserController {
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
   create(@Body() createDto: CreateAuthUserDto, @UploadedFiles() files: Array<Express.Multer.File>) {
-    const signupDto = this.service.toSignUpDto(createDto);
-    return this.authenticationService.signupForExtensionUser(signupDto, createDto, this.repo);
-    // return this.service.create(createDto, files);
+    // const signupDto = this.service.toSignUpDto(createDto);
+    // return this.authenticationService.signupForExtensionUser(signupDto, createDto, this.repo);
+    return this.service.create(createDto, files);
   }
 
   @ApiBearerAuth("jwt")

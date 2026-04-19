@@ -9,16 +9,6 @@ export class UpdateSalaryDto {
     id: number;
 
     @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    nameId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    nameUserKey: string;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     salaryYear: string;
@@ -85,4 +75,22 @@ export class UpdateSalaryDto {
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlip" })
     governmentSalarySlipCommand: string;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
+
+
+@IsNotEmpty()
+@IsOptional()
+@IsString()
+@ApiProperty()
+name: string;
+
 }

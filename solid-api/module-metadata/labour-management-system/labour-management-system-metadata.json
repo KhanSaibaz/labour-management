@@ -456,6 +456,138 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "role",
+            "displayName": "Role",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "Labour:Labour",
+              "Manager:Manager"
+            ],
+            "selectionValueType": "string",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
+          },
+          {
+            "name": "active",
+            "displayName": "Active",
+            "description": null,
+            "type": "boolean",
+            "ormType": "boolean",
+            "isSystem": false,
+            "defaultValue": "true",
+            "required": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "labourPassword",
+            "displayName": "Labour Password",
+            "description": null,
+            "type": "password",
+            "ormType": "varchar",
+            "isSystem": false,
+            "min": null,
+            "max": null,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null
+          },
+          {
+            "name": "contactNumber",
+            "displayName": "Contact Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "labourSalary",
+            "displayName": "LabourSalary",
+            "description": "LabourSalary",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "labourCode",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "salary",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -746,33 +878,6 @@
         "internationalisation": false,
         "fields": [
           {
-            "name": "name",
-            "displayName": "Name",
-            "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": null,
-            "relationCreateInverse": false,
-            "relationCoModelSingularName": "labour",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": true,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": true
-          },
-          {
             "name": "salaryYear",
             "displayName": "Salary Year",
             "description": null,
@@ -791,7 +896,7 @@
             "decryptWhen": null,
             "columnName": null,
             "isUserKey": false,
-            "enableAuditTracking": true,
+            "enableAuditTracking": false,
             "isPrimaryKey": false
           },
           {
@@ -1025,6 +1130,55 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "labourCode",
+            "displayName": "Labour Code",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "labourSalary",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "name",
+            "displayName": "Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -2272,6 +2426,33 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "salary",
+            "displayName": "Salary",
+            "description": "Salary",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "governmentSalarySlip",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "salary",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       }
@@ -3412,94 +3593,262 @@
             },
             "children": [
               {
-                "type": "row",
+                "type": "notebook",
                 "attrs": {
-                  "name": "sheet-1-row-1"
+                  "name": "notebook-1"
                 },
                 "children": [
                   {
-                    "type": "column",
+                    "type": "page",
                     "attrs": {
-                      "name": "column-1",
-                      "label": "Basic Information",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                      "name": "page-1",
+                      "label": "Basic Info"
                     },
                     "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "labourName"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "workType"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "dateOfBirth"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "dateOfJoining"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "lastWorkingDate"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "documents"
-                        }
+                          "name": "row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-1",
+                              "label": "Personal Details",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "name"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "workType"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "role"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "dateOfBirth"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labourPassword"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-2",
+                              "label": "Job Details",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "site"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "dateOfJoining"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "lastWorkingDate"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "dailyWages"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "label": "Labour Active",
+                                  "name": "active"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "documents"
+                                }
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    "type": "column",
+                    "type": "page",
                     "attrs": {
-                      "name": "column-2",
-                      "label": "Contact & Address Details",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                      "name": "page-2",
+                      "label": "Contact Details"
                     },
                     "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "currentAddress"
-                        }
-                      },
+                          "name": "row-3"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-5",
+                              "className": "col-12 md:col-6",
+                              "label": "Contact Details"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "contactNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "emergencyContactNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "currentAddress"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "permanentAddress"
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-3",
+                      "label": "Attendance"
+                    },
+                    "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "permanentAddress"
-                        }
-                      },
+                          "name": "row-3"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-5",
+                              "className": "col-12"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labourAttendances",
+                                  "showLabel": false
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-4",
+                      "label": "Montly Expense"
+                    },
+                    "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "emergencyContactNumber"
-                        }
-                      },
+                          "name": "row-3"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-5",
+                              "className": "col-12"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "LabourMonthlyExpenses",
+                                  "showLabel": false
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-5",
+                      "label": "Government Salary Slip"
+                    },
+                    "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "site"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "dailyWages"
-                        }
+                          "name": "row-4"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-12",
+                              "className": "col-12 "
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "governmentSalarySlip",
+                                  "showLabel": false
+                                }
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }

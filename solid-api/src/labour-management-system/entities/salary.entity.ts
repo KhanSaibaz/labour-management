@@ -6,10 +6,6 @@ import { GovernmentSalarySlip } from 'src/labour-management-system/entities/gove
 // import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity'
 @Entity('salary')
 export class Salary extends CommonEntity {
-    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-    @JoinColumn()
-    name: Labour;
-
     @Column({ type: "varchar", nullable: true })
     salaryYear: string;
 
@@ -40,5 +36,17 @@ export class Salary extends CommonEntity {
     @Column({ type: "varchar" })
     salaryMonth: string;
 
+    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.salary, { cascade: true })
+    // governmentSalarySlip: GovernmentSalarySlip[];
 
+    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    labourCode: Labour;
+
+    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.salary, { cascade: true })
+    // governmentSalarySlip: GovernmentSalarySlip[];
+
+
+    @Column({ type: "varchar" })
+    name: string;
 }

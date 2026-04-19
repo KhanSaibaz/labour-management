@@ -7,16 +7,6 @@ import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos
 
 export class CreateSalaryDto {
     @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    nameId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    nameUserKey: string;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     salaryYear: string;
@@ -82,4 +72,21 @@ export class CreateSalaryDto {
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlip" })
     governmentSalarySlipCommand: string;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
+
+
+@IsNotEmpty()
+@IsString()
+@ApiProperty()
+name: string;
+
 }

@@ -1,185 +1,137 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectEntityManager, InjectRepository } from '@nestjs/typeorm';
-import { ModuleRef } from "@nestjs/core";
-import { EntityManager, Repository } from 'typeorm';
-import { CRUDService, RequestContextService } from '@solidxai/core';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { ModuleRef } from '@nestjs/core';
+import { EntityManager } from 'typeorm';
+import { CRUDService } from '@solidxai/core';
 
 import { Attendance } from '../entities/attendance.entity';
 import { AttendanceRepository } from '../repositories/attendance.repository';
 import { Labour } from '../entities/labour.entity';
 import { AuthUserRepository } from '../repositories/auth-user.repository';
-import { LabourRepository } from '../repositories/labour.repository';
+import { Salary } from '../entities/salary.entity';
+import { SalaryRepository } from '../repositories/salary.repository';
 
 @Injectable()
 export class AttendanceService extends CRUDService<Attendance> {
-
   constructor(
-    @InjectEntityManager("default")
+    @InjectEntityManager('default')
     readonly entityManager: EntityManager,
     readonly repo: AttendanceRepository,
     readonly moduleRef: ModuleRef,
 
     private readonly authUserRepo: AuthUserRepository,
-    private attendanceRepo: AttendanceRepository,
-    private labourRepo: LabourRepository,
-    private requestContextService: RequestContextService,
+    private readonly attendanceRepo: AttendanceRepository,
+    private readonly salaryRepo: SalaryRepository,
   ) {
     super(entityManager, repo, 'attendance', 'labour-management-system', moduleRef);
   }
 
-  // ============================================================
-  // HELPER: RESOLVE DATE (Night Shift)
-  // ============================================================
   private resolveAttendanceDate(now: Date): Date {
     const date = new Date(now);
-
-    if (now.getHours() < 6) {
-      date.setDate(date.getDate() - 1);
-    }
-
+    if (now.getHours() < 6) date.setDate(date.getDate() - 1);
     date.setHours(0, 0, 0, 0);
     return date;
   }
 
-  // ============================================================
-  // HELPER: OVERTIME SLOT
-  // ============================================================
-  private calculateOvertimeSlot(
-    checkOut: Date,
-    totalHours: number
-  ): { hours: number; label: string | null } {
-
-    if (totalHours <= 8) {
-      return { hours: 0, label: null };
-    }
+  private calculateOvertimeSlot(checkOut: Date, totalHours: number) {
+    if (totalHours <= 7.5) return { hours: 0, label: null };
 
     const minutes = checkOut.getHours() * 60 + checkOut.getMinutes();
 
-    const FIVE_45 = 17 * 60 + 45;
-    const EIGHT_45 = 20 * 60 + 45;
-    const ELEVEN = 23 * 60;
-    const SIX_AM = 6 * 60;
-
-    if (minutes < SIX_AM) return { hours: 2, label: "Double" };
-    if (minutes >= ELEVEN) return { hours: 2, label: "Double" };
-    if (minutes >= EIGHT_45) return { hours: 1.5, label: "One And Half" };
-    if (minutes >= FIVE_45) return { hours: 1, label: "Single" };
+    if (minutes < 360) return { hours: 2, label: 'Double' };
+    if (minutes >= 1380) return { hours: 2, label: 'Double' };
+    if (minutes >= 1245) return { hours: 1.5, label: 'One And Half' };
+    if (minutes >= 1065) return { hours: 1, label: 'Single' };
 
     return { hours: 0, label: null };
   }
 
-  // ============================================================
-  // CHECK-IN
-  // ============================================================
-  // ============================================================
-  async checkIn(labourId: number, checkInLocation: string): Promise<any> {
-
-    // STEP 1: Validate labour (by ID)
-
-    const activeUser = this.requestContextService.getActiveUser();
-
-    console.log(activeUser, "----------------");
-
-    // ================= STEP 1: FETCH USER =================
-    const userId = Number(activeUser.sub)
-
-    const labour = await this.labourRepo.findOne({
-      where: { id: labourId }
+  // ================= CHECK-IN =================
+  async checkIn(labourId: number, location: string) {
+    const authUser = await this.authUserRepo.findOne({
+      where: { labour: { id: labourId } },
+      relations: ['labour'],
     });
 
+    if (!authUser || !authUser.labour) {
+      throw new NotFoundException('Labour not found');
+    }
 
-    if (!labour) throw new NotFoundException('Labour not found');
+    const labour = authUser.labour;
 
     const now = new Date();
-
-    // STEP 2: Resolve date
     const attendanceDate = this.resolveAttendanceDate(now);
     const isNight = now.getHours() < 6;
 
-    // STEP 3: Find attendance
     let attendance = await this.attendanceRepo.findOne({
       where: {
-        labourCode: { id: labourId },   // ✅ correct relation usage
-        attendanceDate
+        labourCode: { id: labourId },
+        attendanceDate,
       },
       relations: ['labourCode'],
     });
 
-    // STEP 4: First check-in
     if (!attendance) {
+      if (isNight) throw new BadRequestException('Check-in after 6 AM');
 
-      if (isNight) {
-        throw new BadRequestException('No previous shift found. Check in after 6 AM');
-      }
-
-      const newAttendance = this.attendanceRepo.create({
+      attendance = this.attendanceRepo.create({
         labourCode: labour,
-        // name: labour.labourName,
+        name: labour.name,
         attendanceDate,
         checkIn: now,
-        checkInLocation,
+        checkInLocation: location,
         noOfTries: 1,
         workingHours: 0,
         overtimeHour: 0,
-        workUnits: null,
       });
 
-      await this.attendanceRepo.save(newAttendance);
+      await this.attendanceRepo.save(attendance);
 
-      return {
-        status: 'success',
-        step: 'FIRST_CHECKIN',
-        labourCode: labour.labourCode,
-        data: newAttendance,
-      };
+      return { step: 'FIRST_CHECKIN', data: attendance };
     }
 
-    // STEP 5: Validation
     if (attendance.noOfTries >= 2) {
-      throw new BadRequestException('Max 2 check-ins reached');
+      throw new BadRequestException('Max 2 shifts reached');
     }
 
     if (!attendance.checkOut) {
-      throw new BadRequestException('Please checkout first');
+      throw new BadRequestException('Checkout first');
     }
 
-    // STEP 6: Second check-in
     attendance.checkIn = now;
-    attendance.checkInLocation = checkInLocation;
+    attendance.checkInLocation = location;
     attendance.checkOut = null;
-    attendance.checkOutLocation = null;
     attendance.noOfTries += 1;
 
     await this.attendanceRepo.save(attendance);
 
-    return {
-      status: 'success',
-      step: 'SECOND_CHECKIN',
-      labourCode: labour.labourCode,
-      data: attendance,
-    };
+    return { step: 'SECOND_CHECKIN', data: attendance };
   }
 
-  // ============================================================
-  // CHECK-OUT
-  // ============================================================
-  async checkOut(labourId: number, checkOutLocation: string): Promise<any> {
-
-    // STEP 1: Validate labour
-    const labour = await this.labourRepo.findOne({
-      where: { id: labourId }
+  // ================= CHECK-OUT =================
+  async checkOut(labourId: number, location: string) {
+    const labour = await this.authUserRepo.findOne({
+      where: { labour: { id: labourId } },
+      relations: ['labour'],
     });
 
-    if (!labour) throw new NotFoundException('Labour not found');
+    if (!labour || !labour.labour) {
+      throw new NotFoundException('Labour not found');
+    }
+
+    const worker = labour.labour;
 
     const now = new Date();
     const attendanceDate = this.resolveAttendanceDate(now);
 
-    // STEP 2: Find attendance
     const attendance = await this.attendanceRepo.findOne({
       where: {
         labourCode: { id: labourId },
-        attendanceDate
+        attendanceDate,
       },
       relations: ['labourCode'],
     });
@@ -187,35 +139,83 @@ export class AttendanceService extends CRUDService<Attendance> {
     if (!attendance) throw new BadRequestException('Check-in first');
     if (!attendance.checkIn) throw new BadRequestException('Invalid check-in');
 
-    // Prevent double checkout
     if (attendance.checkOut && attendance.noOfTries === 1) {
       throw new BadRequestException('Already checked out');
     }
 
-    // STEP 3: Calculate hours
     const sessionHours =
-      (now.getTime() - new Date(attendance.checkIn).getTime()) / (1000 * 60 * 60);
+      (now.getTime() - new Date(attendance.checkIn).getTime()) /
+      (1000 * 60 * 60);
 
-    const totalHours = (attendance.workingHours || 0) + sessionHours;
+    // const totalHours = (attendance.workingHours || 0) + sessionHours;
+    const totalHours =
+      Number(attendance.workingHours || 0) + Number(sessionHours);
 
-    // STEP 4: Overtime
     const ot = this.calculateOvertimeSlot(now, totalHours);
 
-    // STEP 5: Save
+
     attendance.checkOut = now;
-    attendance.checkOutLocation = checkOutLocation;
+    attendance.checkOutLocation = location;
     attendance.workingHours = Number(totalHours.toFixed(2));
     attendance.overtimeHour = ot.hours;
     attendance.workUnits = ot.label;
 
+    console.log(ot, "========================= Ot ================");
+
+
     await this.attendanceRepo.save(attendance);
+
+    await this.updateSalary(worker, attendance);
 
     return {
       status: 'success',
-      labourCode: labour.labourCode,
       workingHours: attendance.workingHours,
-      overtimeHours: ot.hours,
+      overtime: ot.hours,
       workUnits: ot.label,
     };
+  }
+
+  // ================= SALARY =================
+  private async updateSalary(labour: Labour, attendance: Attendance) {
+    const now = new Date();
+
+    const month = now.toLocaleString('default', { month: 'long' });
+    const year = now.getFullYear().toString();
+
+    // let salary = await this.salaryRepo.findOne({
+    //   where: {
+    //     name: { id: labour.id },
+    //     salaryMonth: month,
+    //     salaryYear: year,
+    //   },
+    //   relations: ['name'],
+    // });
+
+    // if (!salary) {
+    //   salary = this.salaryRepo.create({
+    //     name: labour,
+    //     salaryMonth: month,
+    //     salaryYear: year,
+    //     presentDays: 0,
+    //     totalAmount: 0,
+    //   });
+    // }
+
+    const base = labour.dailyWages || 0;
+    const perHour = base / 8;
+
+    const earning = attendance.workingHours * perHour;
+    const overtime = attendance.overtimeHour * perHour * 2;
+
+    const total = earning + overtime;
+
+    // if (attendance.noOfTries === 1) {
+    //   salary.presentDays += 1;
+    // }
+
+    // salary.totalAmount += Math.round(total);
+    // salary.dailyWages = labour.dailyWages;
+
+    // await this.salaryRepo.save(salary);
   }
 }
