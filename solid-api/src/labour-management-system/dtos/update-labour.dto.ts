@@ -7,6 +7,7 @@ import { UpdateAttendanceDto } from 'src/labour-management-system/dtos/update-at
 import { UpdateAuthUserDto } from 'src/labour-management-system/dtos/update-auth-user.dto';
 import { UpdateSalaryDto } from 'src/labour-management-system/dtos/update-salary.dto';
 import { UpdateAdvancePaymentDto } from 'src/labour-management-system/dtos/update-advance-payment.dto';
+import { UpdateInventoryAskDto } from 'src/labour-management-system/dtos/update-inventory-ask.dto';
 
 export class UpdateLabourDto {
     @IsOptional()
@@ -181,28 +182,43 @@ export class UpdateLabourDto {
     @ApiProperty({ description: "LabourAdvancePayment" })
     labourAdvancePaymentCommand: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateGovernmentSalarySlipDto)
+    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
 
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "GovernmentSalarySlip" })
+    governmentSalarySlipCommand: string;
 
 
 @IsOptional()
-@ApiProperty({ description: "GovernmentSalarySlip" })
+@ApiProperty({ description: "ManagerInventoryAsk" })
 @IsArray()
 @ValidateNested({ each : true })
-@Type(() => UpdateGovernmentSalarySlipDto)
-governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
+@Type(() => UpdateInventoryAskDto)
+managerInventoryAsk: UpdateInventoryAskDto[];
 
 
 
 @IsOptional()
 @IsArray()
-@ApiProperty({ description: "GovernmentSalarySlip" })
-governmentSalarySlipIds: number[];
+@ApiProperty({ description: "ManagerInventoryAsk" })
+managerInventoryAskIds: number[];
 
 
 
 @IsString()
 @IsOptional()
-@ApiProperty({ description: "GovernmentSalarySlip" })
-governmentSalarySlipCommand: string;
+@ApiProperty({ description: "ManagerInventoryAsk" })
+managerInventoryAskCommand: string;
 
 }

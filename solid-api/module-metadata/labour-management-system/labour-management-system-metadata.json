@@ -615,6 +615,33 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "managerInventoryAsk",
+            "displayName": "ManagerInventoryAsk",
+            "description": "ManagerInventoryAsk",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "managerCode",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "inventoryAsk",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       },
@@ -1813,28 +1840,6 @@
             "isPrimaryKey": false
           },
           {
-            "name": "hsnCode",
-            "displayName": "HSN Code",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": true,
-            "unique": true,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": true,
-            "enableAuditTracking": false,
-            "isPrimaryKey": false
-          },
-          {
             "name": "inventoryAsks",
             "displayName": "InventoryAsks",
             "description": "InventoryAsks",
@@ -1860,6 +1865,28 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
+          },
+          {
+            "name": "hsnCode",
+            "displayName": "HSN Code",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -1877,33 +1904,6 @@
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "managerName",
-            "displayName": "Manager Name",
-            "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": null,
-            "relationCreateInverse": false,
-            "relationCoModelSingularName": "labour",
-            "relationCoModelColumnName": "",
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": "",
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
-          },
           {
             "name": "productName",
             "displayName": "Product Name",
@@ -2026,6 +2026,55 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
+          },
+          {
+            "name": "managerCode",
+            "displayName": "Manager Code",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "managerInventoryAsk",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "labour",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
+          },
+          {
+            "name": "managerName",
+            "displayName": "Manager Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": false,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -3030,6 +3079,19 @@
       "viewUserKey": "authUser-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "authUser"
+    },
+    {
+      "displayName": "Inventory Ask Tree View Action",
+      "name": "inventoryAsk-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "inventoryAsk-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "inventoryAsk"
     }
   ],
   "menus": [
@@ -6387,12 +6449,12 @@
       }
     },
     {
-      "name": "authUser-tree-view",
-      "displayName": "AuthUser",
+      "name": "inventoryAsk-tree-view",
+      "displayName": "Inventory Ask",
       "type": "tree",
       "context": "{}",
       "moduleUserKey": "labour-management-system",
-      "modelUserKey": "authUser",
+      "modelUserKey": "inventoryAsk",
       "layout": {
         "type": "tree",
         "attrs": {
@@ -6417,13 +6479,37 @@
           {
             "type": "field",
             "attrs": {
-              "name": "labour"
+              "name": "managerName"
             }
           },
           {
             "type": "field",
             "attrs": {
-              "name": "userRole"
+              "name": "productName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "projectQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "hsnCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "sIteName"
             }
           }
         ]

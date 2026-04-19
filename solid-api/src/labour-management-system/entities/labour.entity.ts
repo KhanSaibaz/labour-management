@@ -7,6 +7,7 @@ import { Attendance } from 'src/labour-management-system/entities/attendance.ent
 import { AuthUser } from 'src/labour-management-system/entities/auth-user.entity';
 import { Salary } from 'src/labour-management-system/entities/salary.entity';
 import { AdvancePayment } from 'src/labour-management-system/entities/advance-payment.entity';
+import { InventoryAsk } from 'src/labour-management-system/entities/inventory-ask.entity';
 
 // import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity'
 @Entity('labour')
@@ -73,8 +74,10 @@ export class Labour extends CommonEntity {
     @OneToMany(() => AdvancePayment, advancePayment => advancePayment.labourCode, { cascade: true })
     labourAdvancePayment: AdvancePayment[];
 
-
-
     @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.labourCode, { cascade: true })
     governmentSalarySlip: GovernmentSalarySlip[];
+
+
+@OneToMany(() => InventoryAsk, inventoryAsk => inventoryAsk.managerCode, { cascade: true })
+managerInventoryAsk: InventoryAsk[];
 }

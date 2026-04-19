@@ -6,10 +6,6 @@ import { InventoryManagement } from 'src/labour-management-system/entities/inven
 
 @Entity('inventory_ask')
 export class InventoryAsk extends CommonEntity {
-    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: true })
-    @JoinColumn()
-    managerName: Labour;
-
     @Column({ type: "varchar", nullable: true })
     productName: string;
 
@@ -23,8 +19,16 @@ export class InventoryAsk extends CommonEntity {
     @JoinColumn()
     sIteName: Site;
 
+    @ManyToOne(() => InventoryManagement, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    hsnCode: InventoryManagement;
 
-@ManyToOne(() => InventoryManagement, { onDelete: "SET NULL", nullable: true })
+
+@ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: false })
 @JoinColumn()
-hsnCode: InventoryManagement;
+managerCode: Labour;
+
+
+@Column({ type: "varchar" })
+managerName: string;
 }
