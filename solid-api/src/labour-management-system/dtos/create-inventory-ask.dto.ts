@@ -39,17 +39,13 @@ export class CreateInventoryAskDto {
     @ApiProperty()
     sIteNameUserKey: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    hsnCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-hsnCodeId: number;
-
-
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-hsnCodeUserKey: string;
-
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    hsnCodeUserKey: string;
 }

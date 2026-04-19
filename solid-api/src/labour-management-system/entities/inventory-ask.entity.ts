@@ -23,8 +23,7 @@ export class InventoryAsk extends CommonEntity {
     @JoinColumn()
     sIteName: Site;
 
-
-@ManyToOne(() => InventoryManagement, { onDelete: "SET NULL", nullable: true })
-@JoinColumn()
-hsnCode: InventoryManagement;
+    @ManyToOne(() => InventoryManagement, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    hsnCode: InventoryManagement;
 }
