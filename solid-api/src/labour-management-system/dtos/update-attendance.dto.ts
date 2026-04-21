@@ -1,4 +1,4 @@
-import { IsInt,IsOptional, IsString, IsDate, IsNumber, IsNotEmpty } from 'class-validator';
+import { IsInt, IsOptional, IsString, IsDate, IsNumber, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateAttendanceDto {
@@ -27,10 +27,10 @@ export class UpdateAttendanceDto {
     remark: string;
 
     @IsOptional()
-    @IsInt()
-    @ApiProperty()
+    @IsNumber({ maxDecimalPlaces: 2 })
+    @ApiProperty({ example: 1.5, description: 'Overtime hours worked beyond 8 hours' })
     overtimeHour: number;
-
+    
     @IsOptional()
     @IsInt()
     @ApiProperty()

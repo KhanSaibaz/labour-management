@@ -23,10 +23,9 @@ export class CreateAttendanceDto {
     @IsString()
     @ApiProperty()
     remark: string;
-
     @IsOptional()
-    @IsInt()
-    @ApiProperty()
+    @IsNumber({ maxDecimalPlaces: 2 })
+    @ApiProperty({ example: 1.5, description: 'Overtime hours worked beyond 8 hours' })
     overtimeHour: number;
 
     @IsOptional()

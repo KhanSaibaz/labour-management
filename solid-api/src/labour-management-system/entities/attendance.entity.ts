@@ -16,7 +16,7 @@ export class Attendance extends CommonEntity {
     @Column({ type: "text", nullable: true })
     remark: string;
 
-    @Column({ type: "integer", nullable: true })
+@Column({ type: "decimal", precision: 5, scale: 2, nullable: true })
     overtimeHour: number;
 
     @Column({ type: "integer", nullable: true })

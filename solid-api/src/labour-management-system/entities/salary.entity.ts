@@ -36,15 +36,11 @@ export class Salary extends CommonEntity {
     @Column({ type: "varchar" })
     salaryMonth: string;
 
-    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.salary, { cascade: true })
-    // governmentSalarySlip: GovernmentSalarySlip[];
 
     @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: true })
     @JoinColumn()
     labourCode: Labour;
 
-    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.salary, { cascade: true })
-    // governmentSalarySlip: GovernmentSalarySlip[];
 
 
     @Column({ type: "varchar" })

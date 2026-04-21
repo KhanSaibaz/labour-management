@@ -95,8 +95,8 @@ export class LabourService extends CRUDService<Labour> {
     files?: Array<Express.Multer.File>,
     isUpdate?: boolean
   ): Promise<Labour> {
-
     try {
+      // 1️⃣ Update Labour
       const labour = await super.update(id, updateDto, files, isUpdate);
 
       const labourWithUser = await this.repo.findOne({
@@ -109,20 +109,13 @@ export class LabourService extends CRUDService<Labour> {
       if (authUser) {
         const updatePayload: any = {};
 
+        // 👤 Name update
         if (updateDto.name) {
           updatePayload.fullName = updateDto.name;
           updatePayload.username = this.generateUsername(updateDto.name);
         }
 
-        if (updateDto.labourPassword) {
-          const pwdData = await this.userService.hashPassword(
-            updateDto.labourPassword,
-          );
-
-          updatePayload.password = pwdData.password;
-          updatePayload.passwordScheme = pwdData.passwordScheme;
-          updatePayload.passwordSchemeVersion = pwdData.passwordSchemeVersion;
-        }
+        updatePayload.password = updateDto.labourPassword;
 
         if (updateDto.role) {
           updatePayload.userRole = updateDto.role;
@@ -137,14 +130,10 @@ export class LabourService extends CRUDService<Labour> {
           updatePayload.roles = roles;
         }
 
-        console.log(updatePayload, "UPDATE PAYLOAD");
-
-        if (Object.keys(updatePayload).length > 0) {
-          await this.authUserRepository.update(
-            { username: authUser.username }, 
-            updatePayload
-          );
-        }
+        await this.authUserRepository.update(
+          { username: authUser.username },
+          updatePayload
+        );
       }
 
       return labour;
