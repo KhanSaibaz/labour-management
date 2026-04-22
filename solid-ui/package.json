@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.7",
-    "@solidxai/core-ui": "^0.1.5-beta.9",
+    "@solidxai/core-ui": "^0.1.7-beta.10",
     "axios": "^1.13.2",
     "playwright": "^1.58.2",
     "primeflex": "^4.0.0",
