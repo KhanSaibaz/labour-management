@@ -5194,6 +5194,12 @@
                       {
                         "type": "field",
                         "attrs": {
+                          "name": "managerCode"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
                           "name": "sIteName"
                         }
                       },
