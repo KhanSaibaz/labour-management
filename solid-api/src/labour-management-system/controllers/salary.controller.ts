@@ -13,7 +13,7 @@ enum ShowSoftDeleted {
 @ApiTags('Labour Management System')
 @Controller('salary')
 export class SalaryController {
-  constructor(private readonly service: SalaryService) {}
+  constructor(private readonly service: SalaryService) { }
 
   @ApiBearerAuth("jwt")
   @Post()
@@ -55,20 +55,20 @@ export class SalaryController {
   async recover(@Param('id') id: number) {
     return this.service.recover(id);
   }
-    
+
   @ApiBearerAuth("jwt")
   @ApiQuery({ name: 'showSoftDeleted', required: false, enum: ShowSoftDeleted })
   @ApiQuery({ name: 'limit', required: false, type: Number })
   @ApiQuery({ name: 'offset', required: false, type: Number })
   @ApiQuery({ name: 'fields', required: false, type: Array })
-  @ApiQuery({ name: 'sort', required: false, type: Array }) 
+  @ApiQuery({ name: 'sort', required: false, type: Array })
   @ApiQuery({ name: 'groupBy', required: false, type: Array })
   @ApiQuery({ name: 'populate', required: false, type: Array })
   @ApiQuery({ name: 'populateMedia', required: false, type: Array })
   @ApiQuery({ name: 'filters', required: false, type: Array })
   @Get()
-  async findMany(@Query() query: any) { 
-    return this.service.find(query);  
+  async findMany(@Query() query: any) {
+    return this.service.find(query);
   }
 
   @ApiBearerAuth("jwt")
@@ -88,6 +88,14 @@ export class SalaryController {
   async delete(@Param('id') id: number) {
     return this.service.delete(id);
   }
+
+  @ApiBearerAuth("jwt")
+  @Post(':id')
+  async calaculteSalary(@Body() createDto: CreateSalaryDto[]) {
+    return this.service.calculateSalary(createDto);
+  }
+
+
 
 
 }
