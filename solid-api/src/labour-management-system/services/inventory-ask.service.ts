@@ -28,19 +28,16 @@ export class InventoryAskService extends CRUDService<InventoryAsk> {
 
     const activeUser = this.repo.requestContextService.getActiveUser();
     const roles = activeUser.roles || [];
-
-    if (roles.includes('manager')) {
+    if (roles.includes('Manager')) {
       const authUser = await this.authUserRepo.findOne({
         where: { id: Number(activeUser.sub) } as any,
         relations: { labour: true },
       });
-
       if (!authUser?.labour) {
         throw new Error('Labour not found');
       }
-      createDto.managerCodeId = Number(authUser.labour.labourCode);
+      createDto.managerCodeId = Number(authUser.labour.id);
     }
-
     return super.create(createDto, files, solidRequestContext);
   }
 }
