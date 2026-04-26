@@ -32,24 +32,25 @@ export const GenerateGovernmentSalarySlip = () => {
 
     const handleGenerate = async () => {
         if (!month || !year) {
-            showToast(
-                toast,
-                "error",
-                "Validation Error",
-                "Please select month and year"
-            );
+            // showToast(
+            //     // toast,
+            //     // "error",
+            //     // "Validation Error",
+            //     // "Please select month and year"
+            // );
             return;
         }
 
         try {
             const res = await generateSlips({ month, year }).unwrap();
-            showToast(toast, "success", "Success", res?.message);
+            showToast(res?.message);
+            //toast, "success", "Success", 
 
         } catch (err: any) {
             showToast(
-                toast,
-                "error",
-                "Error",
+                // toast,
+                // "error",
+                // "Error",
                 err?.data?.message || "Something went wrong"
             );
         }

@@ -16,9 +16,9 @@ const CurrentMonthSalaryDataLoad = async (
     const currentYear = now.getFullYear().toString();
 
     const months = [
-        "january", "february", "march", "april",
-        "may", "june", "july", "august",
-        "september", "october", "november", "december"
+        "January", "February", "March", "April",
+        "May", "June", "July", "August",
+        "September", "October", "November", "December"
     ];
 
     const currentMonth = months[now.getMonth()];

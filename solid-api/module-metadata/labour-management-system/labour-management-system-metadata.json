@@ -4250,7 +4250,19 @@
           "enableGlobalSearch": true,
           "create": true,
           "edit": true,
-          "delete": true
+          "delete": true,
+          "headerButtons": [
+            {
+              "attrs": {
+                "label": "Genrate",
+                "action": "calculateSalary",
+                "actionInContextMenu": false,
+                "openInPopup": true,
+                "icon": "pi pi-money-bill",
+                "closable": true
+              }
+            }
+          ]
         },
         "children": [
           {

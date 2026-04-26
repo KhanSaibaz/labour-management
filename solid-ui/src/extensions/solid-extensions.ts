@@ -2,6 +2,7 @@ import { registerExtensionComponent, registerExtensionFunction } from "@solidxai
 import InventoryAskOnBeforeListDataLoad from "./labour-management-system/inventory-ask/list-event-listeners/InventoryAskOnBeforeDataLoad";
 import CurrentMonthSalaryDataLoad from "./labour-management-system/salary/list-event-listeners/InventoryAskOnBeforeDataLoad";
 import { GenerateGovernmentSalarySlip } from "./labour-management-system/governmentSalarySlip/list-buttons/GenerateGovernmentSalarySlip";
+import { CalculateSalary } from "./labour-management-system/salary/list-buttons/CalculateSalary";
 
 
 
@@ -16,7 +17,7 @@ import { GenerateGovernmentSalarySlip } from "./labour-management-system/governm
 // form-buttons
 
 // form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('inventoryAskOnBeforeListDataLoad', InventoryAskOnBeforeListDataLoad);
+registerExtensionFunction('inventoryAskOnBeforeListDataLoad', InventoryAskOnBeforeListDataLoad,"onBeforeListDataLoad");
 
 // list-buttons
 
@@ -37,9 +38,29 @@ registerExtensionFunction('inventoryAskOnBeforeListDataLoad', InventoryAskOnBefo
 // form-buttons
 
 // form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
-registerExtensionFunction('currentMonthSalaryDataLoad', CurrentMonthSalaryDataLoad);
+registerExtensionFunction('currentMonthSalaryDataLoad', CurrentMonthSalaryDataLoad,"onFormLayoutLoad");
 
 // list-buttons
+
+// list-event-listeners (onListLoad, onBeforeListDataLoad)
+
+// row-buttons
+
+
+
+// - - - - - - - - - - - - - - - - - - - -
+// Model -   Salary Slip
+// - - - - - - - - - - - - - - - - - - - -
+
+// custom-widgets 
+
+// form-buttons
+
+// form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
+
+// list-buttons
+registerExtensionComponent("calculateSalary", CalculateSalary,"list_header_action");
+
 
 // list-event-listeners (onListLoad, onBeforeListDataLoad)
 
@@ -59,7 +80,7 @@ registerExtensionFunction('currentMonthSalaryDataLoad', CurrentMonthSalaryDataLo
 // form-event-listeners (onFormLayoutLoad, onFormDataLoad, onFormLoad)
 
 // list-buttons
-registerExtensionComponent("generateGovernmentSalarySlip", GenerateGovernmentSalarySlip);
+registerExtensionComponent("generateGovernmentSalarySlip", GenerateGovernmentSalarySlip,"list_header_action");
 
 
 // list-event-listeners (onListLoad, onBeforeListDataLoad)
