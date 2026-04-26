@@ -32,33 +32,31 @@ export const GenerateGovernmentSalarySlip = () => {
 
     const handleGenerate = async () => {
         if (!month || !year) {
-            showToast(
-                toast,
-                "error",
-                "Validation Error",
-                "Please select month and year"
+            toast.current?.show({
+                severity: "error",
+                summary: "Validation Error",
+                detail: "Please select month and year"
+            }
+
             );
             return;
         }
 
         try {
             const res = await generateSlips({ month, year }).unwrap();
-            showToast(toast, "success", "Success", res?.message);
+            toast.current?.show({ severity: "success", summary: "success", detail: res?.message });
 
-        } catch (err: any) {
-            showToast(
-                toast,
-                "error",
-                "Error",
-                err?.data?.message || "Something went wrong"
-            );
-        }
+        } catch (error: any) {
+            toast.current?.show({
+                severity: 'error',
+                summary: 'Error',
+                detail: error?.data?.message || error?.message || "Failed to verify CIF"
+            });
+        };
     };
-
     return (
         <div className="p-4">
             <Toast ref={toast} />
-
             <h3 className="mb-3">Generate Salary Slip</h3>
 
             {/* Month */}
@@ -103,4 +101,5 @@ export const GenerateGovernmentSalarySlip = () => {
             </div>
         </div>
     );
-};
+
+}
