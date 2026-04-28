@@ -2673,6 +2673,7 @@
         "SalaryController.delete",
         "SalaryController.recover",
         "SalaryController.deleteMany",
+        "SalaryController.calaculteSalary",
         "AdvancePaymentController.create",
         "AdvancePaymentController.update",
         "AdvancePaymentController.findMany",
