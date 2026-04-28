@@ -90,7 +90,7 @@ export class SalaryController {
   }
 
   @ApiBearerAuth("jwt")
-  @Post(':id')
+  @Post('/calculate-salary')
   async calaculteSalary(@Body() createDto: CreateSalaryDto[]) {
     return this.service.calculateSalary(createDto);
   }

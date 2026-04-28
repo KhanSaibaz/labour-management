@@ -3535,12 +3535,6 @@
           {
             "type": "field",
             "attrs": {
-              "name": "userRole"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
               "name": "active"
             }
           }
@@ -3620,12 +3614,6 @@
                         "type": "field",
                         "attrs": {
                           "name": "password"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "userRole"
                         }
                       },
                       {

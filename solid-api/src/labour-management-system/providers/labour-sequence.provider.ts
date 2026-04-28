@@ -27,7 +27,7 @@ export class LabourSequenceProvider<T extends CommonEntity>
   }
 
   help(): string {
-    return 'Generate labour code like LB01, LB02, etc from ss_model_sequence';
+    return 'Generate labour code like LB-001, LB-002, etc from ss_model_sequence';
   }
 
   async preComputeValue(
@@ -70,20 +70,17 @@ export class LabourSequenceProvider<T extends CommonEntity>
 
       const seq = seqResult[0];
 
-      // ✅ Ensure starting value = 0
-      const currentVal = parseInt(seq.current_value ?? 0, 10);
+      const currentVal = parseInt(seq.current_value ?? 0, 10) || 0;
 
-      // 👉 Always increment
       const nextVal = currentVal + 1;
 
-      // ✅ Padding logic
-      const padding = seq.padding ?? 3; // default 3 → 001
+      const padding = seq.padding ?? 3;
       const paddedNumber = String(nextVal).padStart(padding, '0');
 
-      // ✅ Build final code
-      const labourCode = `${seq.prefix ?? ''}${seq.separator ?? ''}${paddedNumber}`;
+      const prefix = seq.prefix ?? 'LB';
+      const separator = seq.separator ?? '-';
+      const labourCode = `${prefix}${separator}${paddedNumber}`;
 
-      // ✅ Update sequence
       await manager.query(
         `UPDATE ss_model_sequence
          SET current_value = $1, updated_at = NOW()
@@ -91,8 +88,7 @@ export class LabourSequenceProvider<T extends CommonEntity>
         [nextVal, seq.id]
       );
 
-      // ✅ Assign value to entity
-      triggerEntity[fieldName] = labourCode;
+      (triggerEntity as any)[fieldName] = labourCode;
     });
   }
 }
