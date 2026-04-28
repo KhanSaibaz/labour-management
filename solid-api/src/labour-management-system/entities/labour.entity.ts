@@ -77,7 +77,15 @@ export class Labour extends CommonEntity {
     @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.labourCode, { cascade: true })
     governmentSalarySlip: GovernmentSalarySlip[];
 
+    @OneToMany(() => InventoryAsk, inventoryAsk => inventoryAsk.managerCode, { cascade: true })
+    managerInventoryAsk: InventoryAsk[];
 
-@OneToMany(() => InventoryAsk, inventoryAsk => inventoryAsk.managerCode, { cascade: true })
-managerInventoryAsk: InventoryAsk[];
+    @Column({ type: "varchar", nullable: true })
+    adharCardNumber: string;
+
+    @Column({ type: "varchar", nullable: true })
+    panCardNumber: string;
+
+    @Column({ type: "varchar", nullable: true })
+    uanNumber: string;
 }

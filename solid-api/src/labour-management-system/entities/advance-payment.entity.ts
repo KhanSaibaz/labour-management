@@ -31,12 +31,10 @@ export class AdvancePayment extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     advanceMonth: string;
 
+    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
+    @JoinColumn()
+    labourCode: Labour;
 
-@ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-@JoinColumn()
-labourCode: Labour;
-
-
-@Column({ type: "varchar" })
-name: string;
+    @Column({ type: "varchar" })
+    name: string;
 }

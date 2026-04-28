@@ -53,12 +53,10 @@ export class GovernmentSalarySlip extends CommonEntity {
     @JoinColumn()
     salary: Salary;
 
+    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
+    @JoinColumn()
+    labourCode: Labour;
 
-@ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-@JoinColumn()
-labourCode: Labour;
-
-
-@Column({ type: "varchar" })
-name: string;
+    @Column({ type: "varchar" })
+    name: string;
 }

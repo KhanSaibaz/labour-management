@@ -523,7 +523,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": false,
+            "required": true,
             "unique": false,
             "index": false,
             "private": false,
@@ -642,6 +642,72 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "adharCardNumber",
+            "displayName": "Adhar Card Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "panCardNumber",
+            "displayName": "Pan Card Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "uanNumber",
+            "displayName": "UAN Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -3306,6 +3372,15 @@
       "roles": [
         "Labour  Admin"
       ]
+    },
+    {
+      "displayName": "Salary",
+      "name": "salary-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "salary-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
     }
   ],
   "views": [
@@ -3607,7 +3682,39 @@
           {
             "type": "field",
             "attrs": {
-              "name": "labourName",
+              "name": "name",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "contactNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "adharCardNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "panCardNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "uanNumber",
               "isSearchable": true,
               "sortable": true
             }
@@ -3853,6 +3960,34 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "permanentAddress"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-5",
+                              "className": "col-12 md:col-6",
+                              "label": "Labour Details"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "adharCardNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "panCardNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "uanNumber"
                                 }
                               }
                             ]
@@ -6524,6 +6659,43 @@
             "type": "field",
             "attrs": {
               "name": "sIteName"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "authUser-tree-view",
+      "displayName": "AuthUser",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
             }
           }
         ]

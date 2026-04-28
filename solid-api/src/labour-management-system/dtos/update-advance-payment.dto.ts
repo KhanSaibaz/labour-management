@@ -51,25 +51,19 @@ export class UpdateAdvancePaymentDto {
     @ApiProperty()
     advanceMonth: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-labourCodeId: number;
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
 
-
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-labourCodeUserKey: string;
-
-
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    name: string;
 }

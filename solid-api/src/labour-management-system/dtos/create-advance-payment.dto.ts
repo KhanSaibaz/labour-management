@@ -49,24 +49,18 @@ export class CreateAdvancePaymentDto {
     @ApiProperty()
     advanceMonth: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-labourCodeId: number;
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
 
-
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-labourCodeUserKey: string;
-
-
-
-@IsNotEmpty()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    name: string;
 }

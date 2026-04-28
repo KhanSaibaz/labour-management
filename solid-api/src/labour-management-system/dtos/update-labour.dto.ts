@@ -143,6 +143,7 @@ export class UpdateLabourDto {
     @ApiProperty()
     labourPasswordConfirm: string;
 
+    @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()
@@ -199,26 +200,35 @@ export class UpdateLabourDto {
     @ApiProperty({ description: "GovernmentSalarySlip" })
     governmentSalarySlipCommand: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "ManagerInventoryAsk" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdateInventoryAskDto)
+    managerInventoryAsk: UpdateInventoryAskDto[];
 
-@IsOptional()
-@ApiProperty({ description: "ManagerInventoryAsk" })
-@IsArray()
-@ValidateNested({ each : true })
-@Type(() => UpdateInventoryAskDto)
-managerInventoryAsk: UpdateInventoryAskDto[];
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "ManagerInventoryAsk" })
+    managerInventoryAskIds: number[];
 
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "ManagerInventoryAsk" })
+    managerInventoryAskCommand: string;
 
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    adharCardNumber: string;
 
-@IsOptional()
-@IsArray()
-@ApiProperty({ description: "ManagerInventoryAsk" })
-managerInventoryAskIds: number[];
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    panCardNumber: string;
 
-
-
-@IsString()
-@IsOptional()
-@ApiProperty({ description: "ManagerInventoryAsk" })
-managerInventoryAskCommand: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    uanNumber: string;
 }

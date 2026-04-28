@@ -41,25 +41,19 @@ export class UpdateInventoryAskDto {
     @ApiProperty()
     hsnCodeUserKey: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    managerCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-managerCodeId: number;
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    managerCodeUserKey: string;
 
-
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-managerCodeUserKey: string;
-
-
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-managerName: string;
-
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    managerName: string;
 }

@@ -83,10 +83,8 @@ export class CreateSalaryDto {
     @ApiProperty()
     labourCodeUserKey: string;
 
-
-@IsNotEmpty()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    name: string;
 }
