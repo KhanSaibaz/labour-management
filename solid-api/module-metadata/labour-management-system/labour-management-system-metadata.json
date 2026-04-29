@@ -2785,7 +2785,8 @@
         "ExportTransactionController.insertMany",
         "ExportTransactionController.update",
         "ExportTransactionController.partialUpdate",
-        "ExportTransactionController.findMany"
+        "ExportTransactionController.findMany",
+        "DashBoardController.getDashBoardRecord"
       ]
     },
     {
