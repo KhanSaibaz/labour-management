@@ -59,6 +59,7 @@ export class Labour extends CommonEntity {
     @Column({ type: "boolean", nullable: true, default: true })
     active: boolean = true;
 
+    @Index()
     @Column({ type: "varchar" })
     name: string;
 

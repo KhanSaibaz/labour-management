@@ -16,6 +16,7 @@ import { GenerateGovernmentSalarySlip } from "./admin-layout/governmentSalarySli
 
 import { governmentSalarySlipApi } from "./redux/governmentSalarySlipApi";
 import { labourDashBoardApi } from "./redux/dasboardApi";
+import { DashBoardPage } from "./custom-layout/admin/DashboardPage";
 
 const labourManagementSystemUiModule = {
   name: "labour-management-system",
@@ -25,6 +26,7 @@ const labourManagementSystemUiModule = {
     ],
     extraAdminRoutes: [
       { path: "/admin/info", element: createElement(AdminInfoPage) },
+      { path: "/admin/core/labour-management-system/dashboard", element: createElement(DashBoardPage) },
     ],
     extraRoutes: [
       { path: "/about", element: createElement(AboutPage) },

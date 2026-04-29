@@ -5,11 +5,6 @@ import { IsString, IsDate, IsNotEmpty } from 'class-validator';
 
 export class CreateAdvancePaymentDto {
     @IsOptional()
-    @IsDate()
-    @ApiProperty()
-    advanceYear: Date;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     repaymentStatus: string = "Pending";
@@ -63,4 +58,11 @@ export class CreateAdvancePaymentDto {
     @IsString()
     @ApiProperty()
     name: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+advanceYear: string;
+
 }

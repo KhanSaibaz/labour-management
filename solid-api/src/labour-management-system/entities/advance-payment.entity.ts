@@ -4,9 +4,6 @@ import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('advance_payment')
 export class AdvancePayment extends CommonEntity {
-    @Column({ type: "date", nullable: true })
-    advanceYear: Date;
-
     @Column({ type: "varchar", nullable: true, default: "Pending" })
     repaymentStatus: string = "Pending";
 
@@ -37,4 +34,8 @@ export class AdvancePayment extends CommonEntity {
 
     @Column({ type: "varchar" })
     name: string;
+
+
+@Column({ type: "varchar", nullable: true })
+advanceYear: string;
 }

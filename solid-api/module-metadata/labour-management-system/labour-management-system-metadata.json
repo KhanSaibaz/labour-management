@@ -483,7 +483,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -809,8 +809,6 @@
             "ormType": "decimal",
             "isSystem": false,
             "defaultValue": null,
-            "precision": 5,
-            "scale": 2,
             "min": null,
             "max": null,
             "required": false,
@@ -821,8 +819,7 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
+            "enableAuditTracking": true
           },
           {
             "name": "noOfTries",
@@ -973,7 +970,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -1319,24 +1316,6 @@
         "internationalisation": false,
         "fields": [
           {
-            "name": "advanceYear",
-            "displayName": "Advance Year",
-            "description": null,
-            "type": "date",
-            "ormType": "date",
-            "isSystem": false,
-            "defaultValue": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "enableAuditTracking": true
-          },
-          {
             "name": "repaymentStatus",
             "displayName": "Repayment Status",
             "description": null,
@@ -1579,6 +1558,28 @@
             "columnName": null,
             "isUserKey": false,
             "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "advanceYear",
+            "displayName": "Advance Year",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
             "isPrimaryKey": false
           }
         ]
@@ -4670,6 +4671,14 @@
             "type": "field",
             "attrs": {
               "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode",
+              "isSearchable": true,
+              "sortable": true
             }
           },
           {
