@@ -12,7 +12,7 @@ export interface DashboardData {
   lastRefreshed: string;
 }
 
-export const DashBoardApi = createApi({
+export const labourDashBoardApi = createApi({
   reducerPath: "dashboardApi",
   baseQuery: baseQueryWithAuth,
   tagTypes: ["Dashboard"],
@@ -27,4 +27,4 @@ export const DashBoardApi = createApi({
   }),
 });
 
-export const { useGetDashboardQuery } = DashBoardApi;
+export const { useGetDashboardQuery } = labourDashBoardApi;

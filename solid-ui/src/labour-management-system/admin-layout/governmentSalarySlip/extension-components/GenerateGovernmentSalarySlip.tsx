@@ -4,8 +4,8 @@ import { useDispatch } from "react-redux";
 import { Dropdown } from "primereact/dropdown";
 import { Button } from "primereact/button";
 
-import { useGenerateSalarySlipsMutation } from "../../../../redux/governmentSalarySlipApi";
 import { closePopup, showToast } from "@solidxai/core-ui";
+import { useGenerateSalarySlipsMutation } from "../../../redux/governmentSalarySlipApi";
 
 export const GenerateGovernmentSalarySlip = () => {
     const toast = useRef<Toast>(null);
