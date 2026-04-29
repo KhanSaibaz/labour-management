@@ -34,7 +34,7 @@ export interface DashboardData {
   stats: Stat[];
   attendanceData: ChartData;
   donutData: ChartData;
-  salaryData: ChartData;
+  // salaryData: ChartData;
   advancePayments: AdvancePayment[];
   inventory: InventoryItem[];
   lastRefreshed: string;
@@ -64,7 +64,7 @@ function getMonthRange(year: number, monthIndex: number): { startDate: Date; end
 function getLastSixMonthsMeta() {
   return Array.from({ length: 6 }, (_, i) => {
     const date = new Date();
-    date.setDate(1);  // ← yeh line add karo
+    date.setDate(1);
     date.setMonth(date.getMonth() - (5 - i));
     return {
       label: MONTH_NAMES_SHORT[date.getMonth()],
@@ -95,52 +95,125 @@ export class DashBoardService {
   async getDashBoardRecord(): Promise<DashboardData> {
   
     const now = new Date();
-    const today = new Date(now); today.setHours(0, 0, 0, 0);
-    const tomorrow = new Date(today); tomorrow.setDate(today.getDate() + 1);
+    const today = new Date(now); 
+    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date(today); 
+    tomorrow.setDate(today.getDate() + 1);
 
+    // ── Current Month ────────────────────────────────────────────────────────
     const currentMonth = MONTH_NAMES_FULL[now.getMonth()];
     const currentYear = now.getFullYear().toString();
+
+    // ── Last Month Calculation ───────────────────────────────────────────────
+    const lastMonthDate = new Date(now);
+    lastMonthDate.setMonth(lastMonthDate.getMonth() - 1);
+    const lastMonthFull = MONTH_NAMES_FULL[lastMonthDate.getMonth()];
+    const lastMonthYear = lastMonthDate.getFullYear().toString();
 
     const [
       totalLabours,
       activeSites,
       presentToday,
-      pendingSalaryCount,
       pendingInventoryCount,
       inProgressInventoryCount,
       completedInventoryCount,
       newRequestsCount,
       advancePayments,
       recentInventoryAsks,
-      currentMonthSalaries,
+      // ── Current Month Salaries ──
+      currentMonthCompletedSalaries,
+      currentMonthPendingSalaries,
+      // ── Last Month Salaries ─────
+      lastMonthCompletedSalaries,
+      lastMonthPendingSalaries,
+      // ── Charts ──────────────────
       monthlyAttendance,
-      monthlySalaryData,
+      // monthlySalaryData,
     ] = await Promise.all([
-      this.authUserRepo.count({ where: { active: true } }),
+      this.labourRepo.count({ where: { active: true } }),
       this.siteRepo.count({ where: { status: "active" } }),
       this.attendanceRepo.count({ where: { checkIn: Between(today, tomorrow) } }),
-      this.salaryRepo.count({ where: { salaryMonth: currentMonth, salaryYear: currentYear, status: "Pending" } }),
       this.inventoryAskRepo.count({ where: { status: "Pending" } }),
       this.inventoryAskRepo.count({ where: { status: "In Progress" } }),
       this.inventoryAskRepo.count({ where: { status: "Completed" } }),
       this.inventoryAskRepo.count({ where: { status: "New" } }),
-      this.advancePaymentRepo.find({ relations: ["name"], order: { createdAt: "DESC" }, take: 4 }),
-      this.inventoryAskRepo.find({ relations: ["sIteName"], order: { createdAt: "DESC" }, take: 5 }),
-      this.salaryRepo.find({ where: { salaryMonth: currentMonth, salaryYear: currentYear } }),
+      this.advancePaymentRepo.find({ 
+        relations: ["labourCode"], 
+        order: { createdAt: "DESC" }, 
+        take: 4 
+      }),
+      this.inventoryAskRepo.find({ 
+        relations: ["sIteName"], 
+        order: { createdAt: "DESC" }, 
+        take: 5 
+      }),
+      // ── Current Month: Complete ─
+      this.salaryRepo.find({ 
+        where: { 
+          salaryMonth: currentMonth, 
+          salaryYear: currentYear,
+          status: "Complete"
+        } 
+      }),
+      // ── Current Month: Pending ──
+      this.salaryRepo.find({ 
+        where: { 
+          salaryMonth: currentMonth, 
+          salaryYear: currentYear,
+          status: "Pending"
+        } 
+      }),
+      // ── Last Month: Complete ────
+      this.salaryRepo.find({ 
+        where: { 
+          salaryMonth: lastMonthFull, 
+          salaryYear: lastMonthYear,
+          status: "Complete"
+        } 
+      }),
+      // ── Last Month: Pending ─────
+      this.salaryRepo.find({ 
+        where: { 
+          salaryMonth: lastMonthFull, 
+          salaryYear: lastMonthYear,
+          status: "Pending"
+        } 
+      }),
+      // ── Charts ──────────────────
       this.getMonthlyAttendanceData(),
-      this.getMonthlySalaryData(),
+      // this.getMonthlySalaryData(),
     ]);
 
+    // ── Calculate Salary Amounts & Counts ────────────────────────────────────
+    
+    // Current Month
+    const currentMonthPaidAmount = currentMonthCompletedSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
+    const currentMonthPaidCount = currentMonthCompletedSalaries.length;
+    
+    const currentMonthPendingAmount = currentMonthPendingSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
+    const currentMonthPendingCount = currentMonthPendingSalaries.length;
+
+    // Last Month
+    const lastMonthPaidAmount = lastMonthCompletedSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
+    const lastMonthPaidCount = lastMonthCompletedSalaries.length;
+    
+    const lastMonthPendingAmount = lastMonthPendingSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
+    const lastMonthPendingCount = lastMonthPendingSalaries.length;
+
+    // Attendance
     const absentToday = Math.max(0, totalLabours - presentToday);
     const attendancePct = totalLabours > 0 ? ((presentToday / totalLabours) * 100).toFixed(1) : "0.0";
     const absentPct = (100 - parseFloat(attendancePct)).toFixed(1);
-    const salaryPaidAmount = currentMonthSalaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
 
-    console.log(advancePayments,"advancePayments");
-    
+    console.log({
+      currentMonthCompletedSalaries,
+      currentMonthPendingSalaries,
+      lastMonthCompletedSalaries,
+      lastMonthPendingSalaries,
+    }, "Salary Data");
 
     const mappedAdvancePayments: AdvancePayment[] = advancePayments.map((ap) => ({
-      labourName: ap.name || "Unknown",
+      labourName: ap.labourCode?.name || "Unknown",
       site: "-",
       advanceMonth: ap.advanceMonth || "-",
       repaymentStatus: ap.repaymentStatus || "Pending",
@@ -173,10 +246,45 @@ export class DashBoardService {
           sub: `${absentPct}% absent`, subColor: "#A32D2D",
           icon: "pi pi-times-circle", iconBg: "#FCEBEB", iconColor: "#A32D2D",
         },
+        // ── Current Month: Paid ──────────────────────────────────────────────
         {
-          label: "Salary Paid", value: `₹${(salaryPaidAmount / 100000).toFixed(1)}L`,
-          sub: `${pendingSalaryCount} pending`, subColor: "#854F0B",
-          icon: "pi pi-wallet", iconBg: "#FAEEDA", iconColor: "#854F0B",
+          label: `${currentMonth} Paid`, 
+          value: `₹${(currentMonthPaidAmount / 100000).toFixed(1)}L`,
+          sub: `${currentMonthPaidCount} completed`, 
+          subColor: "#2D5A3B",
+          icon: "pi pi-check-square", 
+          iconBg: "#E8F4ED", 
+          iconColor: "#2D5A3B",
+        },
+        // ── Current Month: Pending ──────────────────────────────────────────
+        {
+          label: `${currentMonth} Pending`, 
+          value: `₹${(currentMonthPendingAmount / 100000).toFixed(1)}L`,
+          sub: `${currentMonthPendingCount} awaiting`, 
+          subColor: "#854F0B",
+          icon: "pi pi-hourglass", 
+          iconBg: "#FAEEDA", 
+          iconColor: "#854F0B",
+        },
+        // ── Last Month: Paid ─────────────────────────────────────────────────
+        {
+          label: `${lastMonthFull} Paid`, 
+          value: `₹${(lastMonthPaidAmount / 100000).toFixed(1)}L`,
+          sub: `${lastMonthPaidCount} completed`, 
+          subColor: "#2D5A3B",
+          icon: "pi pi-check-square", 
+          iconBg: "#E8F4ED", 
+          iconColor: "#2D5A3B",
+        },
+        // ── Last Month: Pending ──────────────────────────────────────────────
+        {
+          label: `${lastMonthFull} Pending`, 
+          value: `₹${(lastMonthPendingAmount / 100000).toFixed(1)}L`,
+          sub: `${lastMonthPendingCount} awaiting`, 
+          subColor: "#A32D2D",
+          icon: "pi pi-times-circle", 
+          iconBg: "#FCEBEB", 
+          iconColor: "#A32D2D",
         },
         {
           label: "Inventory Pending", value: `${pendingInventoryCount}`,
@@ -199,7 +307,7 @@ export class DashBoardService {
           hoverOffset: 6,
         }],
       },
-      salaryData: monthlySalaryData,
+      // salaryData: monthlySalaryData,
       advancePayments: mappedAdvancePayments,
       inventory: mappedInventory,
     };
@@ -236,37 +344,48 @@ export class DashBoardService {
       labels: months.map((m) => m.label),
       datasets: [
         {
-          label: "Present", data: results.map((r) => r.present),
-          backgroundColor: "#378ADD", borderRadius: 4, barPercentage: 0.65,
+          label: "Present", 
+          data: results.map((r) => r.present),
+          backgroundColor: "#378ADD", 
+          borderRadius: 4, 
+          barPercentage: 0.65,
         },
         {
-          label: "Absent", data: results.map((r) => r.absent),
-          backgroundColor: "#E24B4A", borderRadius: 4, barPercentage: 0.65,
+          label: "Absent", 
+          data: results.map((r) => r.absent),
+          backgroundColor: "#E24B4A", 
+          borderRadius: 4, 
+          barPercentage: 0.65,
         },
       ],
     };
   }
 
-  private async getMonthlySalaryData(): Promise<ChartData> {
-    const months = getLastSixMonthsMeta();
+  // private async getMonthlySalaryData(): Promise<ChartData> {
+  //   const months = getLastSixMonthsMeta();
 
-    const results = await Promise.all(
-      months.map(async ({ monthFull, year }) => {
-        const salaries = await this.salaryRepo.find({
-          where: { salaryMonth: monthFull, salaryYear: year },
-        });
-        return salaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
-      })
-    );
+  //   const results = await Promise.all(
+  //     months.map(async ({ monthFull, year }) => {
+  //       const salaries = await this.salaryRepo.find({
+  //         where: { salaryMonth: monthFull, salaryYear: year },
+  //       });
+  //       return salaries.reduce((sum, s) => sum + (s.totalAmount || 0), 0);
+  //     })
+  //   );
 
-    return {
-      labels: months.map((m) => m.label),
-      datasets: [{
-        label: "Salary Paid (₹)", data: results,
-        borderColor: "#378ADD", backgroundColor: "rgba(55,138,221,0.08)",
-        borderWidth: 2, pointBackgroundColor: "#378ADD",
-        pointRadius: 4, fill: true, tension: 0.4,
-      }],
-    };
-  }
+  //   return {
+  //     labels: months.map((m) => m.label),
+  //     datasets: [{
+  //       label: "Salary Paid (₹)", 
+  //       data: results,
+  //       borderColor: "#378ADD", 
+  //       backgroundColor: "rgba(55,138,221,0.08)",
+  //       borderWidth: 2, 
+  //       pointBackgroundColor: "#378ADD",
+  //       pointRadius: 4, 
+  //       fill: true, 
+  //       tension: 0.4,
+  //     }],
+  //   };
+  // }
 }

@@ -355,7 +355,7 @@ export const DashBoardPage = () => {
           </div>
         </div>
 
-        {chartSalary && (
+        {/* {chartSalary && (
           <div className="mb-3">
             <div style={card}>
               <span style={{ fontSize: "14px", fontWeight: 500, color: "var(--text-color)" }}>
@@ -366,7 +366,7 @@ export const DashBoardPage = () => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
 
         <div style={{ height: "1.5rem" }} />
       </div>
