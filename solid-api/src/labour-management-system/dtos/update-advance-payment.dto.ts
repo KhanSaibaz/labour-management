@@ -62,10 +62,8 @@ export class UpdateAdvancePaymentDto {
     @ApiProperty()
     name: string;
 
-
-@IsOptional()
-@IsString()
-@ApiProperty()
-advanceYear: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    advanceYear: string;
 }

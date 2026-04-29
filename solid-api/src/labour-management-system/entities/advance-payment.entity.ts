@@ -1,5 +1,5 @@
 import { CommonEntity } from '@solidxai/core';
-import { Entity, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, Column, Index } from 'typeorm';
 import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('advance_payment')
@@ -32,10 +32,10 @@ export class AdvancePayment extends CommonEntity {
     @JoinColumn()
     labourCode: Labour;
 
+    @Index()
     @Column({ type: "varchar" })
     name: string;
 
-
-@Column({ type: "varchar", nullable: true })
-advanceYear: string;
+    @Column({ type: "varchar", nullable: true })
+    advanceYear: string;
 }

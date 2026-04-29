@@ -14,8 +14,7 @@ export class InventoryManagement extends CommonEntity {
     @OneToMany(() => InventoryAsk, inventoryAsk => inventoryAsk.hsnCode, { cascade: true })
     inventoryAsks: InventoryAsk[];
 
-
-@Index({ unique: true })
-@Column({ type: "varchar" })
-hsnCode: string;
+    @Index({ unique: true })
+    @Column({ type: "varchar" })
+    hsnCode: string;
 }

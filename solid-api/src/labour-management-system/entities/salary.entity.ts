@@ -1,5 +1,5 @@
 import { CommonEntity } from '@solidxai/core';
-import { Entity, JoinColumn, ManyToOne, Column, OneToMany } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, Column, OneToMany, Index } from 'typeorm';
 import { Labour } from 'src/labour-management-system/entities/labour.entity';
 import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
 
@@ -40,6 +40,7 @@ export class Salary extends CommonEntity {
     @JoinColumn()
     labourCode: Labour;
 
+    @Index()
     @Column({ type: "varchar" })
     name: string;
 

@@ -59,10 +59,8 @@ export class CreateAdvancePaymentDto {
     @ApiProperty()
     name: string;
 
-
-@IsOptional()
-@IsString()
-@ApiProperty()
-advanceYear: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    advanceYear: string;
 }
