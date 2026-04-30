@@ -36,16 +36,12 @@ export const GenerateGovernmentSalarySlip = () => {
                 severity: "error",
                 summary: "Validation Error",
                 detail: "Please select month and year"
-            }
-
-            );
+            });
             return;
         }
-
         try {
             const res = await generateSlips({ month, year }).unwrap();
             toast.current?.show({ severity: "success", summary: "success", detail: res?.message });
-
         } catch (error: any) {
             toast.current?.show({
                 severity: 'error',
@@ -58,7 +54,6 @@ export const GenerateGovernmentSalarySlip = () => {
         <div className="p-4">
             <Toast ref={toast} />
             <h3 className="mb-3">Generate Salary Slip</h3>
-
             {/* Month */}
             <div className="mb-3">
                 <label className="block mb-2">Select Month</label>
