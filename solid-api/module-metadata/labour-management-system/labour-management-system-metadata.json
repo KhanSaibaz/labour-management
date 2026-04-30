@@ -4451,8 +4451,8 @@
           "headerButtons": [
             {
               "attrs": {
-                "label": "Genrate",
-                "action": "calculateSalary",
+                "label": "Calculate",
+                "action": "CalculateSalary",
                 "actionInContextMenu": false,
                 "openInPopup": true,
                 "icon": "pi pi-money-bill",
@@ -4476,7 +4476,7 @@
               "isSearchable": true
             }
           },
-            {
+          {
             "type": "field",
             "attrs": {
               "name": "name",
@@ -4605,7 +4605,7 @@
                                   "name": "labourCode"
                                 }
                               },
-                               {
+                              {
                                 "type": "field",
                                 "attrs": {
                                   "name": "name"
