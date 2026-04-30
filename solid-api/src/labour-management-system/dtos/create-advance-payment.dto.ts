@@ -5,11 +5,6 @@ import { IsString, IsDate, IsNotEmpty } from 'class-validator';
 
 export class CreateAdvancePaymentDto {
     @IsOptional()
-    @IsDate()
-    @ApiProperty()
-    advanceYear: Date;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     repaymentStatus: string = "Pending";
@@ -49,24 +44,23 @@ export class CreateAdvancePaymentDto {
     @ApiProperty()
     advanceMonth: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-labourCodeId: number;
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
 
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    name: string;
 
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-labourCodeUserKey: string;
-
-
-
-@IsNotEmpty()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    advanceYear: string;
 }

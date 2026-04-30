@@ -483,7 +483,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -523,7 +523,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": false,
+            "required": true,
             "unique": false,
             "index": false,
             "private": false,
@@ -642,6 +642,72 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "adharCardNumber",
+            "displayName": "Adhar Card Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "panCardNumber",
+            "displayName": "Pan Card Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "uanNumber",
+            "displayName": "UAN Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       },
@@ -743,8 +809,6 @@
             "ormType": "decimal",
             "isSystem": false,
             "defaultValue": null,
-            "precision": 5,
-            "scale": 2,
             "min": null,
             "max": null,
             "required": false,
@@ -755,8 +819,7 @@
             "encryptionType": null,
             "decryptWhen": null,
             "columnName": null,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
+            "enableAuditTracking": true
           },
           {
             "name": "noOfTries",
@@ -907,7 +970,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -916,6 +979,31 @@
             "isUserKey": false,
             "enableAuditTracking": false,
             "isPrimaryKey": false
+          },
+          {
+            "name": "previousWorkUnits",
+            "displayName": "Previous Work Units",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "Single:Single",
+              "One And Half:One And Half",
+              "Double:Double"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
           }
         ]
       },
@@ -1226,7 +1314,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -1252,24 +1340,6 @@
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "advanceYear",
-            "displayName": "Advance Year",
-            "description": null,
-            "type": "date",
-            "ormType": "date",
-            "isSystem": false,
-            "defaultValue": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "enableAuditTracking": true
-          },
           {
             "name": "repaymentStatus",
             "displayName": "Repayment Status",
@@ -1505,7 +1575,7 @@
             "max": null,
             "required": true,
             "unique": false,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -1513,6 +1583,28 @@
             "columnName": null,
             "isUserKey": false,
             "enableAuditTracking": false,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "advanceYear",
+            "displayName": "Advance Year",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
             "isPrimaryKey": false
           }
         ]
@@ -1544,7 +1636,7 @@
             "max": null,
             "required": true,
             "unique": true,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -1880,7 +1972,7 @@
             "max": null,
             "required": true,
             "unique": true,
-            "index": false,
+            "index": true,
             "private": false,
             "encrypt": false,
             "encryptionType": null,
@@ -2548,6 +2640,33 @@
             "isUserKey": false,
             "enableAuditTracking": false,
             "isPrimaryKey": false
+          },
+          {
+            "name": "site",
+            "displayName": "Site",
+            "description": "Site",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "governmentSalarySlip",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "site",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": false
           }
         ]
       }
@@ -2607,6 +2726,7 @@
         "SalaryController.delete",
         "SalaryController.recover",
         "SalaryController.deleteMany",
+        "SalaryController.calaculteSalary",
         "AdvancePaymentController.create",
         "AdvancePaymentController.update",
         "AdvancePaymentController.findMany",
@@ -2646,7 +2766,52 @@
         "InventoryAskController.partialUpdate",
         "InventoryAskController.delete",
         "InventoryAskController.recover",
-        "InventoryAskController.deleteMany"
+        "InventoryAskController.deleteMany",
+        "ImportTransactionController.create",
+        "ImportTransactionController.insertMany",
+        "ImportTransactionController.update",
+        "ImportTransactionController.partialUpdate",
+        "ImportTransactionController.recoverMany",
+        "ImportTransactionController.recover",
+        "ImportTransactionController.findMany",
+        "ImportTransactionController.findOne",
+        "ImportTransactionController.deleteMany",
+        "ImportTransactionController.delete",
+        "ImportTransactionController.startImportAsync",
+        "ImportTransactionController.startImportSync",
+        "ImportTransactionController.getImportMappingInfo",
+        "ImportTransactionController.exportFailedImportedImports",
+        "ImportTransactionController.getImportTemplate",
+        "ImportTransactionController.getImportInstructions",
+        "ImportTransactionErrorLogController.create",
+        "ImportTransactionErrorLogController.recover",
+        "ImportTransactionErrorLogController.findMany",
+        "ImportTransactionErrorLogController.findOne",
+        "ImportTransactionErrorLogController.deleteMany",
+        "ImportTransactionErrorLogController.delete",
+        "ImportTransactionErrorLogController.insertMany",
+        "ImportTransactionErrorLogController.update",
+        "ImportTransactionErrorLogController.partialUpdate",
+        "ImportTransactionErrorLogController.recoverMany",
+        "ExportTemplateController.findMany",
+        "ExportTemplateController.create",
+        "ExportTemplateController.insertMany",
+        "ExportTemplateController.update",
+        "ExportTemplateController.partialUpdate",
+        "ExportTemplateController.findOne",
+        "ExportTemplateController.deleteMany",
+        "ExportTemplateController.delete",
+        "ExportTemplateController.startExportSync",
+        "ExportTemplateController.startExportAsync",
+        "ExportTransactionController.findOne",
+        "ExportTransactionController.deleteMany",
+        "ExportTransactionController.delete",
+        "ExportTransactionController.create",
+        "ExportTransactionController.insertMany",
+        "ExportTransactionController.update",
+        "ExportTransactionController.partialUpdate",
+        "ExportTransactionController.findMany",
+        "DashBoardController.getDashBoardRecord"
       ]
     },
     {
@@ -3460,12 +3625,6 @@
           {
             "type": "field",
             "attrs": {
-              "name": "userRole"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
               "name": "active"
             }
           }
@@ -3550,12 +3709,6 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "userRole"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
                           "name": "active"
                         }
                       }
@@ -3607,7 +3760,39 @@
           {
             "type": "field",
             "attrs": {
-              "name": "labourName",
+              "name": "name",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "contactNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "adharCardNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "panCardNumber",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "uanNumber",
               "isSearchable": true,
               "sortable": true
             }
@@ -3856,6 +4041,34 @@
                                 }
                               }
                             ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "col-5",
+                              "className": "col-12 md:col-6",
+                              "label": "Labour Details"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "adharCardNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "panCardNumber"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "uanNumber"
+                                }
+                              }
+                            ]
                           }
                         ]
                       }
@@ -4074,6 +4287,12 @@
             "attrs": {
               "name": "workUnits"
             }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "previousWorkUnits"
+            }
           }
         ]
       }
@@ -4177,6 +4396,18 @@
                                 "attrs": {
                                   "name": "overtimeHour"
                                 }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "workUnits"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "previousWorkUnits"
+                                }
                               }
                             ]
                           }
@@ -4254,8 +4485,8 @@
           "headerButtons": [
             {
               "attrs": {
-                "label": "Genrate",
-                "action": "calculateSalary",
+                "label": "Calculate",
+                "action": "CalculateSalary",
                 "actionInContextMenu": false,
                 "openInPopup": true,
                 "icon": "pi pi-money-bill",
@@ -4269,6 +4500,14 @@
             "type": "field",
             "attrs": {
               "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labourCode",
+              "sortable": true,
+              "isSearchable": true
             }
           },
           {
@@ -4394,6 +4633,12 @@
                               "label": "Employee & Salary Information"
                             },
                             "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labourCode"
+                                }
+                              },
                               {
                                 "type": "field",
                                 "attrs": {
@@ -4551,6 +4796,14 @@
           {
             "type": "field",
             "attrs": {
+              "name": "labourCode",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "name",
               "isSearchable": true,
               "sortable": true
@@ -4654,6 +4907,12 @@
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "labourCode"
+                        }
+                      },
                       {
                         "type": "field",
                         "attrs": {
@@ -6524,6 +6783,43 @@
             "type": "field",
             "attrs": {
               "name": "sIteName"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "authUser-tree-view",
+      "displayName": "AuthUser",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "authUser",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "labour"
             }
           }
         ]

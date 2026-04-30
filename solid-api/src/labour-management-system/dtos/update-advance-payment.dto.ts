@@ -7,11 +7,6 @@ export class UpdateAdvancePaymentDto {
     id: number;
 
     @IsOptional()
-    @IsDate()
-    @ApiProperty()
-    advanceYear: Date;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     repaymentStatus: string;
@@ -51,25 +46,24 @@ export class UpdateAdvancePaymentDto {
     @ApiProperty()
     advanceMonth: string;
 
+    @IsOptional()
+    @IsInt()
+    @ApiProperty()
+    labourCodeId: number;
 
-@IsOptional()
-@IsInt()
-@ApiProperty()
-labourCodeId: number;
+    @IsString()
+    @IsOptional()
+    @ApiProperty()
+    labourCodeUserKey: string;
 
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    name: string;
 
-
-@IsString()
-@IsOptional()
-@ApiProperty()
-labourCodeUserKey: string;
-
-
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    advanceYear: string;
 }

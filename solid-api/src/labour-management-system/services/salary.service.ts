@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ModuleRef } from "@nestjs/core";
 import { EntityManager, In } from 'typeorm';
@@ -44,7 +44,7 @@ export class SalaryService extends CRUDService<Salary> {
 
     // ================= STEP 0: VALIDATION =================
     if (!createDto.month || !createDto.year) {
-      throw new Error("Month and Year are required");
+      throw new BadRequestException("Month and Year are required");
     }
 
     const month = this.normalizeMonth(createDto.month);
@@ -54,130 +54,125 @@ export class SalaryService extends CRUDService<Salary> {
     const currentYear = Number(year);
 
     if (!currentMonth) {
-      throw new Error("Invalid month format");
+      throw new BadRequestException("Invalid month format");
     }
 
-    // ================= STEP 1: FETCH LABOURS =================
-    const labours = await this.labourRepo.find();
-    if (!labours.length) throw new Error("No labour found");
+    // ================= STEP 1: FETCH EXISTING SALARIES =================
+    const salaries = await this.salaryRepo.find({
+      where: {
+        salaryMonth: month,
+        salaryYear: year,
+      },
+      relations: ['labourCode'],
+    });
 
-    const chunkSize = 50;
-    const results = [];
+    if (!salaries.length) {
+      throw new BadRequestException("No salary records found");
+    }
 
-    // ================= STEP 2: PROCESS IN CHUNKS =================
-    for (let i = 0; i < labours.length; i += chunkSize) {
+    const labourIds = salaries
+      .map(s => s.labourCode?.id)
+      .filter(Boolean);
 
-      const chunk = labours.slice(i, i + chunkSize);
-      const labourIds = chunk.map(l => l.id);
+    // ================= STEP 2: EXPENSE =================
+    const expenses = await (await this.labourMonthlyExpenseRepo
+      .createSecurityRuleAwareQueryBuilder('exp'))
+      .select('exp.labour_code_id', 'labourId')
+      .addSelect('SUM(exp.amount)', 'total')
+      .where('exp.labour_code_id IN (:...ids)', { ids: labourIds })
+      .andWhere('EXTRACT(MONTH FROM exp.created_at) = :month', { month: currentMonth })
+      .andWhere('EXTRACT(YEAR FROM exp.created_at) = :year', { year: currentYear })
+      .groupBy('exp.labour_code_id')
+      .getRawMany();
 
-      // ================= STEP 3: EXPENSE (BATCH) =================
-      const expenses = await this.labourMonthlyExpenseRepo
-        .createQueryBuilder('exp')
-        .select('exp.labourCodeId', 'labourId')
-        .addSelect('SUM(exp.amount)', 'total')
-        .where('exp.labourCodeId IN (:...ids)', { ids: labourIds })
-        .groupBy('exp.labourCodeId')
-        .getRawMany();
+    const expenseMap = new Map(
+      expenses.map(e => [Number(e.labourId), Number(e.total)])
+    );
 
-      const expenseMap = new Map(
-        expenses.map(e => [Number(e.labourId), Number(e.total)])
-      );
+    // ================= STEP 3: ADVANCE =================
+    const advances = await this.advancePaymentRepo.find({
+      where: { labourCode: { id: In(labourIds) } },
+    });
 
-      // ================= STEP 4: ADVANCE (BATCH) =================
-      const advances = await this.advancePaymentRepo.find({
-        where: { labourCode: { id: In(labourIds) } },
-      });
+    const advanceMap = new Map<number, AdvancePayment[]>();
 
-      const advanceMap = new Map<number, AdvancePayment[]>();
+    for (const adv of advances) {
+      const id = adv.labourCode?.id;
+      if (!advanceMap.has(id)) advanceMap.set(id, []);
+      advanceMap.get(id).push(adv);
+    }
 
-      for (const adv of advances) {
-        const id = adv.labourCode?.id;
-        if (!advanceMap.has(id)) advanceMap.set(id, []);
-        advanceMap.get(id).push(adv);
-      }
+    const updatedSalaries = [];
 
-      // ================= STEP 5: PROCESS EACH LABOUR =================
-      for (const labour of chunk) {
-        
-        // duplicate check
-        const existing = await this.salaryRepo.findOne({
-          where: {
-            salaryMonth: month,
-            salaryYear: year,
-            labourCode: { id: labour.id }
-          }
-        });
+    // ================= STEP 4: PROCESS EACH SALARY =================
+    for (const salary of salaries) {
 
-        if (existing) continue;
+      if (!salary.labourCode) continue;
 
-        const totalExpense = expenseMap.get(labour.id) || 0;
-        const labourAdvances = advanceMap.get(labour.id) || [];
+      const labourId = salary.labourCode.id;
 
-        let totalAdvanceDeduction = 0;
+      const totalExpense = expenseMap.get(labourId) || 0;
+      const labourAdvances = advanceMap.get(labourId) || [];
 
-        for (const adv of labourAdvances) {
+      let totalAdvanceDeduction = 0;
 
-          if (adv.repaymentStatus !== 'Pending' || !adv.monthlyDeduction) continue;
+      // ================= ADVANCE LOGIC =================
+      for (const adv of labourAdvances) {
 
-          const startMonth = this.MONTH_MAP[this.normalizeMonth(adv.repaymentStartMonth)];
-          const startYear = Number(adv.repaymentStartYear);
+        if (adv.repaymentStatus !== 'Pending' || !adv.monthlyDeduction) continue;
 
-          if (!startMonth || !startYear) continue;
+        const startMonth = this.MONTH_MAP[this.normalizeMonth(adv.repaymentStartMonth)];
+        const startYear = Number(adv.repaymentStartYear);
 
-          const isEligible =
-            currentYear > startYear ||
-            (currentYear === startYear && currentMonth >= startMonth);
+        if (!startMonth || !startYear) continue;
 
-          if (!isEligible) continue;
+        const isEligible =
+          currentYear > startYear ||
+          (currentYear === startYear && currentMonth >= startMonth);
 
-          totalAdvanceDeduction += adv.monthlyDeduction;
+        if (!isEligible) continue;
 
-          adv.balanceAmount = (adv.balanceAmount || 0) - adv.monthlyDeduction;
+        // 🔥 EDGE CASE FIX
+        const remaining = adv.balanceAmount ?? adv.totalPay ?? 0;
 
-          if (adv.balanceAmount <= 0) {
-            adv.repaymentStatus = 'Completed';
-            adv.balanceAmount = 0;
-          }
+        if (remaining <= 0) continue;
 
-          await this.advancePaymentRepo.save(adv);
+        const deduction = Math.min(remaining, adv.monthlyDeduction);
+
+        totalAdvanceDeduction += deduction;
+
+        adv.balanceAmount = remaining - deduction;
+
+        if (adv.balanceAmount <= 0) {
+          adv.balanceAmount = 0;
+          adv.repaymentStatus = 'Completed';
         }
 
-        // ================= STEP 6: SALARY CALC =================
-        const dailyWages = labour.dailyWages || 0;
-        const presentDays = 26;
-        const workingDays = 26;
-
-        const baseSalary = dailyWages * presentDays;
-
-        const totalDeduction = totalExpense + totalAdvanceDeduction;
-        const totalAmount = baseSalary - totalDeduction;
-
-        // ================= STEP 7: SAVE =================
-        const salary = this.salaryRepo.create({
-          salaryMonth: month,
-          salaryYear: year,
-          labourCode: labour,
-          name: labour.name,
-          presentDays,
-          workingDays,
-          absent: workingDays - presentDays,
-          dailyWages,
-          overtimeAmount: 0,
-          totalDeduction,
-          totalAmount,
-          status: "Pending",
-        });
-
-        const saved = await this.salaryRepo.save(salary);
-        results.push(saved);
+        await this.advancePaymentRepo.save(adv);
       }
+
+      // ================= SALARY CALC =================
+      const baseSalary = salary.dailyWages * salary.presentDays;
+
+      const totalDeduction = totalExpense + totalAdvanceDeduction;
+
+      // 🔥 FIX
+      let totalAmount = baseSalary + (salary.overtimeAmount || 0) - totalDeduction;
+
+      if (totalAmount < 0) totalAmount = 0;
+
+      // ================= UPDATE =================
+      salary.totalDeduction = totalDeduction;
+      salary.totalAmount = totalAmount;
+
+      const saved = await this.salaryRepo.save(salary);
+      updatedSalaries.push(saved);
     }
 
     // ================= FINAL RESPONSE =================
     return {
-      message: "Salary calculated successfully",
-      count: results.length,
-      data: results,
+      message: "Salary updated successfully",
+      count: updatedSalaries.length,
     };
   }
 

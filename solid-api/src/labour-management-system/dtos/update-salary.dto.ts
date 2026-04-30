@@ -86,11 +86,9 @@ export class UpdateSalaryDto {
     @ApiProperty()
     labourCodeUserKey: string;
 
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-name: string;
-
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    name: string;
 }

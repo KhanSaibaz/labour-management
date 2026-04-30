@@ -2,7 +2,7 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ModuleRef } from "@nestjs/core";
 import { EntityManager } from 'typeorm';
-import { AuthenticationService, CRUDService, SignUpDto, UserService } from '@solidxai/core';
+import { AuthenticationService, CRUDService, RoleMetadata, SignUpDto, UserService } from '@solidxai/core';
 
 import { Labour } from '../entities/labour.entity';
 import { LabourRepository } from '../repositories/labour.repository';
@@ -39,9 +39,9 @@ export class LabourService extends CRUDService<Labour> {
   private toSignUpDto(createDto: CreateLabourDto, plainPassword: string): SignUpDto {
     return {
       fullName: createDto.name,
-      username: this.generateUsername(createDto.name) || createDto.name,
+      username: createDto.contactNumber || createDto.name,
       email: null,
-      password: plainPassword, // ✅ ALWAYS plain password
+      password: plainPassword || createDto.name, // ✅ ALWAYS plain password
       mobile: createDto.contactNumber,
       roles: createDto.role ? [createDto.role] : [],
     };
@@ -96,44 +96,46 @@ export class LabourService extends CRUDService<Labour> {
     isUpdate?: boolean
   ): Promise<Labour> {
     try {
-      // 1️⃣ Update Labour
       const labour = await super.update(id, updateDto, files, isUpdate);
 
       const labourWithUser = await this.repo.findOne({
         where: { id },
-        relations: ['authUser'],
+        relations: ['authUser', 'authUser.roles'], // 👈 roles load karna IMPORTANT
       });
 
       const authUser = labourWithUser?.authUser?.[0];
 
       if (authUser) {
-        const updatePayload: any = {};
 
-        // 👤 Name update
         if (updateDto.name) {
-          updatePayload.fullName = updateDto.name;
-          updatePayload.username = this.generateUsername(updateDto.name);
+          authUser.fullName = updateDto.name;
         }
 
-        updatePayload.password = updateDto.labourPassword;
+        if (updateDto.contactNumber) {
+          authUser.username = updateDto.contactNumber;
+        }
+
+
+        if (updateDto.labourPassword) {
+          authUser.password = updateDto.labourPassword;
+        }
+
+        if (updateDto.active !== undefined) {
+          authUser.active = updateDto.active;
+        }
 
         if (updateDto.role) {
-          updatePayload.userRole = updateDto.role;
-
-          const roles = await this.authUserRepository.manager.find('RoleMetadata', {
+          const roles = await this.authUserRepository.manager.find(RoleMetadata, {
             where: [
               { name: 'Internal User' },
               { name: updateDto.role },
             ],
           });
 
-          updatePayload.roles = roles;
+          authUser.roles = roles;
         }
 
-        await this.authUserRepository.update(
-          { username: authUser.username },
-          updatePayload
-        );
+        await this.authUserRepository.save(authUser);
       }
 
       return labour;

@@ -35,11 +35,9 @@ export class UpdateInventoryManagementDto {
     @ApiProperty({ description: "InventoryAsks" })
     inventoryAsksCommand: string;
 
-
-@IsNotEmpty()
-@IsOptional()
-@IsString()
-@ApiProperty()
-hsnCode: string;
-
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    hsnCode: string;
 }

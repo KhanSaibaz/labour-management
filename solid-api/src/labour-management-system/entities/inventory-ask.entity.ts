@@ -23,12 +23,10 @@ export class InventoryAsk extends CommonEntity {
     @JoinColumn()
     hsnCode: InventoryManagement;
 
+    @ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: false })
+    @JoinColumn()
+    managerCode: Labour;
 
-@ManyToOne(() => Labour, { onDelete: "SET NULL", nullable: false })
-@JoinColumn()
-managerCode: Labour;
-
-
-@Column({ type: "varchar" })
-managerName: string;
+    @Column({ type: "varchar" })
+    managerName: string;
 }

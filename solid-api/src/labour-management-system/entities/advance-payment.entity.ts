@@ -1,12 +1,9 @@
 import { CommonEntity } from '@solidxai/core';
-import { Entity, JoinColumn, ManyToOne, Column } from 'typeorm';
+import { Entity, JoinColumn, ManyToOne, Column, Index } from 'typeorm';
 import { Labour } from 'src/labour-management-system/entities/labour.entity'
 
 @Entity('advance_payment')
 export class AdvancePayment extends CommonEntity {
-    @Column({ type: "date", nullable: true })
-    advanceYear: Date;
-
     @Column({ type: "varchar", nullable: true, default: "Pending" })
     repaymentStatus: string = "Pending";
 
@@ -31,12 +28,14 @@ export class AdvancePayment extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     advanceMonth: string;
 
+    @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
+    @JoinColumn()
+    labourCode: Labour;
 
-@ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
-@JoinColumn()
-labourCode: Labour;
+    @Index()
+    @Column({ type: "varchar" })
+    name: string;
 
-
-@Column({ type: "varchar" })
-name: string;
+    @Column({ type: "varchar", nullable: true })
+    advanceYear: string;
 }
