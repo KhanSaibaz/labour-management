@@ -979,6 +979,31 @@
             "isUserKey": false,
             "enableAuditTracking": false,
             "isPrimaryKey": false
+          },
+          {
+            "name": "previousWorkUnits",
+            "displayName": "Previous Work Units",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "selectionStaticValues": [
+              "Single:Single",
+              "One And Half:One And Half",
+              "Double:Double"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
           }
         ]
       },
@@ -4262,6 +4287,12 @@
             "attrs": {
               "name": "workUnits"
             }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "previousWorkUnits"
+            }
           }
         ]
       }
@@ -4364,6 +4395,18 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "overtimeHour"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "workUnits"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "previousWorkUnits"
                                 }
                               }
                             ]

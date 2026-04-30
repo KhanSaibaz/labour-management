@@ -71,4 +71,11 @@ export class UpdateAttendanceDto {
     @IsString()
     @ApiProperty()
     name: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+previousWorkUnits: string;
+
 }

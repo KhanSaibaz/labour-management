@@ -41,4 +41,8 @@ export class Attendance extends CommonEntity {
     @Index()
     @Column({ type: "varchar" })
     name: string;
+
+
+@Column({ type: "varchar", nullable: true })
+previousWorkUnits: string;
 }
