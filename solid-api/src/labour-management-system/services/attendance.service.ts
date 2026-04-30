@@ -69,22 +69,36 @@ export class AttendanceService extends CRUDService<Attendance> {
     return ist.toLocaleString('en-US', { month: 'long' });
   }
 
+
+
   private calculateHazri(workingHours: number) {
 
-    if (workingHours < 7.5) {
-      return { hours: 0, label: null };
-    }
+  const today = new Date();
+  const isSunday = today.getDay() === 0; // 0 = Sunday
 
-    if (workingHours >= 11) {
-      return { hours: 2, label: WORK_UNITS.DOUBLE };
+  // Sunday rule
+  if (isSunday) {
+    if (workingHours > 3) {
+      return { hours: 1, label: WORK_UNITS.SINGLE };
     }
-
-    if (workingHours >= 9) {
-      return { hours: 1.5, label: WORK_UNITS.ONE_AND_HALF };
-    }
-
-    return { hours: 1, label: WORK_UNITS.SINGLE };
+    return { hours: 0, label: null };
   }
+
+  // Normal days
+  if (workingHours < 8) {
+    return { hours: 0, label: null };
+  }
+
+  if (workingHours >= 13) {
+    return { hours: 2, label: WORK_UNITS.DOUBLE };
+  }
+
+  if (workingHours >= 11) {
+    return { hours: 1.5, label: WORK_UNITS.ONE_AND_HALF };
+  }
+
+  return { hours: 1, label: WORK_UNITS.SINGLE };
+}
 
   // ================= CHECK-IN =================
 
