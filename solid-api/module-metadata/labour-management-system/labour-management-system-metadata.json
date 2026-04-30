@@ -3322,6 +3322,18 @@
       ]
     },
     {
+      "displayName": "Salary",
+      "name": "salaryMaster",
+      "sequenceNumber": 8,
+      "actionUserKey": "masters-root",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "attach_money",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
       "displayName": "All Salary ",
       "name": "all-salary-menu-item",
       "sequenceNumber": 1,
@@ -3434,15 +3446,6 @@
       "roles": [
         "Labour  Admin"
       ]
-    },
-    {
-      "displayName": "Salary",
-      "name": "salary-menu-item",
-      "sequenceNumber": 1,
-      "actionUserKey": "salary-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": ""
     }
   ],
   "views": [
