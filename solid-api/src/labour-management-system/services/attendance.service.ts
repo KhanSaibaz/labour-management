@@ -233,6 +233,7 @@ export class AttendanceService extends CRUDService<Attendance> {
       labourId,
       hazriDays,
       attendanceId: attendance?.id,
+      tries: attendance.noOfTries,
     });
 
     const now = new Date();
@@ -240,8 +241,6 @@ export class AttendanceService extends CRUDService<Attendance> {
     const month = now.getMonth() + 1;
 
     const salaryMonth = this.getCurrentSalaryMonth();
-
-    console.log('[SALARY PERIOD]', { year, month, salaryMonth });
 
     let salary = await this.salaryRepo.findOne({
       where: {
@@ -251,24 +250,16 @@ export class AttendanceService extends CRUDService<Attendance> {
       relations: ['labourCode'],
     });
 
-    console.log('[SALARY FETCH]', salary ? 'FOUND' : 'NOT FOUND');
-
     const labour = await this.entityManager
       .getRepository(Labour)
       .findOne({ where: { id: labourId } });
 
     if (!labour) {
-      console.error('[SALARY ERROR] Labour not found', { labourId });
       throw new NotFoundException('Labour not found');
     }
 
     const dailyWages = labour.dailyWages || 0;
     const workingDays = this.getTotalDaysInMonth(year, month);
-
-    console.log('[SALARY BASE DATA]', {
-      dailyWages,
-      workingDays,
-    });
 
     // 🔥 NEW overtime
     const newOvertimeHazri = Math.max(0, hazriDays - 1);
@@ -277,25 +268,6 @@ export class AttendanceService extends CRUDService<Attendance> {
     console.log('[SALARY NEW OVERTIME]', {
       newOvertimeHazri,
       newOvertimeAmount,
-    });
-
-    // 🔥 PREVIOUS overtime
-    const hazriMap = {
-      'Single': 1,
-      'One And Half': 1.5,
-      'Double': 2,
-    };
-
-    const previousHazri =
-      hazriMap[attendance.workUnits as keyof typeof hazriMap] || 0;
-
-    const prevOvertimeHazri = Math.max(0, previousHazri - 1);
-    const prevOvertimeAmount = prevOvertimeHazri * dailyWages;
-
-    console.log('[SALARY PREVIOUS OVERTIME]', {
-      previousHazri,
-      prevOvertimeHazri,
-      prevOvertimeAmount,
     });
 
     // ================= CREATE =================
@@ -308,7 +280,7 @@ export class AttendanceService extends CRUDService<Attendance> {
         salaryMonth,
         salaryYear: year.toString(),
         presentDays: hazriDays > 0 ? 1 : 0,
-        workingDays: workingDays,
+        workingDays,
         absent: 0,
         dailyWages,
         overtimeAmount: newOvertimeAmount,
@@ -319,15 +291,7 @@ export class AttendanceService extends CRUDService<Attendance> {
 
       salary.absent = Math.max(0, workingDays - salary.presentDays);
 
-      const saved = await this.salaryRepo.save(salary);
-
-      console.log('[SALARY CREATED]', {
-        salaryId: saved.id,
-        presentDays: saved.presentDays,
-        overtimeAmount: saved.overtimeAmount,
-      });
-
-      return saved;
+      return await this.salaryRepo.save(salary);
     }
 
     // ================= UPDATE =================
@@ -336,32 +300,52 @@ export class AttendanceService extends CRUDService<Attendance> {
       currentOvertime: salary.overtimeAmount,
     });
 
+    // ✅ present day add only once
     if (hazriDays > 0 && attendance.noOfTries === 2) {
       salary.presentDays += 1;
-
-      console.log('[SALARY PRESENT DAY ADDED]', {
-        newPresentDays: salary.presentDays,
-      });
     }
 
-    // 🔥 FIX overtime
-    salary.overtimeAmount =
-      salary.overtimeAmount - prevOvertimeAmount + newOvertimeAmount;
+    // 🔥 CONDITION BASED LOGIC
+    if (attendance.noOfTries === 3) {
+      // 👉 EXTEND CASE (correction logic)
 
-    console.log('[SALARY OVERTIME UPDATED]', {
-      updatedOvertime: salary.overtimeAmount,
+      const hazriMap = {
+        'Single': 1,
+        'One And Half': 1.5,
+        'Double': 2,
+      };
+
+      const previousHazri =
+        hazriMap[attendance.workUnits as keyof typeof hazriMap] || 0;
+
+      const prevOvertimeHazri = Math.max(0, previousHazri - 1);
+      const prevOvertimeAmount = prevOvertimeHazri * dailyWages;
+
+      console.log('[SALARY CORRECTION MODE]', {
+        previousHazri,
+        prevOvertimeAmount,
+        newOvertimeAmount,
+      });
+
+      salary.overtimeAmount =
+        salary.overtimeAmount - prevOvertimeAmount + newOvertimeAmount;
+
+    } else {
+      // 👉 NORMAL CASE (first / second checkout)
+      console.log('[SALARY NORMAL MODE ADD]');
+
+      salary.overtimeAmount += newOvertimeAmount;
+    }
+
+    console.log('[SALARY FINAL OVERTIME]', {
+      overtimeAmount: salary.overtimeAmount,
     });
 
     salary.absent = Math.max(0, salary.workingDays - salary.presentDays);
 
     const updated = await this.salaryRepo.save(salary);
 
-    console.log('[SALARY SAVED]', {
-      salaryId: updated.id,
-      presentDays: updated.presentDays,
-      absent: updated.absent,
-      overtimeAmount: updated.overtimeAmount,
-    });
+    console.log('[SALARY SAVED]', updated);
 
     return updated;
   }
