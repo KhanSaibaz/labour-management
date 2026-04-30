@@ -197,6 +197,9 @@ export class AttendanceService extends CRUDService<Attendance> {
     hazriDays: number,
     attendance: Attendance, 
   ) {
+
+    console.log("Insode salary ATTENDANCE:", attendance);
+
     const now = new Date();
     const year = now.getFullYear();
     const month = now.getMonth() + 1;
@@ -239,6 +242,9 @@ export class AttendanceService extends CRUDService<Attendance> {
 
     const prevOvertimeHazri = Math.max(0, previousHazri - 1);
     const prevOvertimeAmount = prevOvertimeHazri * dailyWages;
+
+    console.log("----------------------------");
+    
 
     if (!salary) {
       salary = this.salaryRepo.create({
