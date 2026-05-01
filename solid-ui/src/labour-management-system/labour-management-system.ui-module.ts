@@ -17,6 +17,7 @@ import { GenerateGovernmentSalarySlip } from "./admin-layout/governmentSalarySli
 import { governmentSalarySlipApi } from "./redux/governmentSalarySlipApi";
 import { labourDashBoardApi } from "./redux/dasboardApi";
 import { DashBoardPage } from "./custom-layout/admin/DashboardPage";
+import GenerateSalarySlip from "./admin-layout/salary/extension-components/GenerateSalarySlip";
 
 const labourManagementSystemUiModule = {
   name: "labour-management-system",
@@ -43,7 +44,13 @@ const labourManagementSystemUiModule = {
       component: GenerateGovernmentSalarySlip,
       type: ExtensionComponentTypes.listHeaderAction,
     },
-   
+
+      {
+      name: "GenerateSalarySlip",
+      component: GenerateSalarySlip,
+      type: ExtensionComponentTypes.listRowAction,
+    },
+
   ],
   extensionFunctions: [
     {
@@ -57,6 +64,7 @@ const labourManagementSystemUiModule = {
       fn: CurrentMonthSalaryDataLoad,
       type: ExtensionFunctionTypes.onFormLayoutLoad,
     },
+
   ],
   reducers: {
     [governmentSalarySlipApi.reducerPath]: governmentSalarySlipApi.reducer,

@@ -50,6 +50,7 @@ import { GovernmentSalarySlip } from './entities/government-salary-slip.entity';
 import { GovernmentSalarySlipService } from './services/government-salary-slip.service';
 import { GovernmentSalarySlipController } from './controllers/government-salary-slip.controller';
 import { GovernmentSalarySlipRepository } from './repositories/government-salary-slip.repository';
+import { AuthUserCreationProvider } from './providers/auth-user-creation.provider';
 // import { GovernmentSalarySlip } from './entities/government-salary-slip.entity';
 // import { GovernmentSalarySlipService } from './services/government-salary-slip.service';
 // import { GovernmentSalarySlipController } from './controllers/government-salary-slip.controller';
@@ -60,6 +61,6 @@ import { GovernmentSalarySlipRepository } from './repositories/government-salary
 @Module({
     imports: [TypeOrmModule.forFeature([WorkType]), TypeOrmModule.forFeature([AuthUser]), TypeOrmModule.forFeature([Labour]), TypeOrmModule.forFeature([Attendance]), TypeOrmModule.forFeature([Salary]), TypeOrmModule.forFeature([AdvancePayment]), TypeOrmModule.forFeature([Site]), TypeOrmModule.forFeature([InventoryManagement]), TypeOrmModule.forFeature([InventoryAsk]), TypeOrmModule.forFeature([LabourMonthlyExpense]), TypeOrmModule.forFeature([GovernmentSalarySlip]), ],
     controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController, InventoryManagementController, InventoryAskController,DashBoardController, LabourMonthlyExpenseController, GovernmentSalarySlipController,],
-    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository, InventoryAskService, InventoryAskRepository,DashBoardService,LabourSequenceProvider, LabourMonthlyExpenseService, LabourMonthlyExpenseRepository, GovernmentSalarySlipService, GovernmentSalarySlipRepository],
+    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository, InventoryAskService, InventoryAskRepository,DashBoardService,LabourSequenceProvider, LabourMonthlyExpenseService, LabourMonthlyExpenseRepository, GovernmentSalarySlipService, GovernmentSalarySlipRepository,AuthUserCreationProvider],
 })
 export class LabourManagementSystemModule {}

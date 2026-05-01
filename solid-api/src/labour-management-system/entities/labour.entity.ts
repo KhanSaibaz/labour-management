@@ -64,9 +64,6 @@ export class Labour extends CommonEntity {
     name: string;
 
     @Column({ type: "varchar", nullable: true })
-    labourPassword: string;
-
-    @Column({ type: "varchar", nullable: true })
     contactNumber: string;
 
     @OneToMany(() => Salary, salary => salary.labourCode, { cascade: true })
@@ -89,4 +86,8 @@ export class Labour extends CommonEntity {
 
     @Column({ type: "varchar", nullable: true })
     uanNumber: string;
+
+
+@Column({ type: "varchar", nullable: true })
+password: string;
 }

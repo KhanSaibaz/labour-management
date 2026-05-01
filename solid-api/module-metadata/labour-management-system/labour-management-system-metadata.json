@@ -494,26 +494,6 @@
             "isPrimaryKey": false
           },
           {
-            "name": "labourPassword",
-            "displayName": "Labour Password",
-            "description": null,
-            "type": "password",
-            "ormType": "varchar",
-            "isSystem": false,
-            "min": null,
-            "max": null,
-            "regexPattern": "",
-            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null
-          },
-          {
             "name": "contactNumber",
             "displayName": "Contact Number",
             "description": null,
@@ -690,6 +670,28 @@
           {
             "name": "uanNumber",
             "displayName": "UAN Number",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "password",
+            "displayName": "Password",
             "description": null,
             "type": "shortText",
             "ormType": "varchar",
@@ -3939,7 +3941,7 @@
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "labourPassword"
+                                  "name": "password"
                                 }
                               }
                             ]
@@ -4491,6 +4493,21 @@
                 "openInPopup": true,
                 "icon": "pi pi-money-bill",
                 "closable": true
+              }
+            }
+          ],
+          "rowButtons": [
+            {
+              "attrs": {
+                "icon": "pi pi-cog",
+                "label": "Generate Salary Slip",
+                "action": "`GenerateSalarySlip`",
+                "customComponentIsSystem": true,
+                "actionInContextMenu": true,
+                "openInPopup": true,
+                "closable": true,
+                "title": "Generate Salary Slip",
+                "description": "Generate employee salary slip"
               }
             }
           ]

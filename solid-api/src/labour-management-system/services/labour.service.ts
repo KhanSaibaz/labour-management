@@ -2,12 +2,16 @@ import { Injectable, BadRequestException } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ModuleRef } from "@nestjs/core";
 import { EntityManager } from 'typeorm';
-import { AuthenticationService, CRUDService, RoleMetadata, SignUpDto, UserService } from '@solidxai/core';
+
+import {
+  AuthenticationService,
+  CRUDService,
+  UserService
+} from '@solidxai/core';
 
 import { Labour } from '../entities/labour.entity';
 import { LabourRepository } from '../repositories/labour.repository';
 import { CreateLabourDto } from '../dtos/create-labour.dto';
-import { AuthUserRepository } from '../repositories/auth-user.repository';
 import { AuthUser } from '../entities/auth-user.entity';
 
 @Injectable()
@@ -18,33 +22,9 @@ export class LabourService extends CRUDService<Labour> {
     readonly repo: LabourRepository,
     readonly moduleRef: ModuleRef,
     private readonly authenticationService: AuthenticationService,
-    private readonly authUserRepository: AuthUserRepository,
     readonly userService: UserService,
   ) {
     super(entityManager, repo, 'labour', 'labour-management-system', moduleRef);
-  }
-
-  // ✅ Username generator
-  private generateUsername(name: string): string {
-    if (!name) return '';
-
-    const parts = name.trim().toLowerCase().split(/\s+/);
-
-    if (parts.length === 1) return parts[0];
-
-    return `${parts[0]}.${parts[1]}`;
-  }
-
-  // ✅ Convert DTO → Signup DTO
-  private toSignUpDto(createDto: CreateLabourDto, plainPassword: string): SignUpDto {
-    return {
-      fullName: createDto.name,
-      username: createDto.contactNumber || createDto.name,
-      email: null,
-      password: plainPassword || createDto.name, // ✅ ALWAYS plain password
-      mobile: createDto.contactNumber,
-      roles: createDto.role ? [createDto.role] : [],
-    };
   }
 
   // ================= CREATE =================
@@ -54,30 +34,21 @@ export class LabourService extends CRUDService<Labour> {
   ): Promise<Labour> {
 
     try {
-
-      const plainPassword = createDto.labourPassword;
-
       const labour = await super.create(createDto, files);
 
+      
+      const user = await this.authenticationService.signUp({
+        fullName: createDto.name,
+        username: createDto.contactNumber || createDto.name,
+        password: createDto.password || createDto.contactNumber,
+        mobile: createDto.contactNumber,
+        email: null,
+        role: createDto.role, 
+        ...createDto,         
+      });
 
-      const signupDto = this.toSignUpDto(createDto, plainPassword);
-
-
-      const authUser: AuthUser =
-        await this.authenticationService.signupForExtensionUser(
-          signupDto,
-          createDto,
-          this.authUserRepository,
-        );
-
-
-      if (authUser) {
-        labour.authUser = [authUser];
-        await this.repo.save(labour);
-      } else {
-        await this.repo.delete(labour.id);
-        throw new BadRequestException('Auth user creation failed');
-      }
+      labour.authUser = [user as AuthUser];
+      await this.repo.save(labour);
 
       return labour;
 
@@ -95,47 +66,50 @@ export class LabourService extends CRUDService<Labour> {
     files?: Array<Express.Multer.File>,
     isUpdate?: boolean
   ): Promise<Labour> {
+
     try {
       const labour = await super.update(id, updateDto, files, isUpdate);
 
       const labourWithUser = await this.repo.findOne({
         where: { id },
-        relations: ['authUser', 'authUser.roles'], // 👈 roles load karna IMPORTANT
+        relations: ['authUser'],
       });
 
       const authUser = labourWithUser?.authUser?.[0];
 
       if (authUser) {
 
+        // 🔹 Basic fields update
         if (updateDto.name) {
           authUser.fullName = updateDto.name;
         }
 
         if (updateDto.contactNumber) {
           authUser.username = updateDto.contactNumber;
-        }
-
-
-        if (updateDto.labourPassword) {
-          authUser.password = updateDto.labourPassword;
+          authUser.mobile = updateDto.contactNumber;
         }
 
         if (updateDto.active !== undefined) {
           authUser.active = updateDto.active;
         }
 
-        if (updateDto.role) {
-          const roles = await this.authUserRepository.manager.find(RoleMetadata, {
-            where: [
-              { name: 'Internal User' },
-              { name: updateDto.role },
-            ],
-          });
+        await this.entityManager.save(authUser);
 
-          authUser.roles = roles;
+        // 🔥 PASSWORD UPDATE (correct way)
+        if (updateDto.password) {
+          await this.authenticationService.updatePasswordDetails(
+            authUser,
+            updateDto.password
+          );
         }
 
-        await this.authUserRepository.save(authUser);
+        // 🔥 ROLE UPDATE (same as auth flow)
+        if (updateDto.role) {
+          await this.userService.initializeRolesForNewUser(
+            [updateDto.role],
+            authUser
+          );
+        }
       }
 
       return labour;

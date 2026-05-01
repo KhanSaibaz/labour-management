@@ -133,16 +133,6 @@ export class UpdateLabourDto {
     @ApiProperty()
     name: string;
 
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    labourPassword: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    labourPasswordConfirm: string;
-
     @IsNotEmpty()
     @IsOptional()
     @IsString()
@@ -231,4 +221,11 @@ export class UpdateLabourDto {
     @IsString()
     @ApiProperty()
     uanNumber: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+password: string;
+
 }
