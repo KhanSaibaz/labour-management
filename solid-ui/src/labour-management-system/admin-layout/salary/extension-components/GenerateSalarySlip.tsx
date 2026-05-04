@@ -56,23 +56,23 @@ const GenerateSalarySlip = ({ context }: any) => {
       );
 
       // ✅ Check if response indicates success
-      if (response?.statusCode === 200 || response?.success === true) {
-        toast.current?.show({
-          severity: "success",
-          summary: "Success",
-          detail: response?.message || "Salary slip generated successfully",
-          life: 3000,
-        });
+      // if (response?.statusCode === 200 || response?.success === true) {
+      //   toast.current?.show({
+      //     severity: "success",
+      //     summary: "Success",
+      //     detail: response?.message || "Salary slip generated successfully",
+      //     life: 3000,
+      //   });
 
-        // ✅ Close popup after brief delay (no hard reload)
-        setTimeout(() => {
-          dispatch(closePopup());
-        }, 1500);
-      } else {
-        // Handle non-standard success response
-        const errorMsg = response?.message || response?.error || "Unknown error occurred";
-        throw new Error(errorMsg);
-      }
+      //   // ✅ Close popup after brief delay (no hard reload)
+      //   setTimeout(() => {
+      //     dispatch(closePopup());
+      //   }, 1500);
+      // } else {
+      //   // Handle non-standard success response
+      //   const errorMsg = response?.message || response?.error || "Unknown error occurred";
+      //   throw new Error(errorMsg);
+      // }
 
     } catch (error: any) {
       console.error("[GenerateSalarySlip] Error:", error);
