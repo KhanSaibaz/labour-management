@@ -1,9 +1,9 @@
 import { Controller, Post, Body, Param, UploadedFiles, UseInterceptors, Put, Get, Query, Delete, Patch } from '@nestjs/common';
 import { AnyFilesInterceptor } from "@nestjs/platform-express";
 import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
-import { InventoryAskService } from '../services/inventory-ask.service';
-import { CreateInventoryAskDto } from '../dtos/create-inventory-ask.dto';
-import { UpdateInventoryAskDto } from '../dtos/update-inventory-ask.dto';
+import { PurchaseOrderService } from '../services/purchase-order.service';
+import { CreatePurchaseOrderDto } from '../dtos/create-purchase-order.dto';
+import { UpdatePurchaseOrderDto } from '../dtos/update-purchase-order.dto';
 
 enum ShowSoftDeleted {
   INCLUSIVE = "inclusive",
@@ -11,21 +11,21 @@ enum ShowSoftDeleted {
 }
 
 @ApiTags('Labour Management System')
-@Controller('inventory-ask')
-export class InventoryAskController {
-  constructor(private readonly service: InventoryAskService) {}
+@Controller('purchase-order')
+export class PurchaseOrderController {
+  constructor(private readonly service: PurchaseOrderService) {}
 
   @ApiBearerAuth("jwt")
   @Post()
   @UseInterceptors(AnyFilesInterceptor())
-  create(@Body() createDto: CreateInventoryAskDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+  create(@Body() createDto: CreatePurchaseOrderDto, @UploadedFiles() files: Array<Express.Multer.File>) {
     return this.service.create(createDto, files);
   }
 
   @ApiBearerAuth("jwt")
   @Post('/bulk')
   @UseInterceptors(AnyFilesInterceptor())
-  insertMany(@Body() createDtos: CreateInventoryAskDto[], @UploadedFiles() filesArray: Express.Multer.File[][] = []) {
+  insertMany(@Body() createDtos: CreatePurchaseOrderDto[], @UploadedFiles() filesArray: Express.Multer.File[][] = []) {
     return this.service.insertMany(createDtos, filesArray);
   }
 
@@ -33,14 +33,14 @@ export class InventoryAskController {
   @ApiBearerAuth("jwt")
   @Put(':id')
   @UseInterceptors(AnyFilesInterceptor())
-  update(@Param('id') id: number, @Body() updateDto: UpdateInventoryAskDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+  update(@Param('id') id: number, @Body() updateDto: UpdatePurchaseOrderDto, @UploadedFiles() files: Array<Express.Multer.File>) {
     return this.service.update(id, updateDto, files);
   }
 
   @ApiBearerAuth("jwt")
   @Patch(':id')
   @UseInterceptors(AnyFilesInterceptor())
-  partialUpdate(@Param('id') id: number, @Body() updateDto: UpdateInventoryAskDto, @UploadedFiles() files: Array<Express.Multer.File>) {
+  partialUpdate(@Param('id') id: number, @Body() updateDto: UpdatePurchaseOrderDto, @UploadedFiles() files: Array<Express.Multer.File>) {
     return this.service.update(id, updateDto, files, true);
   }
 

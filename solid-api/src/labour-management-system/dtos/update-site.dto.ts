@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import { UpdateLabourDto } from 'src/labour-management-system/dtos/update-labour.dto';
 import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
+import { UpdatePurchaseOrderDto } from 'src/labour-management-system/dtos/update-purchase-order.dto';
 
 // import { UpdateGovernmentSalarySlipDto } from 'src/labour-management-system/dtos/update-government-salary-slip.dto';
 
@@ -107,4 +108,27 @@ export class UpdateSiteDto {
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlips" })
     governmentSalarySlipCommand: string;
+
+
+@IsOptional()
+@ApiProperty({ description: "PurchaseOrders" })
+@IsArray()
+@ValidateNested({ each : true })
+@Type(() => UpdatePurchaseOrderDto)
+purchaseOrders: UpdatePurchaseOrderDto[];
+
+
+
+@IsOptional()
+@IsArray()
+@ApiProperty({ description: "PurchaseOrders" })
+purchaseOrdersIds: number[];
+
+
+
+@IsString()
+@IsOptional()
+@ApiProperty({ description: "PurchaseOrders" })
+purchaseOrdersCommand: string;
+
 }

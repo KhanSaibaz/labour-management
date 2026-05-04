@@ -7,7 +7,7 @@ import { AuthUserRepository } from '../repositories/auth-user.repository';
 import { SiteRepository } from '../repositories/site.repository';
 import { AttendanceRepository } from '../repositories/attendance.repository';
 import { SalaryRepository } from '../repositories/salary.repository';
-import { InventoryAskRepository } from '../repositories/inventory-ask.repository';
+// import { InventoryAskRepository } from '../repositories/inventory-ask.repository';
 import { AdvancePaymentRepository } from '../repositories/advance-payment.repository';
 
 export interface Stat {
@@ -32,9 +32,9 @@ export interface InventoryItem {
 
 export interface DashboardData {
   stats: Stat[];
-  attendanceData: ChartData;
-  donutData: ChartData;
-  // salaryData: ChartData;
+  attendanceData?: ChartData;
+  donutData?: ChartData;
+  salaryData?: ChartData;
   advancePayments: AdvancePayment[];
   inventory: InventoryItem[];
   lastRefreshed: string;
@@ -87,7 +87,7 @@ export class DashBoardService {
     readonly siteRepo: SiteRepository,
     readonly attendanceRepo: AttendanceRepository,
     readonly salaryRepo: SalaryRepository,
-    readonly inventoryAskRepo: InventoryAskRepository,
+    // readonly inventoryAskRepo: InventoryAskRepository,
     readonly advancePaymentRepo: AdvancePaymentRepository,
     readonly moduleRef: ModuleRef,
   ) { }
@@ -114,12 +114,12 @@ export class DashBoardService {
       totalLabours,
       activeSites,
       presentToday,
-      pendingInventoryCount,
-      inProgressInventoryCount,
-      completedInventoryCount,
-      newRequestsCount,
+      // pendingInventoryCount,
+      // inProgressInventoryCount,
+      // completedInventoryCount,
+      // newRequestsCount,
       advancePayments,
-      recentInventoryAsks,
+      // recentInventoryAsks,
       // ── Current Month Salaries ──
       currentMonthCompletedSalaries,
       currentMonthPendingSalaries,
@@ -133,20 +133,20 @@ export class DashBoardService {
       this.labourRepo.count({ where: { active: true } }),
       this.siteRepo.count({ where: { status: "active" } }),
       this.attendanceRepo.count({ where: { checkIn: Between(today, tomorrow) } }),
-      this.inventoryAskRepo.count({ where: { status: "Pending" } }),
-      this.inventoryAskRepo.count({ where: { status: "In Progress" } }),
-      this.inventoryAskRepo.count({ where: { status: "Completed" } }),
-      this.inventoryAskRepo.count({ where: { status: "New" } }),
+      // this.inventoryAskRepo.count({ where: { status: "Pending" } }),
+      // this.inventoryAskRepo.count({ where: { status: "In Progress" } }),
+      // this.inventoryAskRepo.count({ where: { status: "Completed" } }),
+      // this.inventoryAskRepo.count({ where: { status: "New" } }),
       this.advancePaymentRepo.find({ 
         relations: ["labourCode"], 
         order: { createdAt: "DESC" }, 
         take: 4 
       }),
-      this.inventoryAskRepo.find({ 
-        relations: ["sIteName"], 
-        order: { createdAt: "DESC" }, 
-        take: 5 
-      }),
+      // this.inventoryAskRepo.find({ 
+      //   relations: ["sIteName"], 
+      //   order: { createdAt: "DESC" }, 
+      //   take: 5 
+      // }),
       // ── Current Month: Complete ─
       this.salaryRepo.find({ 
         where: { 
@@ -222,11 +222,11 @@ export class DashBoardService {
       monthlyDeduction: ap.monthlyDeduction || 0,
     }));
 
-    const mappedInventory: InventoryItem[] = recentInventoryAsks.map((inv) => ({
-      siteName: inv.sIteName?.siteName || "-",
-      productName: inv.productName || "-",
-      productQuantity: parseInt(inv.projectQuantity as any) || 0,
-    }));
+    // const mappedInventory: InventoryItem[] = recentInventoryAsks.map((inv) => ({
+    //   siteName: inv.sIteName?.siteName || "-",
+    //   productName: inv.productName || "-",
+    //   productQuantity: parseInt(inv.projectQuantity as any) || 0,
+    // }));
 
     return {
       lastRefreshed: now.toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", second: "2-digit" }),
@@ -286,11 +286,11 @@ export class DashBoardService {
           iconBg: "#FCEBEB", 
           iconColor: "#A32D2D",
         },
-        {
-          label: "Inventory Pending", value: `${pendingInventoryCount}`,
-          sub: `${newRequestsCount} new requests`, subColor: "#A32D2D",
-          icon: "pi pi-box", iconBg: "#FCEBEB", iconColor: "#A32D2D",
-        },
+        // {
+        //   label: "Inventory Pending", value: `${pendingInventoryCount}`,
+        //   sub: `${newRequestsCount} new requests`, subColor: "#A32D2D",
+        //   icon: "pi pi-box", iconBg: "#FCEBEB", iconColor: "#A32D2D",
+        // },
         {
           label: "Active Sites", value: `${activeSites}`,
           sub: "All operational", subColor: "#3B6D11",
@@ -298,18 +298,20 @@ export class DashBoardService {
         },
       ],
       attendanceData: monthlyAttendance,
-      donutData: {
-        labels: ["Pending", "In Progress", "Completed"],
-        datasets: [{
-          data: [pendingInventoryCount, inProgressInventoryCount, completedInventoryCount],
-          backgroundColor: ["#EF9F27", "#378ADD", "#639922"],
-          borderWidth: 0,
-          hoverOffset: 6,
-        }],
-      },
+      // donutData: {
+      //   labels: ["Pending", "In Progress", "Completed"],
+      //   datasets: [{
+      //     data: [pendingInventoryCount, inProgressInventoryCount, completedInventoryCount],
+      //     backgroundColor: ["#EF9F27", "#378ADD", "#639922"],
+      //     borderWidth: 0,
+      //     hoverOffset: 6,
+      //   }],
+      // },
       // salaryData: monthlySalaryData,
+      salaryData: null,
       advancePayments: mappedAdvancePayments,
-      inventory: mappedInventory,
+      inventory: null,
+      // inventory: mappedInventory,
     };
     
   }

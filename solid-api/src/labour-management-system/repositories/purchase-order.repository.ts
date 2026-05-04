@@ -4,16 +4,16 @@ import { SolidBaseRepository } from '@solidxai/core' ;
 import { RequestContextService } from '@solidxai/core';
 import { DataSource } from 'typeorm';
 import { InjectDataSource } from '@nestjs/typeorm';
-import { InventoryAsk } from '../entities/inventory-ask.entity';
+import { PurchaseOrder } from '../entities/purchase-order.entity';
 
 @Injectable()
-export class InventoryAskRepository extends SolidBaseRepository<InventoryAsk> {
+export class PurchaseOrderRepository extends SolidBaseRepository<PurchaseOrder> {
     constructor(
         @InjectDataSource("default")
         readonly dataSource: DataSource,
         readonly requestContextService: RequestContextService,
         readonly securityRuleRepository: SecurityRuleRepository,
     ) {
-        super(InventoryAsk, dataSource, requestContextService, securityRuleRepository);
+        super(PurchaseOrder, dataSource, requestContextService, securityRuleRepository);
     }
 }

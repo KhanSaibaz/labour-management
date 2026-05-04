@@ -2,7 +2,6 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { IsOptional, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
 import { Type } from 'class-transformer';
-import { UpdateInventoryAskDto } from 'src/labour-management-system/dtos/update-inventory-ask.dto';
 
 export class CreateInventoryManagementDto {
     @IsOptional()
@@ -15,20 +14,13 @@ export class CreateInventoryManagementDto {
     @ApiProperty()
     productQuantity: string;
 
-    @IsOptional()
-    @ApiProperty({ description: "InventoryAsks" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateInventoryAskDto)
-    inventoryAsks: UpdateInventoryAskDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "InventoryAsks" })
-    inventoryAsksIds: number[];
-
+    @IsNotEmpty()
     @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "InventoryAsks" })
-    inventoryAsksCommand: string;
+    @ApiProperty()
+    hsnCode: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    description: string;
 }

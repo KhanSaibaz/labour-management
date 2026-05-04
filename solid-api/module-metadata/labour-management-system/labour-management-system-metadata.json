@@ -597,33 +597,6 @@
             "enableAuditTracking": false
           },
           {
-            "name": "managerInventoryAsk",
-            "displayName": "ManagerInventoryAsk",
-            "description": "ManagerInventoryAsk",
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "one-to-many",
-            "relationCoModelFieldName": "managerCode",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "inventoryAsk",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "set null",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
-          },
-          {
             "name": "adharCardNumber",
             "displayName": "Adhar Card Number",
             "description": null,
@@ -1873,6 +1846,33 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": false
+          },
+          {
+            "name": "purchaseOrders",
+            "displayName": "PurchaseOrders",
+            "description": "PurchaseOrders",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "site",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "purchaseOrder",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
           }
         ]
       },
@@ -1884,7 +1884,6 @@
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "inventory_management",
-        "userKeyFieldUserKey": "hsnCode",
         "isChild": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
@@ -1936,202 +1935,9 @@
             "isPrimaryKey": false
           },
           {
-            "name": "inventoryAsks",
-            "displayName": "InventoryAsks",
-            "description": "InventoryAsks",
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "one-to-many",
-            "relationCoModelFieldName": "hsnCode",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "inventoryAsk",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "set null",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": true
-          }
-        ]
-      },
-      {
-        "singularName": "inventoryAsk",
-        "pluralName": "inventoryAsks",
-        "displayName": "Inventory Ask",
-        "description": "These Mode in Inventory Ask",
-        "dataSource": "default",
-        "dataSourceType": "postgres",
-        "tableName": "inventory_ask",
-        "isChild": false,
-        "enableAuditTracking": true,
-        "enableSoftDelete": false,
-        "draftPublishWorkflow": false,
-        "internationalisation": false,
-        "fields": [
-          {
-            "name": "productName",
-            "displayName": "Product Name",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": false,
-            "isPrimaryKey": false
-          },
-          {
-            "name": "projectQuantity",
-            "displayName": "Project Quantity",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": false,
-            "isPrimaryKey": false
-          },
-          {
-            "name": "status",
-            "displayName": "Status",
-            "description": null,
-            "type": "selectionStatic",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": "Pending",
-            "selectionStaticValues": [
-              "Pending:Pending",
-              "InProgress:InProgress",
-              "Completed:Completed"
-            ],
-            "selectionValueType": "string",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "enableAuditTracking": true,
-            "isMultiSelect": false
-          },
-          {
-            "name": "sIteName",
-            "displayName": "SIte Name",
-            "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": null,
-            "relationCreateInverse": false,
-            "relationCoModelSingularName": "site",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
-          },
-          {
             "name": "hsnCode",
             "displayName": "HSN Code",
             "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": "inventoryAsks",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "inventoryManagement",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "set null",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": true
-          },
-          {
-            "name": "managerCode",
-            "displayName": "Manager Code",
-            "description": null,
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": "managerInventoryAsk",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "labour",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "set null",
-            "required": true,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
-          },
-          {
-            "name": "managerName",
-            "displayName": "Manager Name",
-            "description": null,
             "type": "shortText",
             "ormType": "varchar",
             "isSystem": false,
@@ -2149,6 +1955,28 @@
             "isUserKey": false,
             "enableAuditTracking": false,
             "isPrimaryKey": false
+          },
+          {
+            "name": "description",
+            "displayName": "Description",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
           }
         ]
       },
@@ -2649,6 +2477,527 @@
             "enableAuditTracking": false
           }
         ]
+      },
+      {
+        "singularName": "poConfig",
+        "pluralName": "poConfigs",
+        "displayName": "PO Config",
+        "description": "These is model ia all about Po configuration",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "po_config",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "compnayName",
+            "displayName": "compnay name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "iso",
+            "displayName": "ISO",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "address",
+            "displayName": "Address",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "telePhone",
+            "displayName": "TelePhone",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "email",
+            "displayName": "Email",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "webSite",
+            "displayName": "WebSite",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "gst",
+            "displayName": "GST",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "pan",
+            "displayName": "PAN",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "cin",
+            "displayName": "CIN",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "msme",
+            "displayName": "MSME",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          }
+        ]
+      },
+      {
+        "singularName": "purchaseOrder",
+        "pluralName": "purchaseOrders",
+        "displayName": "Purchase Order",
+        "description": "These Model is all about Purchase Order",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "purchase_order",
+        "isChild": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "supplierName",
+            "displayName": "Supplier Name",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "shipTo",
+            "displayName": "Ship To",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "poDate",
+            "displayName": "PO Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "reqDate",
+            "displayName": "Req Date",
+            "description": null,
+            "type": "date",
+            "ormType": "date",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "managerName",
+            "displayName": "Manager Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "site",
+            "displayName": "Site",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "purchaseOrders",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "site",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          },
+          {
+            "name": "poItems",
+            "displayName": "PoItems",
+            "description": "PoItems",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "purchaseOrder",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "purchaseOrderItems",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          }
+        ]
+      },
+      {
+        "singularName": "purchaseOrderItems",
+        "pluralName": "purchaseOrderItems",
+        "displayName": "Purchase Order Items",
+        "description": "These model is all about purchase order items",
+        "dataSource": "default",
+        "dataSourceType": "postgres",
+        "tableName": "purchase_order_items",
+        "isChild": false,
+        "isLegacyTable": false,
+        "isLegacyTableWithId": false,
+        "enableAuditTracking": true,
+        "enableSoftDelete": false,
+        "draftPublishWorkflow": false,
+        "internationalisation": false,
+        "fields": [
+          {
+            "name": "productName",
+            "displayName": "Product Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "prdouctQuantity",
+            "displayName": "Prdouct Quantity",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "description",
+            "displayName": "Description",
+            "description": null,
+            "type": "longText",
+            "ormType": "text",
+            "isSystem": false,
+            "regexPattern": "",
+            "regexPatternNotMatchingErrorMsg": "Invalid regex pattern",
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "purchaseOrder",
+            "displayName": "Purchase Order",
+            "description": null,
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "many-to-one",
+            "relationCoModelFieldName": "poItems",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "purchaseOrder",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "set null",
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
+          }
+        ]
       }
     ]
   },
@@ -2737,16 +3086,36 @@
         "InventoryManagementController.delete",
         "InventoryManagementController.recover",
         "InventoryManagementController.deleteMany",
-        "InventoryAskController.create",
-        "InventoryAskController.update",
-        "InventoryAskController.findMany",
-        "InventoryAskController.insertMany",
-        "InventoryAskController.findOne",
-        "InventoryAskController.recoverMany",
-        "InventoryAskController.partialUpdate",
-        "InventoryAskController.delete",
-        "InventoryAskController.recover",
-        "InventoryAskController.deleteMany",
+        "PurchaseOrderItemsController.create",
+        "PurchaseOrderItemsController.update",
+        "PurchaseOrderItemsController.findMany",
+        "PurchaseOrderItemsController.insertMany",
+        "PurchaseOrderItemsController.findOne",
+        "PurchaseOrderItemsController.recoverMany",
+        "PurchaseOrderItemsController.partialUpdate",
+        "PurchaseOrderItemsController.delete",
+        "PurchaseOrderItemsController.recover",
+        "PurchaseOrderItemsController.deleteMany",
+        "PurchaseOrderController.create",
+        "PurchaseOrderController.update",
+        "PurchaseOrderController.findMany",
+        "PurchaseOrderController.insertMany",
+        "PurchaseOrderController.findOne",
+        "PurchaseOrderController.recoverMany",
+        "PurchaseOrderController.partialUpdate",
+        "PurchaseOrderController.delete",
+        "PurchaseOrderController.recover",
+        "PurchaseOrderController.deleteMany",
+        "PoConfigController.create",
+        "PoConfigController.update",
+        "PoConfigController.findMany",
+        "PoConfigController.insertMany",
+        "PoConfigController.findOne",
+        "PoConfigController.recoverMany",
+        "PoConfigController.partialUpdate",
+        "PoConfigController.delete",
+        "PoConfigController.recover",
+        "PoConfigController.deleteMany",
         "ImportTransactionController.create",
         "ImportTransactionController.insertMany",
         "ImportTransactionController.update",
@@ -2797,14 +3166,6 @@
     {
       "name": "Manager",
       "permissions": [
-        "InventoryAskController.create",
-        "InventoryAskController.update",
-        "InventoryAskController.findMany",
-        "InventoryAskController.insertMany",
-        "InventoryAskController.findOne",
-        "InventoryAskController.recoverMany",
-        "InventoryAskController.partialUpdate",
-        "InventoryAskController.recover",
         "AttendanceController.create",
         "AttendanceController.update",
         "AttendanceController.findMany",
@@ -2837,14 +3198,26 @@
         "SiteController.recoverMany",
         "SiteController.partialUpdate",
         "SiteController.recover",
-        "InventoryManagementController.create",
-        "InventoryManagementController.update",
-        "InventoryManagementController.findMany",
-        "InventoryManagementController.insertMany",
-        "InventoryManagementController.findOne",
-        "InventoryManagementController.recoverMany",
-        "InventoryManagementController.partialUpdate",
-        "InventoryManagementController.recover"
+        "PurchaseOrderItemsController.create",
+        "PurchaseOrderItemsController.update",
+        "PurchaseOrderItemsController.findMany",
+        "PurchaseOrderItemsController.insertMany",
+        "PurchaseOrderItemsController.findOne",
+        "PurchaseOrderItemsController.recoverMany",
+        "PurchaseOrderItemsController.partialUpdate",
+        "PurchaseOrderItemsController.delete",
+        "PurchaseOrderItemsController.recover",
+        "PurchaseOrderItemsController.deleteMany",
+        "PurchaseOrderController.create",
+        "PurchaseOrderController.update",
+        "PurchaseOrderController.findMany",
+        "PurchaseOrderController.insertMany",
+        "PurchaseOrderController.findOne",
+        "PurchaseOrderController.recoverMany",
+        "PurchaseOrderController.partialUpdate",
+        "PurchaseOrderController.delete",
+        "PurchaseOrderController.recover",
+        "PurchaseOrderController.deleteMany"
       ]
     },
     {
@@ -3020,58 +3393,6 @@
       "modelUserKey": "inventoryManagement"
     },
     {
-      "displayName": "All Inventory Ask ",
-      "name": "inventoryAsk-list-action",
-      "type": "solid",
-      "domain": "",
-      "context": "",
-      "customComponent": "",
-      "customIsModal": true,
-      "serverEndpoint": "",
-      "viewUserKey": "inventoryAsk-list-view",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk"
-    },
-    {
-      "displayName": "Inventory Ask Pending ",
-      "name": "inventoryAsk-withPending-list-action",
-      "type": "solid",
-      "domain": "",
-      "context": "",
-      "customComponent": "",
-      "customIsModal": true,
-      "serverEndpoint": "",
-      "viewUserKey": "inventoryAsk-list-view",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk"
-    },
-    {
-      "displayName": "Inventory Ask InProgress",
-      "name": "inventoryAsk-withInProgress-list-action",
-      "type": "solid",
-      "domain": "",
-      "context": "",
-      "customComponent": "",
-      "customIsModal": true,
-      "serverEndpoint": "",
-      "viewUserKey": "inventoryAsk-list-view",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk"
-    },
-    {
-      "displayName": "Inventory Ask  Completed",
-      "name": "inventoryAsk-withCompleted-list-action",
-      "type": "solid",
-      "domain": "",
-      "context": "",
-      "customComponent": "",
-      "customIsModal": true,
-      "serverEndpoint": "",
-      "viewUserKey": "inventoryAsk-list-view",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk"
-    },
-    {
       "displayName": "Advance Payment Tree View Action",
       "name": "advancePayment-tree-view-action",
       "type": "solid",
@@ -3228,17 +3549,56 @@
       "modelUserKey": "authUser"
     },
     {
-      "displayName": "Inventory Ask Tree View Action",
-      "name": "inventoryAsk-tree-view-action",
+      "displayName": "PO Config List Action",
+      "name": "poConfig-list-action",
       "type": "solid",
       "domain": "",
       "context": "",
       "customComponent": "",
       "customIsModal": true,
       "serverEndpoint": "",
-      "viewUserKey": "inventoryAsk-tree-view",
+      "viewUserKey": "poConfig-list-view",
       "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk"
+      "modelUserKey": "poConfig"
+    },
+    {
+      "displayName": "PO Config Tree View Action",
+      "name": "poConfig-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "poConfig-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "poConfig"
+    },
+    {
+      "displayName": "Purchase Order List Action",
+      "name": "purchaseOrder-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "purchaseOrder-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrder"
+    },
+    {
+      "displayName": "Purchase Order Tree View Action",
+      "name": "purchaseOrder-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "purchaseOrder-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrder"
     }
   ],
   "menus": [
@@ -3267,21 +3627,9 @@
       ]
     },
     {
-      "displayName": "AuthUser",
-      "name": "authUser-menu-item",
-      "sequenceNumber": 3,
-      "actionUserKey": "authUser-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "admin_panel_settings",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
       "displayName": "Labour",
       "name": "labour-menu-item",
-      "sequenceNumber": 4,
+      "sequenceNumber": 3,
       "actionUserKey": "labour-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3293,7 +3641,7 @@
     {
       "displayName": "Attendance",
       "name": "attendance-menu-item",
-      "sequenceNumber": 5,
+      "sequenceNumber": 4,
       "actionUserKey": "attendance-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3303,21 +3651,9 @@
       ]
     },
     {
-      "displayName": "Advance Payment",
-      "name": "advancePayment-menu-item",
-      "sequenceNumber": 6,
-      "actionUserKey": "advancePayment-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "payment",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
       "displayName": "Site",
       "name": "site-menu-item",
-      "sequenceNumber": 7,
+      "sequenceNumber": 5,
       "actionUserKey": "site-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3327,9 +3663,21 @@
       ]
     },
     {
+      "displayName": "Inventory Management",
+      "name": "inventoryManagement-menu-item",
+      "sequenceNumber": 6,
+      "actionUserKey": "inventoryManagement-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "inventory_2",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
       "displayName": "Salary",
       "name": "salaryMaster",
-      "sequenceNumber": 8,
+      "sequenceNumber": 7,
       "actionUserKey": "masters-root",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3369,7 +3717,10 @@
       "actionUserKey": "labourMonthlyExpense-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "salaryMaster",
-      "iconName": ""
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
     },
     {
       "displayName": "Government Salary Slip",
@@ -3378,75 +3729,54 @@
       "actionUserKey": "governmentSalarySlip-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "salaryMaster",
-      "iconName": ""
-    },
-    {
-      "displayName": "Inventory Management",
-      "name": "inventoryManagement-menu-item",
-      "sequenceNumber": 9,
-      "actionUserKey": "inventoryManagement-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "inventory_2",
+      "iconName": "",
       "roles": [
         "Labour  Admin"
       ]
     },
     {
-      "displayName": "Inventory Ask Master",
-      "name": "inventoryAskMaster",
-      "sequenceNumber": 10,
-      "actionUserKey": "masters-root",
+      "displayName": "Advance Payment",
+      "name": "advancePayment-menu-item",
+      "sequenceNumber": 5,
+      "actionUserKey": "advancePayment-list-action",
       "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "inbox",
+      "parentMenuItemUserKey": "salaryMaster",
+      "iconName": "payment",
       "roles": [
         "Labour  Admin"
       ]
     },
     {
-      "displayName": "All",
-      "name": "inventoryAsk-menu-item",
+      "displayName": "Purchase Order",
+      "name": "purchase-order-root-menu-item",
+      "sequenceNumber": 8,
+      "actionUserKey": "poConfig-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "PO Config",
+      "name": "poConfig-menu-item",
       "sequenceNumber": 1,
-      "actionUserKey": "inventoryAsk-list-action",
+      "actionUserKey": "poConfig-list-action",
       "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "inventoryAskMaster",
+      "parentMenuItemUserKey": "purchase-order-root-menu-item",
       "iconName": "",
       "roles": [
         "Labour  Admin"
       ]
     },
     {
-      "displayName": "Pending",
-      "name": "inventoryAsk-withPending-menu-item",
+      "displayName": "Purchase Order",
+      "name": "purchaseOrder-menu-item",
       "sequenceNumber": 2,
-      "actionUserKey": "inventoryAsk-withPending-list-action",
+      "actionUserKey": "purchaseOrder-list-action",
       "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "inventoryAskMaster",
-      "iconName": "",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
-      "displayName": "InProgress",
-      "name": "inventoryAsk-withInProgress-menu-item",
-      "sequenceNumber": 3,
-      "actionUserKey": "inventoryAsk-withInProgress-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "inventoryAskMaster",
-      "iconName": "",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
-      "displayName": "Completed",
-      "name": "inventoryAsk-withCompleted-menu-item",
-      "sequenceNumber": 4,
-      "actionUserKey": "inventoryAsk-withCompleted-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "inventoryAskMaster",
+      "parentMenuItemUserKey": "purchase-order-root-menu-item",
       "iconName": "",
       "roles": [
         "Labour  Admin"
@@ -5185,7 +5515,7 @@
                     "type": "page",
                     "attrs": {
                       "name": "page-2",
-                      "label": "Labour Assignment"
+                      "label": "Labour Information"
                     },
                     "children": [
                       {
@@ -5205,6 +5535,39 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "labour",
+                                  "create": false
+                                }
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "page",
+                    "attrs": {
+                      "name": "page-3",
+                      "label": "Purchase Orders From these Site"
+                    },
+                    "children": [
+                      {
+                        "type": "row",
+                        "attrs": {
+                          "name": "page-2-row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-2-col-1",
+                              "className": "col-12"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "purchaseOrders",
                                   "create": false
                                 }
                               }
@@ -5323,172 +5686,6 @@
                         "type": "field",
                         "attrs": {
                           "name": "productQuantity"
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "name": "inventoryAsk-list-view",
-      "displayName": "Inventory Ask",
-      "type": "list",
-      "context": "{}",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk",
-      "layout": {
-        "onBeforeListDataLoad": "inventoryAskOnBeforeListDataLoad",
-        "type": "list",
-        "attrs": {
-          "pagination": true,
-          "pageSizeOptions": [
-            10,
-            25,
-            50
-          ],
-          "enableGlobalSearch": true,
-          "create": true,
-          "edit": true,
-          "delete": true
-        },
-        "children": [
-          {
-            "type": "field",
-            "attrs": {
-              "name": "id"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "hsnCode",
-              "isSearchable": true,
-              "sortable": true
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "managerName",
-              "isSearchable": true,
-              "sortable": true
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "productName",
-              "isSearchable": true,
-              "sortable": true
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "projectQuantity"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "status"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "sIteName",
-              "isSearchable": true,
-              "sortable": true
-            }
-          }
-        ]
-      }
-    },
-    {
-      "name": "inventoryAsk-form-view",
-      "displayName": "Inventory Ask",
-      "type": "form",
-      "context": "{}",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk",
-      "layout": {
-        "type": "form",
-        "attrs": {
-          "name": "form-1",
-          "label": "Inventory Ask",
-          "className": "grid"
-        },
-        "children": [
-          {
-            "type": "sheet",
-            "attrs": {
-              "name": "sheet-1"
-            },
-            "children": [
-              {
-                "type": "row",
-                "attrs": {
-                  "name": "sheet-1"
-                },
-                "children": [
-                  {
-                    "type": "column",
-                    "attrs": {
-                      "name": "group-1",
-                      "label": "",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
-                    },
-                    "children": [
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "managerName"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "projectQuantity"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "sIteName"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "hsnCode"
-                        }
-                      }
-                    ]
-                  },
-                  {
-                    "type": "column",
-                    "attrs": {
-                      "name": "group-2",
-                      "label": "",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
-                    },
-                    "children": [
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "productName"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "status"
                         }
                       }
                     ]
@@ -6717,73 +6914,6 @@
       }
     },
     {
-      "name": "inventoryAsk-tree-view",
-      "displayName": "Inventory Ask",
-      "type": "tree",
-      "context": "{}",
-      "moduleUserKey": "labour-management-system",
-      "modelUserKey": "inventoryAsk",
-      "layout": {
-        "type": "tree",
-        "attrs": {
-          "pagination": true,
-          "pageSizeOptions": [
-            10,
-            25,
-            50
-          ],
-          "enableGlobalSearch": true,
-          "create": true,
-          "edit": true,
-          "delete": true
-        },
-        "children": [
-          {
-            "type": "field",
-            "attrs": {
-              "name": "id"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "managerName"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "productName"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "projectQuantity"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "status"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "hsnCode"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "sIteName"
-            }
-          }
-        ]
-      }
-    },
-    {
       "name": "authUser-tree-view",
       "displayName": "AuthUser",
       "type": "tree",
@@ -6816,6 +6946,490 @@
             "attrs": {
               "name": "labour"
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "poConfig-list-view",
+      "displayName": "PO Config",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "poConfig",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "compnayName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "iso"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "address"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "telePhone"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "email"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "webSite"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "gst"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "pan"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "cin"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "msme"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "poConfig-tree-view",
+      "displayName": "PO Config",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "poConfig",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "compnayName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "iso"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "address"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "telePhone"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "email"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "webSite"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "gst"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "pan"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "cin"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "msme"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "poConfig-form-view",
+      "displayName": "PO Config",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "poConfig",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "PO Config",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "compnayName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "address"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "email"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "gst"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "cin"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "iso"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "telePhone"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "webSite"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "pan"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "msme"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrder-list-view",
+      "displayName": "Purchase Order",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrder",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "supplierName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "shipTo"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "poDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "reqDate"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrder-tree-view",
+      "displayName": "Purchase Order",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrder",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "supplierName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "shipTo"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "poDate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "reqDate"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrder-form-view",
+      "displayName": "Purchase Order",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrder",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Purchase Order",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "supplierName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "poDate"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "shipTo"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "reqDate"
+                        }
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
         ]
       }

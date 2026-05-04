@@ -180,3 +180,35 @@ inventory ask
 
 inventory items 
 
+
+
+
+PO config 
+compnay name 
+Iso
+address
+Tel
+email
+website
+GST
+PAN
+CIN
+MSME
+
+
+
+Purchase order 
+Supplier Name 
+Ship to 
+PO no
+Po Date 
+Req Date 
+onetomay
+
+purchase order items
+prod name 
+quantity
+desc
+po 
+
+many-to-one to  

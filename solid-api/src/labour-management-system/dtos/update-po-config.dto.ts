@@ -1,59 +1,60 @@
 import { IsInt,IsOptional, IsString, IsNotEmpty } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateInventoryAskDto {
+export class UpdatePoConfigDto {
     @IsOptional()
     @IsInt()
     id: number;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    productName: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    projectQuantity: string;
-
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    status: string;
-
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    sIteNameId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    sIteNameUserKey: string;
-
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    hsnCodeId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    hsnCodeUserKey: string;
-
-    @IsOptional()
-    @IsInt()
-    @ApiProperty()
-    managerCodeId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty()
-    managerCodeUserKey: string;
 
     @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()
-    managerName: string;
+    compnayName: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    iso: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    address: string;
+
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    telePhone: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    email: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    webSite: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    gst: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    pan: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    cin: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    msme: string;
 }

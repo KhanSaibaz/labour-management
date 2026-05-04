@@ -2,6 +2,7 @@ import { CommonEntity } from '@solidxai/core';
 import { Entity, Column, OneToMany, Index } from 'typeorm';
 import { Labour } from 'src/labour-management-system/entities/labour.entity';
 import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity';
+import { PurchaseOrder } from 'src/labour-management-system/entities/purchase-order.entity';
 
 @Entity('site')
 export class Site extends CommonEntity {
@@ -39,4 +40,8 @@ export class Site extends CommonEntity {
 
 // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
 // governmentSalarySlip: GovernmentSalarySlip[];
+
+
+@OneToMany(() => PurchaseOrder, purchaseOrder => purchaseOrder.site, { cascade: true })
+purchaseOrders: PurchaseOrder[];
 }
