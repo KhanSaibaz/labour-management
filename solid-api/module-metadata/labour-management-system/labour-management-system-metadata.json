@@ -1961,28 +1961,6 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
-          },
-          {
-            "name": "hsnCode",
-            "displayName": "HSN Code",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": true,
-            "unique": true,
-            "index": true,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": true,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
           }
         ]
       },
