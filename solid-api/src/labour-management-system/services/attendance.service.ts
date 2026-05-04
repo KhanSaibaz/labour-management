@@ -48,18 +48,36 @@ export class AttendanceService extends CRUDService<Attendance> {
     return new Date(year, month, 0).getDate();
   }
 
+  // private resolveAttendanceDate(now: Date): Date {
+  //   const ist = new Date(
+  //     now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })
+  //   );
+
+  //   if (ist.getHours() < 6) {
+  //     ist.setDate(ist.getDate() - 1);
+  //   }
+
+  //   ist.setHours(0, 0, 0, 0);
+
+  //   return new Date(ist.getTime() - 5.5 * 60 * 60 * 1000);
+  // }
   private resolveAttendanceDate(now: Date): Date {
-    const ist = new Date(
-      now.toLocaleString('en-US', { timeZone: 'Asia/Kolkata' })
-    );
+    // IST offset in ms
+    const IST_OFFSET = 5.5 * 60 * 60 * 1000;
 
-    if (ist.getHours() < 6) {
-      ist.setDate(ist.getDate() - 1);
-    }
+    // Convert UTC → IST
+    const istTime = new Date(now.getTime() + IST_OFFSET);
 
-    ist.setHours(0, 0, 0, 0);
+    // Get IST date parts
+    const year = istTime.getUTCFullYear();
+    const month = istTime.getUTCMonth();
+    const date = istTime.getUTCDate();
 
-    return new Date(ist.getTime() - 5.5 * 60 * 60 * 1000);
+    // Create IST midnight in UTC
+    const istMidnightUTC = new Date(Date.UTC(year, month, date));
+
+    // Convert back to UTC timestamp
+    return new Date(istMidnightUTC.getTime() - IST_OFFSET);
   }
 
   private getCurrentSalaryMonth(): string {
@@ -73,32 +91,32 @@ export class AttendanceService extends CRUDService<Attendance> {
 
   private calculateHazri(workingHours: number) {
 
-  const today = new Date();
-  const isSunday = today.getDay() === 0; // 0 = Sunday
+    const today = new Date();
+    const isSunday = today.getDay() === 0; // 0 = Sunday
 
-  // Sunday rule
-  if (isSunday) {
-    if (workingHours > 3) {
-      return { hours: 1, label: WORK_UNITS.SINGLE };
+    // Sunday rule
+    if (isSunday) {
+      if (workingHours > 3) {
+        return { hours: 1, label: WORK_UNITS.SINGLE };
+      }
+      return { hours: 0, label: null };
     }
-    return { hours: 0, label: null };
-  }
 
-  // Normal days
-  if (workingHours < 8) {
-    return { hours: 0, label: null };
-  }
+    // Normal days
+    if (workingHours < 8) {
+      return { hours: 0, label: null };
+    }
 
-  if (workingHours >= 13) {
-    return { hours: 2, label: WORK_UNITS.DOUBLE };
-  }
+    if (workingHours >= 13) {
+      return { hours: 2, label: WORK_UNITS.DOUBLE };
+    }
 
-  if (workingHours >= 11) {
-    return { hours: 1.5, label: WORK_UNITS.ONE_AND_HALF };
-  }
+    if (workingHours >= 11) {
+      return { hours: 1.5, label: WORK_UNITS.ONE_AND_HALF };
+    }
 
-  return { hours: 1, label: WORK_UNITS.SINGLE };
-}
+    return { hours: 1, label: WORK_UNITS.SINGLE };
+  }
 
   // ================= CHECK-IN =================
 
@@ -115,6 +133,8 @@ export class AttendanceService extends CRUDService<Attendance> {
 
     const labour = authUser.labour;
     const now = new Date();
+    console.log(now);
+
     const attendanceDate = this.resolveAttendanceDate(now);
 
     const existing = await this.attendanceRepo.findOne({
@@ -181,7 +201,7 @@ export class AttendanceService extends CRUDService<Attendance> {
       relations: ['labourCode'],
     });
 
- 
+
 
     if (!attendance) {
       console.warn('[CHECK-OUT ERROR] No check-in found', {
@@ -204,10 +224,10 @@ export class AttendanceService extends CRUDService<Attendance> {
       (now.getTime() - new Date(attendance.checkIn).getTime()) /
       (1000 * 60 * 60);
 
- 
+
 
     const hazri = this.calculateHazri(hours);
-   
+
 
     // ✅ CRITICAL: Store previous workUnits BEFORE updating
     const previousWorkUnits = attendance.workUnits; // ✅ Save OLD value
@@ -222,7 +242,7 @@ export class AttendanceService extends CRUDService<Attendance> {
 
     const saved = await this.attendanceRepo.save(attendance);
 
-  
+
 
     // ✅ Update salary with correct overtime calculation
     await this.updateSalaryWithOvertimeCorrection(
@@ -233,7 +253,7 @@ export class AttendanceService extends CRUDService<Attendance> {
       labour,
     );
 
- 
+
     return {
       message: 'Checkout processed successfully',
       attempts: saved.noOfTries,
@@ -281,7 +301,7 @@ export class AttendanceService extends CRUDService<Attendance> {
 
     // ================= CREATE NEW SALARY =================
     if (!salary) {
- 
+
 
       salary = this.salaryRepo.create({
         labourCode: labour,
