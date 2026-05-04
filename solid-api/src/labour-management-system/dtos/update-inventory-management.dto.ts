@@ -1,6 +1,7 @@
 import { IsInt,IsOptional, IsString, IsNotEmpty, ValidateNested, IsArray } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
+
 // import { UpdateInventoryAskDto } from 'src/labour-management-system/dtos/update-inventory-ask.dto';
 
 export class UpdateInventoryManagementDto {
@@ -24,7 +25,6 @@ export class UpdateInventoryManagementDto {
     @ApiProperty()
     hsnCode: string;
 
-    @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()

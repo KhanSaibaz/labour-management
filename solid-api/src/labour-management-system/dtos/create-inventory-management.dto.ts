@@ -19,7 +19,7 @@ export class CreateInventoryManagementDto {
     @ApiProperty()
     hsnCode: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @ApiProperty()
     description: string;

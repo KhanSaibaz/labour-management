@@ -13,6 +13,6 @@ export class InventoryManagement extends CommonEntity {
     @Column({ type: "varchar" })
     hsnCode: string;
 
-    @Column({ type: "text" })
+    @Column({ type: "text", nullable: true })
     description: string;
 }

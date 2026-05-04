@@ -1968,7 +1968,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": true,
+            "required": false,
             "unique": false,
             "index": false,
             "private": false,
@@ -5685,6 +5685,12 @@
                       {
                         "type": "field",
                         "attrs": {
+                          "name": "description"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
                           "name": "productQuantity"
                         }
                       }
@@ -7163,7 +7169,7 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-1",
-                      "label": "",
+                      "label": "PO Detail",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
@@ -7203,7 +7209,7 @@
                     "type": "column",
                     "attrs": {
                       "name": "group-2",
-                      "label": "",
+                      "label": "PO Detail",
                       "className": "col-12 sm:col-12 md:col-6 lg:col-6"
                     },
                     "children": [
@@ -7332,6 +7338,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "supplierName"
             }
           },
@@ -7402,6 +7414,12 @@
                         "attrs": {
                           "name": "poDate"
                         }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "site"
+                        }
                       }
                     ]
                   },
@@ -7423,6 +7441,12 @@
                         "type": "field",
                         "attrs": {
                           "name": "reqDate"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "poItems"
                         }
                       }
                     ]
