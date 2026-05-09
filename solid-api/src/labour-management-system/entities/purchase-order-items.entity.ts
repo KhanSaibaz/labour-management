@@ -5,9 +5,6 @@ import { PurchaseOrder } from 'src/labour-management-system/entities/purchase-or
 @Entity('purchase_order_items')
 export class PurchaseOrderItems extends CommonEntity {
     @Column({ type: "varchar" })
-    productName: string;
-
-    @Column({ type: "varchar" })
     prdouctQuantity: string;
 
     @Column({ type: "text", nullable: true })
@@ -16,4 +13,12 @@ export class PurchaseOrderItems extends CommonEntity {
     @ManyToOne(() => PurchaseOrder, { onDelete: "SET NULL", nullable: false })
     @JoinColumn()
     purchaseOrder: PurchaseOrder;
+
+
+@Column({ type: "varchar" })
+productName: string;
+
+
+@Column({ type: "varchar", nullable: true })
+hsnCode: string;
 }

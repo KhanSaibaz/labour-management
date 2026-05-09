@@ -6,11 +6,6 @@ export class CreatePurchaseOrderItemsDto {
     @IsNotEmpty()
     @IsString()
     @ApiProperty()
-    productName: string;
-
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
     prdouctQuantity: string;
 
     @IsOptional()
@@ -27,4 +22,18 @@ export class CreatePurchaseOrderItemsDto {
     @IsOptional()
     @ApiProperty()
     purchaseOrderUserKey: string;
+
+
+@IsNotEmpty()
+@IsString()
+@ApiProperty()
+productName: string;
+
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+hsnCode: string;
+
 }

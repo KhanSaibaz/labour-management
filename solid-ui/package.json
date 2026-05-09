@@ -16,6 +16,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "@solidxai/core-ui": "^0.1.8-beta.19",
     "axios": "^1.13.2",
+    "html-to-image": "^1.11.13",
     "playwright": "^1.58.2",
     "primeflex": "^4.0.0",
     "primeicons": "^7.0.0",

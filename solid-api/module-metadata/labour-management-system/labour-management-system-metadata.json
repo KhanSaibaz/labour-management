@@ -1884,6 +1884,7 @@
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "inventory_management",
+        "userKeyFieldUserKey": "externalId",
         "isChild": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
@@ -1977,6 +1978,37 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": true
+          },
+          {
+            "name": "externalId",
+            "displayName": "External Id",
+            "description": null,
+            "type": "computed",
+            "ormType": "varchar",
+            "isSystem": false,
+            "computedFieldValueType": "string",
+            "computedFieldTriggerConfig": [
+              {
+                "moduleName": "labour-management-system",
+                "modelName": "inventoryManagement",
+                "operations": [
+                  "before-insert",
+                  "before-update"
+                ]
+              }
+            ],
+            "computedFieldValueProvider": "ConcatEntityComputedFieldProvider",
+            "computedFieldValueProviderCtxt": "{\n  \"separator\": \"-\",\n  \"fields\": [\n    \"hsnCode\",\n    \"productName\"\n  ],\n  \"slugify\": false\n}",
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": false
           }
         ]
       },
@@ -2897,35 +2929,11 @@
         "dataSourceType": "postgres",
         "tableName": "purchase_order_items",
         "isChild": false,
-        "isLegacyTable": false,
-        "isLegacyTableWithId": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
         "draftPublishWorkflow": false,
         "internationalisation": false,
         "fields": [
-          {
-            "name": "productName",
-            "displayName": "Product Name",
-            "description": null,
-            "type": "shortText",
-            "ormType": "varchar",
-            "isSystem": false,
-            "defaultValue": null,
-            "min": null,
-            "max": null,
-            "required": true,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": false,
-            "enableAuditTracking": true,
-            "isPrimaryKey": false
-          },
           {
             "name": "prdouctQuantity",
             "displayName": "Prdouct Quantity",
@@ -2996,6 +3004,50 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
+          },
+          {
+            "name": "productName",
+            "displayName": "Product Name",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": true,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "hsnCode",
+            "displayName": "HSN Code",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
           }
         ]
       }
@@ -4946,12 +4998,11 @@
             {
               "attrs": {
                 "icon": "pi pi-cog",
+                "className": "p-button-sm",
                 "label": "Generate Salary Slip",
-                "action": "`GenerateSalarySlip`",
+                "action": "GenerateSalarySlip",
                 "actionInContextMenu": false,
-                "openInPopup": true,
-                "title": "Generate Salary Slip",
-                "description": "Generate employee salary slip"
+                "openInPopup": true
               }
             }
           ]
@@ -5041,6 +5092,12 @@
                                 "attrs": {
                                   "name": "workingDays"
                                 }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "status"
+                                }
                               }
                             ]
                           }
@@ -5079,12 +5136,6 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "overtimeAmount"
-                                }
-                              },
-                              {
-                                "type": "field",
-                                "attrs": {
-                                  "name": "status"
                                 }
                               }
                             ]
@@ -5662,6 +5713,18 @@
             "type": "field",
             "attrs": {
               "name": "productQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "externalId"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "description"
             }
           }
         ]

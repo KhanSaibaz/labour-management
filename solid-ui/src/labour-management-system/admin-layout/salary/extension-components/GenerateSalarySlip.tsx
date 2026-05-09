@@ -1,160 +1,481 @@
-import { closePopup, logger } from "@solidxai/core-ui";
-import { useRef, useState } from "react";
-import { ProgressSpinner } from "primereact/progressspinner";
-import { Message } from "primereact/message";
-import { Button } from "primereact/button";
+import React, { useRef, useState } from "react";
+import { toPng } from "html-to-image";
+import { closePopup, SolidButton } from "@solidxai/core-ui";
 import { useDispatch } from "react-redux";
-// import { useMoveToCheckerMutation, useValidateApplicationMutation } from "../../../redux/applicationApi";
-import { Toast } from "primereact/toast";
-
-type Step = "initial" | "validating" | "errors" | "passed" | "sending" | "done";
-
-interface ValidationResponse {
-  success: boolean;
-  errors: string[];
-}
 
 const GenerateSalarySlip = (e: any): React.JSX.Element => {
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
-  // const [validateApplication] = useValidateApplicationMutation();
-  // const [moveToChecker] = useMoveToCheckerMutation();
+    const slipRef = useRef<HTMLDivElement>(null);
 
-  const [step, setStep] = useState<Step>("initial");
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const toast = useRef<Toast>(null);
+    const data = e?.formData;
 
-  // ── STEP 1: Validate ────────────────────────────────────────────────────────
+    const labour = data?.labourCode || {};
 
+    const formatAmount = (amount: number | string) => {
+        return Number(amount || 0).toLocaleString("en-IN");
+    };
 
+    const handleGenerateSlip = async () => {
+        if (!slipRef.current) return;
 
+        try {
+            setIsSubmitting(true);
 
-  // ── Render ──────────────────────────────────────────────────────────────────
-  const renderBody = () => {
-    // ── Spinner (validating / sending) ───────────────────────────
-    if (step === "validating" || step === "sending") {
-      return (
-        <div className="flex flex-column align-items-center justify-content-center py-6 gap-3">
-          <ProgressSpinner style={{ width: 50, height: 50 }} />
-          <p className="text-600 m-0">
-            {step === "validating" ? "Validating application..." : "Sending to Checker..."}
-          </p>
-        </div>
-      );
-    }
+            const dataUrl = await toPng(slipRef.current, {
+                cacheBust: true,
+                pixelRatio: 2,
+            });
 
-    // ── Initial ──────────────────────────────────────────────────
-    if (step === "initial") {
-      return (
-        <div className="flex flex-column gap-4">
-          <div className="text-600">
-            <p className="mb-2 font-medium">You are about to send this application to Checker.</p>
-            <p className="m-0">
-              The system will first validate all application details.
-              If any issues are found, you will need to fix them before proceeding.
-            </p>
-          </div>
+            const link = document.createElement("a");
 
-          <div className="p-3 border-1 border-round bg-yellow-50 border-yellow-300">
-            <div className="flex align-items-center gap-2 mb-2">
-              <i className="pi pi-exclamation-triangle text-yellow-600" />
-              <b>Confirmation Required</b>
+            link.download = `${labour?.name || "salary-slip"}-${data?.salaryMonth}-${data?.salaryYear}.png`;
+
+            link.href = dataUrl;
+
+            link.click();
+
+            dispatch(closePopup());
+        } catch (error) {
+            console.error("Failed to generate salary slip:", error);
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
+    return (
+        <div
+            style={{
+                padding: "24px",
+                width: "100%",
+                maxWidth: "500px",
+            }}
+        >
+            {/* TITLE */}
+
+            <div
+                style={{
+                    marginBottom: "20px",
+                }}
+            >
+                <h2
+                    style={{
+                        margin: 0,
+                        fontSize: "22px",
+                        fontWeight: 700,
+                        color: "#111827",
+                    }}
+                >
+                    Generate Salary Slip
+                </h2>
+
+                <p
+                    style={{
+                        marginTop: "8px",
+                        fontSize: "14px",
+                        color: "#6b7280",
+                    }}
+                >
+                    Please click below to generate and download the salary slip.
+                </p>
             </div>
-            <p className="m-0">Are you sure you want to validate & send this application to Checker?</p>
-          </div>
 
-          <div className="flex justify-content-end gap-2">
-            <Button label="Cancel" icon="pi pi-times" severity="secondary" outlined size="small" onClick={() => dispatch(closePopup())} />
-            <Button label="Validate" icon="pi pi-check" severity="success" size="small" />
-          </div>
-        </div>
-      );
-    }
+            {/* 🔘 Buttons */}
 
-    // ── Validation Errors ────────────────────────────────────────
-    if (step === "errors") {
-      return (
-        <div className="flex flex-column gap-3">
-          <div className="w-full p-3 border-round-lg bg-red-50 border-1 border-red-200">
-            <div className="flex align-items-center gap-2 mb-3">
-              <i className="pi pi-exclamation-triangle text-red-500 text-lg" />
-              <span className="font-semibold text-red-700">Validation Errors</span>
-            </div>
-            <div className="flex flex-column gap-2">
-              {validationErrors.map((error, i) => (
-                <Message
-                  key={i}
-                  severity="error"
-                  content={<span style={{ fontSize: 14, fontWeight: 600 }}>- {error}</span>}
+            <div
+                className="flex justify-start gap-3 pt-2"
+            >
+                {/* Cancel */}
+
+                <SolidButton
+                    type="button"
+                    label="Cancel"
+                    variant="secondary"
+                    onClick={() => dispatch(closePopup())}
                 />
-              ))}
+
+                {/* Generate */}
+
+                <SolidButton
+                    type="button"
+                    label="Generate Salary Slip"
+                    loading={isSubmitting}
+                    variant="primary"
+                    onClick={handleGenerateSlip}
+                />
             </div>
-          </div>
 
-          <div className="text-center text-sm text-600">
-            <i className="pi pi-info-circle mr-2" />
-            Please resolve the errors above before sending to Checker.
-          </div>
+            {/* HIDDEN SALARY SLIP */}
 
-          {/* ✅ Buttons so user isn't stuck */}
-          {/* <div className="flex justify-content-end gap-2 mt-2">
-            <Button label="Close" icon="pi pi-times" severity="secondary" outlined onClick={() => dispatch(closePopup())} />
-            <Button label="Re-validate" icon="pi pi-refresh" severity="warning" onClick={handleValidate} />
-          </div> */}
+            <div
+                style={{
+                    position: "fixed",
+                    left: "-99999px",
+                    top: 0,
+                }}
+            >
+                <div
+                    ref={slipRef}
+                    id="salary-slip"
+                    style={{
+                        width: "850px",
+                        background: "#ffffff",
+                        borderRadius: "16px",
+                        overflow: "hidden",
+                        border: "1px solid #e5e7eb",
+                        fontFamily: "Arial, sans-serif",
+                    }}
+                >
+                    {/* HEADER */}
+
+                    <div
+                        style={{
+                            background: "#111827",
+                            color: "#ffffff",
+                            padding: "24px 32px",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                        }}
+                    >
+                        <div
+                            style={{
+                                display: "flex",
+                                alignItems: "center",
+                                gap: "16px",
+                            }}
+                        >
+                            <img
+                                src="/logo.jpeg"
+                                alt="Company Logo"
+                                style={{
+                                    width: "80px",
+                                    height: "55px",
+                                    objectFit: "contain",
+                                    background: "#ffffff",
+                                    borderRadius: "10px",
+                                    padding: "6px",
+                                }}
+                            />
+
+                            <div>
+                                <h1
+                                    style={{
+                                        margin: 0,
+                                        fontSize: "30px",
+                                        fontWeight: 700,
+                                        color: "#ffffff",
+                                    }}
+                                >
+                                    HM Electrical
+                                </h1>
+
+                                <p
+                                    style={{
+                                        margin: "4px 0 0",
+                                        fontSize: "13px",
+                                        opacity: 0.8,
+                                    }}
+                                >
+                                    Employee Salary Slip
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            style={{
+                                textAlign: "right",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    fontSize: "13px",
+                                    opacity: 0.7,
+                                }}
+                            >
+                                Salary Month
+                            </div>
+
+                            <div
+                                style={{
+                                    fontSize: "24px",
+                                    fontWeight: 700,
+                                }}
+                            >
+                                {data?.salaryMonth} {data?.salaryYear}
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* BODY */}
+
+                    <div
+                        style={{
+                            padding: "32px",
+                            background: "#ffffff",
+                        }}
+                    >
+                        {/* EMPLOYEE INFO */}
+
+                        <div
+                            style={{
+                                border: "1px solid #e5e7eb",
+                                borderRadius: "12px",
+                                overflow: "hidden",
+                                marginBottom: "24px",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    background: "#f9fafb",
+                                    padding: "14px 18px",
+                                    fontWeight: 700,
+                                    fontSize: "16px",
+                                    borderBottom: "1px solid #e5e7eb",
+                                }}
+                            >
+                                Employee Information
+                            </div>
+
+                            <div
+                                style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "1fr 1fr",
+                                    gap: "20px",
+                                    padding: "20px",
+                                }}
+                            >
+                                <Info
+                                    label="Employee Name"
+                                    value={labour?.name}
+                                />
+
+                                <Info
+                                    label="Labour Code"
+                                    value={labour?.labourCode}
+                                />
+
+                                <Info
+                                    label="Role"
+                                    value={labour?.role}
+                                />
+
+                                <Info
+                                    label="Mobile Number"
+                                    value={labour?.contactNumber}
+                                />
+                            </div>
+                        </div>
+
+                        {/* ATTENDANCE */}
+
+                        <div
+                            style={{
+                                border: "1px solid #e5e7eb",
+                                borderRadius: "12px",
+                                overflow: "hidden",
+                                marginBottom: "24px",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    background: "#f9fafb",
+                                    padding: "14px 18px",
+                                    fontWeight: 700,
+                                    fontSize: "16px",
+                                    borderBottom: "1px solid #e5e7eb",
+                                }}
+                            >
+                                Attendance Details
+                            </div>
+
+                            <div
+                                style={{
+                                    display: "grid",
+                                    gridTemplateColumns: "1fr 1fr 1fr",
+                                    gap: "20px",
+                                    padding: "20px",
+                                }}
+                            >
+                                <Info
+                                    label="Working Days"
+                                    value={data?.workingDays}
+                                />
+
+                                <Info
+                                    label="Present Days"
+                                    value={data?.presentDays}
+                                />
+
+                                <Info
+                                    label="Absent Days"
+                                    value={data?.absent}
+                                />
+                            </div>
+                        </div>
+
+                        {/* SALARY DETAILS */}
+
+                        <div
+                            style={{
+                                border: "1px solid #e5e7eb",
+                                borderRadius: "12px",
+                                overflow: "hidden",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    background: "#f9fafb",
+                                    padding: "14px 18px",
+                                    fontWeight: 700,
+                                    fontSize: "16px",
+                                    borderBottom: "1px solid #e5e7eb",
+                                }}
+                            >
+                                Salary Details
+                            </div>
+
+                            <div
+                                style={{
+                                    padding: "20px",
+                                }}
+                            >
+                                <table
+                                    style={{
+                                        width: "100%",
+                                        borderCollapse: "collapse",
+                                    }}
+                                >
+                                    <thead>
+                                        <tr
+                                            style={{
+                                                background: "#111827",
+                                                color: "#ffffff",
+                                            }}
+                                        >
+                                            <th style={tableHead}>
+                                                Description
+                                            </th>
+
+                                            <th style={tableHead}>
+                                                Amount
+                                            </th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td style={tableCell}>
+                                                Daily Wages
+                                            </td>
+
+                                            <td style={tableCell}>
+                                                ₹ {formatAmount(labour?.dailyWages)}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style={tableCell}>
+                                                Overtime Amount
+                                            </td>
+
+                                            <td style={tableCell}>
+                                                ₹ {formatAmount(data?.overtimeAmount)}
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td style={tableCell}>
+                                                Total Deduction
+                                            </td>
+
+                                            <td style={tableCell}>
+                                                ₹ {formatAmount(data?.totalDeduction)}
+                                            </td>
+                                        </tr>
+
+                                        <tr
+                                            style={{
+                                                background: "#f3f4f6",
+                                                fontWeight: 700,
+                                            }}
+                                        >
+                                            <td style={tableCell}>
+                                                Net Salary
+                                            </td>
+
+                                            <td style={tableCell}>
+                                                ₹ {formatAmount(data?.totalAmount)}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        {/* FOOTER */}
+
+                        <div
+                            style={{
+                                marginTop: "30px",
+                                textAlign: "center",
+                                color: "#6b7280",
+                                fontSize: "12px",
+                            }}
+                        >
+                            This is a computer generated salary slip.
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-      );
-    }
+    );
+};
 
-    // ── Validation Passed ────────────────────────────────────────
-    if (step === "passed") {
-      return (
-        <div className="flex flex-column align-items-center gap-3 p-2">
-          <Message
-            severity="success"
-            text="Validation successful. You can now send the application to the Checker."
-            className="w-full"
-          />
-          <div className="flex justify-content-center gap-3 pt-2">
-            <Button label="Cancel" icon="pi pi-times" severity="secondary" outlined size="small" onClick={() => dispatch(closePopup())} />
-            <Button label="Send to Checker" icon="pi pi-send" severity="success" size="small"  />
-          </div>
+const Info = ({
+    label,
+    value,
+}: {
+    label: string;
+    value: any;
+}) => {
+    return (
+        <div>
+            <div
+                style={{
+                    fontSize: "12px",
+                    color: "#6b7280",
+                    marginBottom: "6px",
+                }}
+            >
+                {label}
+            </div>
+
+            <div
+                style={{
+                    fontSize: "16px",
+                    fontWeight: 600,
+                    color: "#111827",
+                }}
+            >
+                {value || "-"}
+            </div>
         </div>
-      );
-    }
+    );
+};
 
-    // ── Done ─────────────────────────────────────────────────────
-    if (step === "done") {
-      return (
-        <div className="flex flex-column align-items-center justify-content-center py-5 gap-3">
-          <i className="pi pi-check-circle text-green-500" style={{ fontSize: "3rem" }} />
-          <p className="text-lg font-semibold text-green-700 m-0">Application sent to Checker!</p>
-          <p className="text-sm text-600 m-0">Refreshing page...</p>
-        </div>
-      );
-    }
-  };
+const tableHead: React.CSSProperties = {
+    padding: "14px",
+    textAlign: "left",
+    fontSize: "14px",
+};
 
-  return (
-    <div>
-      <Toast ref={toast} />
-
-      {/* Header */}
-      <div className="px-4 py-2 secondary-border-bottom flex align-items-center justify-content-between">
-        <h5 className="m-0">Validate & Send to Checker</h5>
-        <Button
-          icon="pi pi-times"
-          onClick={() => dispatch(closePopup())}
-          size="small"
-          severity="secondary"
-          text
-          style={{ height: 30, width: 30 }}
-        />
-      </div>
-
-      <div className="p-4">{renderBody()}</div>
-    </div>
-  );
+const tableCell: React.CSSProperties = {
+    padding: "14px",
+    borderBottom: "1px solid #e5e7eb",
+    fontSize: "14px",
 };
 
 export default GenerateSalarySlip;

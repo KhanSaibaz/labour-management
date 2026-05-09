@@ -10,12 +10,6 @@ export class UpdatePurchaseOrderItemsDto {
     @IsOptional()
     @IsString()
     @ApiProperty()
-    productName: string;
-
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
     prdouctQuantity: string;
 
     @IsOptional()
@@ -32,4 +26,19 @@ export class UpdatePurchaseOrderItemsDto {
     @IsOptional()
     @ApiProperty()
     purchaseOrderUserKey: string;
+
+
+@IsNotEmpty()
+@IsOptional()
+@IsString()
+@ApiProperty()
+productName: string;
+
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+hsnCode: string;
+
 }

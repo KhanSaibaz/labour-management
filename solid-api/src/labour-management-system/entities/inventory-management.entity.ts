@@ -15,4 +15,9 @@ export class InventoryManagement extends CommonEntity {
 
     @Column({ type: "text", nullable: true })
     description: string;
+
+
+@Index({ unique: true })
+@Column({ type: "varchar" })
+externalId: string;
 }
