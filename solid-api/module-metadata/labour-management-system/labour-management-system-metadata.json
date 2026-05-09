@@ -1845,7 +1845,35 @@
             "relationJoinTableName": null,
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
+            "enableAuditTracking": false,
+            "isMarkedForRemoval": true
+          },
+          {
+            "name": "poItems",
+            "displayName": "PoItems",
+            "description": "PoItems",
+            "type": "relation",
+            "ormType": "integer",
+            "isSystem": false,
+            "relationType": "one-to-many",
+            "relationCoModelFieldName": "site",
+            "relationCreateInverse": true,
+            "relationCoModelSingularName": "purchaseOrder",
+            "relationCoModelColumnName": null,
+            "relationModelModuleName": "labour-management-system",
+            "relationCascade": "cascade",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "relationJoinTableName": null,
+            "isRelationManyToManyOwner": null,
+            "relationFieldFixedFilter": "",
+            "enableAuditTracking": true
           },
           {
             "name": "purchaseOrders",
@@ -2133,7 +2161,8 @@
             "columnName": null,
             "isUserKey": false,
             "enableAuditTracking": false,
-            "isPrimaryKey": false
+            "isPrimaryKey": false,
+            "isMarkedForRemoval": true
           },
           {
             "name": "otherAllowance",
@@ -2507,7 +2536,112 @@
             "relationJoinTableName": null,
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
+            "enableAuditTracking": false,
+            "isMarkedForRemoval": true
+          },
+          {
+            "name": "department",
+            "displayName": "Department",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "location",
+            "displayName": "Location",
+            "description": null,
+            "type": "shortText",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": false,
+            "enableAuditTracking": true,
+            "isPrimaryKey": false
+          },
+          {
+            "name": "grossEarning",
+            "displayName": "Gross Earning",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "netPay",
+            "displayName": "Net Pay",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "totalDeduction",
+            "displayName": "Total Deduction",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
           }
         ]
       },
@@ -6665,12 +6799,6 @@
             "attrs": {
               "name": "salary"
             }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "uanNo"
-            }
           }
         ]
       }
@@ -6846,12 +6974,6 @@
             "attrs": {
               "name": "salary"
             }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "uanNo"
-            }
           }
         ]
       }
@@ -6895,12 +7017,6 @@
                         "type": "field",
                         "attrs": {
                           "name": "labour"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "uanNo"
                         }
                       },
                       {

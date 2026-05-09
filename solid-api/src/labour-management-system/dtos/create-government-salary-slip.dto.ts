@@ -3,11 +3,6 @@ import { IsString } from 'class-validator';
 import { IsNotEmpty, IsInt, IsOptional, IsNumber } from 'class-validator';
 
 export class CreateGovernmentSalarySlipDto {
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty()
-    uanNo: string;
-
     @IsOptional()
     @IsInt()
     @ApiProperty()
@@ -97,4 +92,44 @@ export class CreateGovernmentSalarySlipDto {
     @IsString()
     @ApiProperty()
     name: string;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty({ description: "Site" })
+    siteId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "Site" })
+    siteUserKey: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    department: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    location: string;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    grossEarning: number;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    netPay: number;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    totalDeduction: number;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty()
+    uanNo: string;
 }

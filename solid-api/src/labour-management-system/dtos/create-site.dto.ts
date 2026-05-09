@@ -119,4 +119,21 @@ export class CreateSiteDto {
     @IsOptional()
     @ApiProperty({ description: "PurchaseOrders" })
     purchaseOrdersCommand: string;
+
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdatePurchaseOrderDto)
+    poItems: UpdatePurchaseOrderDto[];
+
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "PoItems" })
+    poItemsIds: number[];
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    poItemsCommand: string;
 }

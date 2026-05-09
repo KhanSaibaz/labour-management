@@ -20,98 +20,98 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
   }
 
   async processSalarySlips(month: string, year: string) {
-    try {
+    // try {
 
-      // ================= STEP 1: VALIDATION =================
-      if (!month || !year) {
-        throw new BadRequestException('month and year required');
-      }
+    //   // ================= STEP 1: VALIDATION =================
+    //   if (!month || !year) {
+    //     throw new BadRequestException('month and year required');
+    //   }
 
-      // ================= STEP 2: FETCH ALL SLIPS =================
-      const slips = await this.repo.find({
-        relations: ['labour', 'labour.site']
-      });
+    //   // ================= STEP 2: FETCH ALL SLIPS =================
+    //   const slips = await this.repo.find({
+    //     relations: ['labour', 'labour.site']
+    //   });
 
-      if (!slips.length) {
-        return { message: 'No salary slips found', count: 0 };
-      }
+    //   if (!slips.length) {
+    //     return { message: 'No salary slips found', count: 0 };
+    //   }
 
-      // ================= STEP 3: FETCH SALARY DATA =================
-      const salaryData = await this.salaryRepo.find({
-        where: { salaryMonth:month, salaryYear:year },
-        relations: ['labour']
-      });
+    //   // ================= STEP 3: FETCH SALARY DATA =================
+    //   const salaryData = await this.salaryRepo.find({
+    //     where: { salaryMonth:month, salaryYear:year },
+    //     relations: ['labour']
+    //   });
 
-      // Map labourId → salary
-      const salaryMap = new Map(
-        // salaryData.map(s => [s.name?.id, s])
-      );
+    //   // Map labourId → salary
+    //   const salaryMap = new Map(
+    //     // salaryData.map(s => [s.name?.id, s])
+    //   );
 
-      // ================= STEP 4: PROCESS EACH EMPLOYEE =================
-      const updatedSlips: GovernmentSalarySlip[] = [];
+    //   // ================= STEP 4: PROCESS EACH EMPLOYEE =================
+    //   const updatedSlips: GovernmentSalarySlip[] = [];
 
-      for (const slip of slips) {
+    //   for (const slip of slips) {
 
-        // const labour = slip.labour;
-        const labour = null;
-        if (!labour) continue;
+    //     // const labour = slip.labour;
+    //     const labour = null;
+    //     if (!labour) continue;
 
-        const salary = salaryMap.get(labour.id);
+    //     const salary = salaryMap.get(labour.id);
 
-        if (!salary) {
-          this.logger.warn(`No salary found for labour ${labour.id}`);
-          continue;
-        }
+    //     if (!salary) {
+    //       this.logger.warn(`No salary found for labour ${labour.id}`);
+    //       continue;
+    //     }
 
-        // ✅ 1. Days Worked from salary table
-        const daysWorked = salary.workingDays || 0;
+    //     // ✅ 1. Days Worked from salary table
+    //     const daysWorked = salary.workingDays || 0;
 
-        // ✅ 2. Daily Rate ONLY from slip table (as per your rule)
-        const dailyRate = slip.dailyRate || 0;
+    //     // ✅ 2. Daily Rate ONLY from slip table (as per your rule)
+    //     const dailyRate = slip.dailyRate || 0;
 
-        // ================= CALCULATION =================
-        const basicWages = daysWorked * dailyRate;
-        const hra = basicWages * 0.10;
-        const otherAllowance = basicWages * 0.05;
-        const incentive = 0;
+    //     // ================= CALCULATION =================
+    //     const basicWages = daysWorked * dailyRate;
+    //     const hra = basicWages * 0.10;
+    //     const otherAllowance = basicWages * 0.05;
+    //     const incentive = 0;
 
-        const pf = basicWages * 0.12;
-        const professionalTax = 200;
-        const esic = 0;
-        const otherDeduction = 0;
+    //     const pf = basicWages * 0.12;
+    //     const professionalTax = 200;
+    //     const esic = 0;
+    //     const otherDeduction = 0;
 
-        // ================= UPDATE =================
-        slip.daysWorked = daysWorked;
+    //     // ================= UPDATE =================
+    //     slip.daysWorked = daysWorked;
 
-        slip.basicWages = basicWages;
-        slip.hra = hra;
-        slip.otherAllowance = otherAllowance;
-        slip.incentive = incentive;
+    //     slip.basicWages = basicWages;
+    //     slip.hra = hra;
+    //     slip.otherAllowance = otherAllowance;
+    //     slip.incentive = incentive;
 
-        slip.pf = pf;
-        slip.professionalTax = professionalTax;
-        slip.esic = esic;
-        slip.otherDeduction = otherDeduction;
+    //     slip.pf = pf;
+    //     slip.professionalTax = professionalTax;
+    //     slip.esic = esic;
+    //     slip.otherDeduction = otherDeduction;
 
-        updatedSlips.push(slip);
-      }
+    //     updatedSlips.push(slip);
+    //   }
 
-      // ================= STEP 5: SAVE =================
-      await this.repo.save(updatedSlips);
+    //   // ================= STEP 5: SAVE =================
+    //   await this.repo.save(updatedSlips);
 
-      // ================= STEP 6: FORMAT =================
-      const formatted = updatedSlips.map(slip => this.formatSalarySlip(slip));
+    //   // ================= STEP 6: FORMAT =================
+    //   const formatted = updatedSlips.map(slip => this.formatSalarySlip(slip));
 
-      return {
-        message: 'Salary processed successfully',
-        count: formatted.length,
-        data: formatted
-      };
+    //   return {
+    //     message: 'Salary processed successfully',
+    //     count: formatted.length,
+    //     data: formatted
+    //   };
 
-    } catch (error: any) {
-      this.logger.error(error.message);
-      throw new Error(error.message);
-    }
+    // } catch (error: any) {
+    //   this.logger.error(error.message);
+    //   throw new Error(error.message);
+    // }
   }
 
   // ================= DERIVED =================
@@ -155,7 +155,7 @@ export class GovernmentSalarySlipService extends CRUDService<GovernmentSalarySli
         // name: slip.labour?.labourName,
         // department: slip.labour?.workType,
         // location: slip.labour?.site?.clientName,
-        uan: slip.uanNo,
+        // uan: slip.uanNo,
         category: slip.category,
         daysWorked: slip.daysWorked,
         dailyRate: slip.dailyRate,

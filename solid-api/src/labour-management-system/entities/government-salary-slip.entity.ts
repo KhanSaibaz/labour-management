@@ -1,14 +1,12 @@
 import { CommonEntity } from '@solidxai/core';
 import { Entity, Column, JoinColumn, ManyToOne, Index } from 'typeorm';
 import { Labour } from 'src/labour-management-system/entities/labour.entity';
-import { Salary } from 'src/labour-management-system/entities/salary.entity'
+import { Salary } from 'src/labour-management-system/entities/salary.entity';
+import { Site } from 'src/labour-management-system/entities/site.entity'
 
 @Entity('government_salary_slip')
 @Index(['salaryMonth', 'salaryYear'], { unique: true })
 export class GovernmentSalarySlip extends CommonEntity {
-    @Column({ type: "varchar" })
-    uanNo: string;
-
     @Column({ type: "integer", nullable: true })
     otherAllowance: number;
 
@@ -59,4 +57,26 @@ export class GovernmentSalarySlip extends CommonEntity {
 
     @Column({ type: "varchar" })
     name: string;
+
+    @ManyToOne(() => Site, { onDelete: "SET NULL", nullable: true })
+    @JoinColumn()
+    site: Site;
+
+    @Column({ type: "varchar", nullable: true })
+    department: string;
+
+    @Column({ type: "varchar", nullable: true })
+    location: string;
+
+    @Column({ type: "decimal", nullable: true })
+    grossEarning: number;
+
+    @Column({ type: "decimal", nullable: true })
+    netPay: number;
+
+    @Column({ type: "decimal", nullable: true })
+    totalDeduction: number;
+
+    @Column({ type: "varchar" })
+    uanNo: string;
 }

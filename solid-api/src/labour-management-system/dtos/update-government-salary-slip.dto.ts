@@ -6,12 +6,6 @@ export class UpdateGovernmentSalarySlipDto {
     @IsInt()
     id: number;
 
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    uanNo: string;
-
     @IsOptional()
     @IsInt()
     @ApiProperty()
@@ -104,4 +98,45 @@ export class UpdateGovernmentSalarySlipDto {
     @IsString()
     @ApiProperty()
     name: string;
+
+    @IsOptional()
+    @IsInt()
+    @ApiProperty({ description: "Site" })
+    siteId: number;
+
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "Site" })
+    siteUserKey: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    department: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    location: string;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    grossEarning: number;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    netPay: number;
+
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    totalDeduction: number;
+
+    @IsNotEmpty()
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    uanNo: string;
 }
