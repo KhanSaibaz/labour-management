@@ -2008,7 +2008,8 @@
             "decryptWhen": null,
             "columnName": null,
             "isUserKey": true,
-            "enableAuditTracking": false
+            "enableAuditTracking": false,
+            "isMarkedForRemoval": true
           }
         ]
       },
@@ -2917,6 +2918,31 @@
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
             "enableAuditTracking": true
+          },
+          {
+            "name": "status",
+            "displayName": "Status",
+            "description": null,
+            "type": "selectionStatic",
+            "ormType": "varchar",
+            "isSystem": false,
+            "defaultValue": "New",
+            "selectionStaticValues": [
+              "Pending:Pending",
+              "Completed:Completed",
+              "New:New"
+            ],
+            "selectionValueType": "string",
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true,
+            "isMultiSelect": false
           }
         ]
       },
@@ -3363,8 +3389,34 @@
       "modelUserKey": "labour"
     },
     {
-      "displayName": "Attendance List Action",
-      "name": "attendance-list-action",
+      "displayName": "All Attendance List Action",
+      "name": "all-attendance-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "attendance-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance"
+    },
+    {
+      "displayName": "Currect Month Attendance List Action",
+      "name": "current-month-attendance-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "attendance-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "attendance"
+    },
+    {
+      "displayName": "Today Attendance List Action",
+      "name": "today-attendance-list-action",
       "type": "solid",
       "domain": "",
       "context": "",
@@ -3713,21 +3765,9 @@
       ]
     },
     {
-      "displayName": "Attendance",
-      "name": "attendance-menu-item",
-      "sequenceNumber": 4,
-      "actionUserKey": "attendance-list-action",
-      "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "",
-      "iconName": "event_note",
-      "roles": [
-        "Labour  Admin"
-      ]
-    },
-    {
       "displayName": "Site",
       "name": "site-menu-item",
-      "sequenceNumber": 5,
+      "sequenceNumber": 4,
       "actionUserKey": "site-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3739,11 +3779,59 @@
     {
       "displayName": "Inventory Management",
       "name": "inventoryManagement-menu-item",
-      "sequenceNumber": 6,
+      "sequenceNumber": 5,
       "actionUserKey": "inventoryManagement-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
       "iconName": "inventory_2",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Attendance",
+      "name": "attendanceMaster",
+      "sequenceNumber": 7,
+      "actionUserKey": "masters-root",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "attach_money",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Today Attendance",
+      "name": "toady-attendance-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "today-attendance-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "attendanceMaster",
+      "iconName": "event_note",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Current Month Attendance",
+      "name": "current-attendance-menu-item",
+      "sequenceNumber": 2,
+      "actionUserKey": "current-month-attendance-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "attendanceMaster",
+      "iconName": "event_note",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "All Attendance",
+      "name": "all-attendance-menu-item",
+      "sequenceNumber": 3,
+      "actionUserKey": "all-attendance-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "attendanceMaster",
+      "iconName": "event_note",
       "roles": [
         "Labour  Admin"
       ]
@@ -4584,6 +4672,7 @@
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "attendance",
       "layout": {
+        "onBeforeListDataLoad": "AttendanceOnBeforeDataLoad",
         "type": "list",
         "attrs": {
           "pagination": true,
@@ -7439,6 +7528,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "status"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "supplierName"
             }
           },
@@ -7555,6 +7650,12 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "shipTo"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "status"
                                 }
                               }
                             ]

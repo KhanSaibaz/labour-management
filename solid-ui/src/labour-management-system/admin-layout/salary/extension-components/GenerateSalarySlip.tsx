@@ -53,10 +53,9 @@ const GenerateSalarySlip = (e: any): React.JSX.Element => {
                 maxWidth: "500px",
             }}
         >
-            {/* TITLE */}
 
             <div
-                style={{
+                  style={{
                     marginBottom: "20px",
                 }}
             >
@@ -453,13 +452,7 @@ const Info = ({
                 {label}
             </div>
 
-            <div
-                style={{
-                    fontSize: "16px",
-                    fontWeight: 600,
-                    color: "#111827",
-                }}
-            >
+            <div style={{ fontSize: "16px", fontWeight: 600, color: "#111827", }} >
                 {value || "-"}
             </div>
         </div>

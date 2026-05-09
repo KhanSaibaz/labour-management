@@ -61,4 +61,11 @@ export class UpdatePurchaseOrderDto {
     @IsOptional()
     @ApiProperty({ description: "PoItems" })
     poItemsCommand: string;
+
+
+@IsOptional()
+@IsString()
+@ApiProperty()
+status: string;
+
 }

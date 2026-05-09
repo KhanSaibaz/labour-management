@@ -26,4 +26,8 @@ export class PurchaseOrder extends CommonEntity {
 
     @OneToMany(() => PurchaseOrderItems, purchaseOrderItems => purchaseOrderItems.purchaseOrder, { cascade: true })
     poItems: PurchaseOrderItems[];
+
+
+@Column({ type: "varchar", nullable: true, default: "New" })
+status: string = "New";
 }
