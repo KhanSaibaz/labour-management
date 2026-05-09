@@ -212,3 +212,27 @@ desc
 po 
 
 many-to-one to  
+
+
+
+
+"formButtons": [
+           {
+              "attrs": {
+                "icon": "pi pi-cog",
+                "label": "Generate Salary Slip",
+                "action": "`GenerateSalarySlip`",
+                "customComponentIsSystem": true,
+                "actionInContextMenu": true,
+                "openInPopup": true,
+                "closable": true,
+                "title": "Generate Salary Slip",
+                "description": "Generate employee salary slip"
+              }
+            }
+          ]
+
+
+
+
+

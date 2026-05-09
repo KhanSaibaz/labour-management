@@ -5,10 +5,10 @@ import { PurchaseOrderItems } from 'src/labour-management-system/entities/purcha
 
 @Entity('purchase_order')
 export class PurchaseOrder extends CommonEntity {
-    @Column({ type: "text" })
+    @Column({ type: "text", nullable: true })
     supplierName: string;
 
-    @Column({ type: "text" })
+    @Column({ type: "text", nullable: true })
     shipTo: string;
 
     @Column({ type: "date" })
@@ -24,7 +24,6 @@ export class PurchaseOrder extends CommonEntity {
     @JoinColumn()
     site: Site;
 
-
-@OneToMany(() => PurchaseOrderItems, purchaseOrderItems => purchaseOrderItems.purchaseOrder, { cascade: true })
-poItems: PurchaseOrderItems[];
+    @OneToMany(() => PurchaseOrderItems, purchaseOrderItems => purchaseOrderItems.purchaseOrder, { cascade: true })
+    poItems: PurchaseOrderItems[];
 }

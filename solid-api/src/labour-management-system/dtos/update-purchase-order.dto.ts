@@ -8,13 +8,11 @@ export class UpdatePurchaseOrderDto {
     @IsInt()
     id: number;
 
-    @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()
     supplierName: string;
 
-    @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()
@@ -47,26 +45,20 @@ export class UpdatePurchaseOrderDto {
     @ApiProperty()
     siteUserKey: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdatePurchaseOrderItemsDto)
+    poItems: UpdatePurchaseOrderItemsDto[];
 
-@IsOptional()
-@ApiProperty({ description: "PoItems" })
-@IsArray()
-@ValidateNested({ each : true })
-@Type(() => UpdatePurchaseOrderItemsDto)
-poItems: UpdatePurchaseOrderItemsDto[];
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "PoItems" })
+    poItemsIds: number[];
 
-
-
-@IsOptional()
-@IsArray()
-@ApiProperty({ description: "PoItems" })
-poItemsIds: number[];
-
-
-
-@IsString()
-@IsOptional()
-@ApiProperty({ description: "PoItems" })
-poItemsCommand: string;
-
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    poItemsCommand: string;
 }

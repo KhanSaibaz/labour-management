@@ -205,12 +205,12 @@ export class DashBoardService {
     const attendancePct = totalLabours > 0 ? ((presentToday / totalLabours) * 100).toFixed(1) : "0.0";
     const absentPct = (100 - parseFloat(attendancePct)).toFixed(1);
 
-    console.log({
-      currentMonthCompletedSalaries,
-      currentMonthPendingSalaries,
-      lastMonthCompletedSalaries,
-      lastMonthPendingSalaries,
-    }, "Salary Data");
+    // console.log({
+    //   currentMonthCompletedSalaries,
+    //   currentMonthPendingSalaries,
+    //   lastMonthCompletedSalaries,
+    //   lastMonthPendingSalaries,
+    // }, "Salary Data");
 
     const mappedAdvancePayments: AdvancePayment[] = advancePayments.map((ap) => ({
       labourName: ap.labourCode?.name || "Unknown",

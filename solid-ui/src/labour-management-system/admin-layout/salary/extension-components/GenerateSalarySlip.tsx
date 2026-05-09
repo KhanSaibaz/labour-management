@@ -1,167 +1,158 @@
-import {
-  SolidButton,
-  closePopup,
-  solidPost
-} from "@solidxai/core-ui";
-
+import { closePopup, logger } from "@solidxai/core-ui";
+import { useRef, useState } from "react";
+import { ProgressSpinner } from "primereact/progressspinner";
+import { Message } from "primereact/message";
+import { Button } from "primereact/button";
 import { useDispatch } from "react-redux";
+// import { useMoveToCheckerMutation, useValidateApplicationMutation } from "../../../redux/applicationApi";
 import { Toast } from "primereact/toast";
-import { useRef, useState, useEffect } from "react";
 
-const GenerateSalarySlip = ({ context }: any) => {
+type Step = "initial" | "validating" | "errors" | "passed" | "sending" | "done";
+
+interface ValidationResponse {
+  success: boolean;
+  errors: string[];
+}
+
+const GenerateSalarySlip = (e: any): React.JSX.Element => {
   const dispatch = useDispatch();
+
+  // const [validateApplication] = useValidateApplicationMutation();
+  // const [moveToChecker] = useMoveToCheckerMutation();
+
+  const [step, setStep] = useState<Step>("initial");
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+
   const toast = useRef<Toast>(null);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [isValid, setIsValid] = useState(true);
 
-  const rowData = context?.rowData;
+  // ── STEP 1: Validate ────────────────────────────────────────────────────────
 
-  // ✅ Validate rowData on mount
-  useEffect(() => {
-    if (!rowData?.id || !rowData?.name) {
-      setError("Invalid employee data. Please select a valid employee.");
-      setIsValid(false);
-      toast.current?.show({
-        severity: "warn",
-        summary: "Invalid Data",
-        detail: "Employee data is missing",
-        life: 3000,
-      });
-    }
-  }, [rowData]);
 
-  const handleCalculate = async () => {
-    try {
-      // 🔍 Clear previous errors
-      setError(null);
 
-      // ✅ Validate before submission
-      if (!rowData?.id) {
-        throw new Error("Employee ID is required");
-      }
 
-      setLoading(true);
-
-      // 🔥 Payload from selected row
-      const payload = {
-        employeeId: rowData.id,
-        employeeName: rowData.name || "Unknown",
-      };
-
-      // 📡 API call with better error handling
-      const response = await solidPost(
-        "/salary/generate-salary-slip",
-        payload
+  // ── Render ──────────────────────────────────────────────────────────────────
+  const renderBody = () => {
+    // ── Spinner (validating / sending) ───────────────────────────
+    if (step === "validating" || step === "sending") {
+      return (
+        <div className="flex flex-column align-items-center justify-content-center py-6 gap-3">
+          <ProgressSpinner style={{ width: 50, height: 50 }} />
+          <p className="text-600 m-0">
+            {step === "validating" ? "Validating application..." : "Sending to Checker..."}
+          </p>
+        </div>
       );
-
-      // ✅ Check if response indicates success
-      // if (response?.statusCode === 200 || response?.success === true) {
-      //   toast.current?.show({
-      //     severity: "success",
-      //     summary: "Success",
-      //     detail: response?.message || "Salary slip generated successfully",
-      //     life: 3000,
-      //   });
-
-      //   // ✅ Close popup after brief delay (no hard reload)
-      //   setTimeout(() => {
-      //     dispatch(closePopup());
-      //   }, 1500);
-      // } else {
-      //   // Handle non-standard success response
-      //   const errorMsg = response?.message || response?.error || "Unknown error occurred";
-      //   throw new Error(errorMsg);
-      // }
-
-    } catch (error: any) {
-      console.error("[GenerateSalarySlip] Error:", error);
-
-      // 🔴 Extract error message
-      let errorDetail = "Failed to generate salary slip";
-
-      if (error?.response?.data?.message) {
-        errorDetail = error.response.data.message;
-      } else if (error?.message) {
-        errorDetail = error.message;
-      } else if (typeof error === "string") {
-        errorDetail = error;
-      }
-
-      setError(errorDetail);
-
-      toast.current?.show({
-        severity: "error",
-        summary: "Generation Failed",
-        detail: errorDetail,
-        life: 4000,
-      });
-
-    } finally {
-      setLoading(false);
     }
-  };
 
-  // ✅ Handle cancel with cleanup
-  const handleCancel = () => {
-    setError(null);
-    dispatch(closePopup());
+    // ── Initial ──────────────────────────────────────────────────
+    if (step === "initial") {
+      return (
+        <div className="flex flex-column gap-4">
+          <div className="text-600">
+            <p className="mb-2 font-medium">You are about to send this application to Checker.</p>
+            <p className="m-0">
+              The system will first validate all application details.
+              If any issues are found, you will need to fix them before proceeding.
+            </p>
+          </div>
+
+          <div className="p-3 border-1 border-round bg-yellow-50 border-yellow-300">
+            <div className="flex align-items-center gap-2 mb-2">
+              <i className="pi pi-exclamation-triangle text-yellow-600" />
+              <b>Confirmation Required</b>
+            </div>
+            <p className="m-0">Are you sure you want to validate & send this application to Checker?</p>
+          </div>
+
+          <div className="flex justify-content-end gap-2">
+            <Button label="Cancel" icon="pi pi-times" severity="secondary" outlined size="small" onClick={() => dispatch(closePopup())} />
+            <Button label="Validate" icon="pi pi-check" severity="success" size="small" />
+          </div>
+        </div>
+      );
+    }
+
+    // ── Validation Errors ────────────────────────────────────────
+    if (step === "errors") {
+      return (
+        <div className="flex flex-column gap-3">
+          <div className="w-full p-3 border-round-lg bg-red-50 border-1 border-red-200">
+            <div className="flex align-items-center gap-2 mb-3">
+              <i className="pi pi-exclamation-triangle text-red-500 text-lg" />
+              <span className="font-semibold text-red-700">Validation Errors</span>
+            </div>
+            <div className="flex flex-column gap-2">
+              {validationErrors.map((error, i) => (
+                <Message
+                  key={i}
+                  severity="error"
+                  content={<span style={{ fontSize: 14, fontWeight: 600 }}>- {error}</span>}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div className="text-center text-sm text-600">
+            <i className="pi pi-info-circle mr-2" />
+            Please resolve the errors above before sending to Checker.
+          </div>
+
+          {/* ✅ Buttons so user isn't stuck */}
+          {/* <div className="flex justify-content-end gap-2 mt-2">
+            <Button label="Close" icon="pi pi-times" severity="secondary" outlined onClick={() => dispatch(closePopup())} />
+            <Button label="Re-validate" icon="pi pi-refresh" severity="warning" onClick={handleValidate} />
+          </div> */}
+        </div>
+      );
+    }
+
+    // ── Validation Passed ────────────────────────────────────────
+    if (step === "passed") {
+      return (
+        <div className="flex flex-column align-items-center gap-3 p-2">
+          <Message
+            severity="success"
+            text="Validation successful. You can now send the application to the Checker."
+            className="w-full"
+          />
+          <div className="flex justify-content-center gap-3 pt-2">
+            <Button label="Cancel" icon="pi pi-times" severity="secondary" outlined size="small" onClick={() => dispatch(closePopup())} />
+            <Button label="Send to Checker" icon="pi pi-send" severity="success" size="small"  />
+          </div>
+        </div>
+      );
+    }
+
+    // ── Done ─────────────────────────────────────────────────────
+    if (step === "done") {
+      return (
+        <div className="flex flex-column align-items-center justify-content-center py-5 gap-3">
+          <i className="pi pi-check-circle text-green-500" style={{ fontSize: "3rem" }} />
+          <p className="text-lg font-semibold text-green-700 m-0">Application sent to Checker!</p>
+          <p className="text-sm text-600 m-0">Refreshing page...</p>
+        </div>
+      );
+    }
   };
 
   return (
-    <div className="p-4 min-h-64 flex flex-col justify-between">
+    <div>
       <Toast ref={toast} />
 
-      {/* Header Section */}
-      <div className="mb-4">
-        <h2 className="text-lg font-semibold mb-2">
-          Generate Salary Slip
-        </h2>
-
-        {/* Employee Info */}
-        <div className="bg-gray-50 p-3 rounded-md border border-gray-200">
-          <p className="text-sm text-gray-600 mb-1">Employee Details</p>
-          <div className="flex justify-between items-center">
-            <div>
-              <p className="text-sm font-medium">
-                Name: <span className="text-gray-700">{rowData?.name || "N/A"}</span>
-              </p>
-              <p className="text-sm font-medium">
-                ID: <span className="text-gray-700">{rowData?.id || "N/A"}</span>
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Error Message Display */}
-        {error && (
-          <div className="mt-3 p-3 bg-red-50 border border-red-200 rounded-md">
-            <p className="text-sm text-red-600">
-              <strong>⚠️ Error:</strong> {error}
-            </p>
-          </div>
-        )}
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200">
-        <SolidButton
-          type="button"
-          label="Cancel"
-          variant="secondary"
-          onClick={handleCancel}
-          disabled={loading}
-        />
-
-        <SolidButton
-          type="button"
-          label={loading ? "Generating..." : "Generate"}
-          variant="primary"
-          loading={loading}
-          disabled={!isValid || loading}
-          onClick={handleCalculate}
+      {/* Header */}
+      <div className="px-4 py-2 secondary-border-bottom flex align-items-center justify-content-between">
+        <h5 className="m-0">Validate & Send to Checker</h5>
+        <Button
+          icon="pi pi-times"
+          onClick={() => dispatch(closePopup())}
+          size="small"
+          severity="secondary"
+          text
+          style={{ height: 30, width: 30 }}
         />
       </div>
+
+      <div className="p-4">{renderBody()}</div>
     </div>
   );
 };

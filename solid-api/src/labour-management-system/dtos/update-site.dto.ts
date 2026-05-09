@@ -109,26 +109,20 @@ export class UpdateSiteDto {
     @ApiProperty({ description: "GovernmentSalarySlips" })
     governmentSalarySlipCommand: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "PurchaseOrders" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdatePurchaseOrderDto)
+    purchaseOrders: UpdatePurchaseOrderDto[];
 
-@IsOptional()
-@ApiProperty({ description: "PurchaseOrders" })
-@IsArray()
-@ValidateNested({ each : true })
-@Type(() => UpdatePurchaseOrderDto)
-purchaseOrders: UpdatePurchaseOrderDto[];
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "PurchaseOrders" })
+    purchaseOrdersIds: number[];
 
-
-
-@IsOptional()
-@IsArray()
-@ApiProperty({ description: "PurchaseOrders" })
-purchaseOrdersIds: number[];
-
-
-
-@IsString()
-@IsOptional()
-@ApiProperty({ description: "PurchaseOrders" })
-purchaseOrdersCommand: string;
-
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "PurchaseOrders" })
+    purchaseOrdersCommand: string;
 }

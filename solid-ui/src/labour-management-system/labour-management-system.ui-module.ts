@@ -48,7 +48,7 @@ const labourManagementSystemUiModule = {
       {
       name: "GenerateSalarySlip",
       component: GenerateSalarySlip,
-      type: ExtensionComponentTypes.listRowAction,
+      type: ExtensionComponentTypes.formAction,
     },
 
   ],

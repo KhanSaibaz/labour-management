@@ -37,11 +37,12 @@ export class Site extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     siteManager: string;
 
+    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
+    // governmentSalarySlip: GovernmentSalarySlip[];
 
-// @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
-// governmentSalarySlip: GovernmentSalarySlip[];
+    @OneToMany(() => PurchaseOrder, purchaseOrder => purchaseOrder.site, { cascade: true })
+    purchaseOrders: PurchaseOrder[];
 
-
-@OneToMany(() => PurchaseOrder, purchaseOrder => purchaseOrder.site, { cascade: true })
-purchaseOrders: PurchaseOrder[];
+    // @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
+    // governmentSalarySlip: GovernmentSalarySlip[];
 }

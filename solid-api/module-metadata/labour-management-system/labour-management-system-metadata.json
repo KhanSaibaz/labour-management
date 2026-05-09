@@ -2742,7 +2742,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": true,
+            "required": false,
             "unique": false,
             "index": false,
             "private": false,
@@ -2764,7 +2764,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": true,
+            "required": false,
             "unique": false,
             "index": false,
             "private": false,
@@ -3205,9 +3205,7 @@
         "PurchaseOrderItemsController.findOne",
         "PurchaseOrderItemsController.recoverMany",
         "PurchaseOrderItemsController.partialUpdate",
-        "PurchaseOrderItemsController.delete",
         "PurchaseOrderItemsController.recover",
-        "PurchaseOrderItemsController.deleteMany",
         "PurchaseOrderController.create",
         "PurchaseOrderController.update",
         "PurchaseOrderController.findMany",
@@ -3215,9 +3213,7 @@
         "PurchaseOrderController.findOne",
         "PurchaseOrderController.recoverMany",
         "PurchaseOrderController.partialUpdate",
-        "PurchaseOrderController.delete",
-        "PurchaseOrderController.recover",
-        "PurchaseOrderController.deleteMany"
+        "PurchaseOrderController.recover"
       ]
     },
     {
@@ -3599,6 +3595,32 @@
       "viewUserKey": "purchaseOrder-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "purchaseOrder"
+    },
+    {
+      "displayName": "Purchase Order Items List Action",
+      "name": "purchaseOrderItems-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "purchaseOrderItems-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrderItems"
+    },
+    {
+      "displayName": "Purchase Order Items Tree View Action",
+      "name": "purchaseOrderItems-tree-view-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "purchaseOrderItems-tree-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrderItems"
     }
   ],
   "menus": [
@@ -3775,6 +3797,18 @@
       "name": "purchaseOrder-menu-item",
       "sequenceNumber": 2,
       "actionUserKey": "purchaseOrder-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "purchase-order-root-menu-item",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Purchase Order Items",
+      "name": "purchaseOrderItems-menu-item",
+      "sequenceNumber": 31,
+      "actionUserKey": "purchaseOrderItems-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "purchase-order-root-menu-item",
       "iconName": "",
@@ -4803,21 +4837,6 @@
                 "closable": true
               }
             }
-          ],
-          "rowButtons": [
-            {
-              "attrs": {
-                "icon": "pi pi-cog",
-                "label": "Generate Salary Slip",
-                "action": "`GenerateSalarySlip`",
-                "customComponentIsSystem": true,
-                "actionInContextMenu": true,
-                "openInPopup": true,
-                "closable": true,
-                "title": "Generate Salary Slip",
-                "description": "Generate employee salary slip"
-              }
-            }
           ]
         },
         "children": [
@@ -4922,7 +4941,20 @@
         "attrs": {
           "name": "form-1",
           "label": "Salary",
-          "className": "grid"
+          "className": "grid",
+          "formButtons": [
+            {
+              "attrs": {
+                "icon": "pi pi-cog",
+                "label": "Generate Salary Slip",
+                "action": "`GenerateSalarySlip`",
+                "actionInContextMenu": false,
+                "openInPopup": true,
+                "title": "Generate Salary Slip",
+                "description": "Generate employee salary slip"
+              }
+            }
+          ]
         },
         "children": [
           {
@@ -7431,18 +7463,6 @@
                               {
                                 "type": "field",
                                 "attrs": {
-                                  "name": "supplierName"
-                                }
-                              },
-                              {
-                                "type": "field",
-                                "attrs": {
-                                  "name": "shipTo"
-                                }
-                              },
-                              {
-                                "type": "field",
-                                "attrs": {
                                   "name": "poDate"
                                 }
                               },
@@ -7450,6 +7470,28 @@
                                 "type": "field",
                                 "attrs": {
                                   "name": "reqDate"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "page-1-col-1",
+                              "label": "Transport Detail",
+                              "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "supplierName"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "shipTo"
                                 }
                               }
                             ]
@@ -7488,6 +7530,194 @@
                             ]
                           }
                         ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrderItems-list-view",
+      "displayName": "Purchase Order Items",
+      "type": "list",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrderItems",
+      "layout": {
+        "type": "list",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "prdouctQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "description"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "purchaseOrder"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrderItems-tree-view",
+      "displayName": "Purchase Order Items",
+      "type": "tree",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrderItems",
+      "layout": {
+        "type": "tree",
+        "attrs": {
+          "pagination": true,
+          "pageSizeOptions": [
+            10,
+            25,
+            50
+          ],
+          "enableGlobalSearch": true,
+          "create": true,
+          "edit": true,
+          "delete": true
+        },
+        "children": [
+          {
+            "type": "field",
+            "attrs": {
+              "name": "id"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "productName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "prdouctQuantity"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "description"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "purchaseOrder"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "purchaseOrderItems-form-view",
+      "displayName": "Purchase Order Items",
+      "type": "form",
+      "context": "{}",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "purchaseOrderItems",
+      "layout": {
+        "type": "form",
+        "attrs": {
+          "name": "form-1",
+          "label": "Purchase Order Items",
+          "className": "grid"
+        },
+        "children": [
+          {
+            "type": "sheet",
+            "attrs": {
+              "name": "sheet-1"
+            },
+            "children": [
+              {
+                "type": "row",
+                "attrs": {
+                  "name": "sheet-1"
+                },
+                "children": [
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-1",
+                      "label": "Product Detail",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "productName"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "description"
+                        }
+                      }
+                    ]
+                  },
+                  {
+                    "type": "column",
+                    "attrs": {
+                      "name": "group-2",
+                      "label": "Product Detail",
+                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                    },
+                    "children": [
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "prdouctQuantity"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "purchaseOrder"
+                        }
                       }
                     ]
                   }

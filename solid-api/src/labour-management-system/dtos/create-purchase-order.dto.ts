@@ -5,12 +5,12 @@ import { Type } from 'class-transformer';
 import { UpdatePurchaseOrderItemsDto } from 'src/labour-management-system/dtos/update-purchase-order-items.dto';
 
 export class CreatePurchaseOrderDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @ApiProperty()
     supplierName: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @ApiProperty()
     shipTo: string;
@@ -40,26 +40,20 @@ export class CreatePurchaseOrderDto {
     @ApiProperty()
     siteUserKey: string;
 
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    @IsArray()
+    @ValidateNested({ each: true })
+    @Type(() => UpdatePurchaseOrderItemsDto)
+    poItems: UpdatePurchaseOrderItemsDto[];
 
-@IsOptional()
-@ApiProperty({ description: "PoItems" })
-@IsArray()
-@ValidateNested({ each : true })
-@Type(() => UpdatePurchaseOrderItemsDto)
-poItems: UpdatePurchaseOrderItemsDto[];
+    @IsOptional()
+    @IsArray()
+    @ApiProperty({ description: "PoItems" })
+    poItemsIds: number[];
 
-
-
-@IsOptional()
-@IsArray()
-@ApiProperty({ description: "PoItems" })
-poItemsIds: number[];
-
-
-
-@IsString()
-@IsOptional()
-@ApiProperty({ description: "PoItems" })
-poItemsCommand: string;
-
+    @IsString()
+    @IsOptional()
+    @ApiProperty({ description: "PoItems" })
+    poItemsCommand: string;
 }
