@@ -100,16 +100,6 @@ export class UpdateGovernmentSalarySlipDto {
     name: string;
 
     @IsOptional()
-    @IsInt()
-    @ApiProperty({ description: "Site" })
-    siteId: number;
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "Site" })
-    siteUserKey: string;
-
-    @IsOptional()
     @IsString()
     @ApiProperty()
     department: string;
@@ -133,10 +123,4 @@ export class UpdateGovernmentSalarySlipDto {
     @IsNumber()
     @ApiProperty()
     totalDeduction: number;
-
-    @IsNotEmpty()
-    @IsOptional()
-    @IsString()
-    @ApiProperty()
-    uanNo: string;
 }

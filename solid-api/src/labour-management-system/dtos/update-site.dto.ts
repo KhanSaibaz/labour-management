@@ -76,40 +76,6 @@ export class UpdateSiteDto {
     siteManager: string;
 
     @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateGovernmentSalarySlipDto)
-    governmentSalarySlips: UpdateGovernmentSalarySlipDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipsIds: number[];
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipsCommand: string;
-
-    @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateGovernmentSalarySlipDto)
-    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipIds: number[];
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlips" })
-    governmentSalarySlipCommand: string;
-
-    @IsOptional()
     @ApiProperty({ description: "PurchaseOrders" })
     @IsArray()
     @ValidateNested({ each: true })

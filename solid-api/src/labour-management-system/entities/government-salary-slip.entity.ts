@@ -58,10 +58,6 @@ export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "varchar" })
     name: string;
 
-    @ManyToOne(() => Site, { onDelete: "SET NULL", nullable: true })
-    @JoinColumn()
-    site: Site;
-
     @Column({ type: "varchar", nullable: true })
     department: string;
 
@@ -76,7 +72,4 @@ export class GovernmentSalarySlip extends CommonEntity {
 
     @Column({ type: "decimal", nullable: true })
     totalDeduction: number;
-
-    @Column({ type: "varchar" })
-    uanNo: string;
 }

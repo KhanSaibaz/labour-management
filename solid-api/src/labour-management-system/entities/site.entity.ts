@@ -43,9 +43,6 @@ export class Site extends CommonEntity {
     @OneToMany(() => PurchaseOrder, purchaseOrder => purchaseOrder.site, { cascade: true })
     purchaseOrders: PurchaseOrder[];
 
-    @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.site, { cascade: true })
-    governmentSalarySlip: GovernmentSalarySlip[];
-
     @OneToMany(() => PurchaseOrder, purchaseOrder => purchaseOrder.site, { cascade: true })
     poItems: PurchaseOrder[];
 }
