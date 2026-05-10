@@ -123,17 +123,13 @@ export class CreateGovernmentSalarySlipDto {
     @ApiProperty()
     isGenerateSlip: boolean = false;
 
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    hraAmount: number;
 
-@IsOptional()
-@IsNumber()
-@ApiProperty()
-hraAmount: number;
-
-
-
-@IsOptional()
-@IsNumber()
-@ApiProperty()
-pfAmount: number;
-
+    @IsOptional()
+    @IsNumber()
+    @ApiProperty()
+    pfAmount: number;
 }

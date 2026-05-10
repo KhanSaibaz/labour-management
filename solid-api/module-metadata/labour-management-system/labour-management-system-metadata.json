@@ -2409,7 +2409,8 @@
             "relationJoinTableName": null,
             "isRelationManyToManyOwner": null,
             "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
+            "enableAuditTracking": false,
+            "isMarkedForRemoval": true
           },
           {
             "name": "labourCode",
@@ -7731,6 +7732,24 @@
           {
             "type": "field",
             "attrs": {
+              "name": "managerName"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "site"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "status"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "supplierName"
             }
           },
@@ -8155,6 +8174,17 @@
           }
         ]
       }
+    }
+  ],
+  "modelSequences": [
+    {
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "labour",
+      "fieldUserKey": "labourCode",
+      "sequenceName": "LABOUR_CODE",
+      "prefix": "LB",
+      "padding": 3,
+      "separator": "-"
     }
   ],
   "emailTemplates": [],

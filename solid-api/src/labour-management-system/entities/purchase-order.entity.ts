@@ -28,6 +28,6 @@ export class PurchaseOrder extends CommonEntity {
     poItems: PurchaseOrderItems[];
 
 
-@Column({ type: "varchar", nullable: true, default: "New" })
-status: string = "New";
+    @Column({ type: "varchar", nullable: true, default: "New" })
+    status: string = "New";
 }

@@ -76,11 +76,9 @@ export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "boolean", nullable: true, default: false })
     isGenerateSlip: boolean = false;
 
+    @Column({ type: "decimal", nullable: true })
+    hraAmount: number;
 
-@Column({ type: "decimal", nullable: true })
-hraAmount: number;
-
-
-@Column({ type: "decimal", nullable: true })
-pfAmount: number;
+    @Column({ type: "decimal", nullable: true })
+    pfAmount: number;
 }
