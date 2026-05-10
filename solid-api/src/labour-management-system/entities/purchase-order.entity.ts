@@ -1,5 +1,5 @@
 import { CommonEntity } from '@solidxai/core';
-import { Entity, Column, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne, OneToMany, Index } from 'typeorm';
 import { Site } from 'src/labour-management-system/entities/site.entity';
 import { PurchaseOrderItems } from 'src/labour-management-system/entities/purchase-order-items.entity'
 
@@ -27,7 +27,10 @@ export class PurchaseOrder extends CommonEntity {
     @OneToMany(() => PurchaseOrderItems, purchaseOrderItems => purchaseOrderItems.purchaseOrder, { cascade: true })
     poItems: PurchaseOrderItems[];
 
-
     @Column({ type: "varchar", nullable: true, default: "New" })
     status: string = "New";
+
+    @Index({ unique: true })
+    @Column({ type: "varchar", nullable: true })
+    poNo: string;
 }

@@ -91,7 +91,6 @@ export class GovernmentSalarySlipController {
   }
 
   @ApiBearerAuth("jwt")
-  @Public()
   @Post('/generate-slips')
   async generateSalarySlips(
     @Body() body: { month: string; year: number }

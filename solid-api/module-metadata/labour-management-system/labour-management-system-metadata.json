@@ -2870,6 +2870,7 @@
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "purchase_order",
+        "userKeyFieldUserKey": "poNo",
         "isChild": false,
         "enableAuditTracking": true,
         "enableSoftDelete": false,
@@ -3056,6 +3057,36 @@
             "columnName": null,
             "enableAuditTracking": true,
             "isMultiSelect": false
+          },
+          {
+            "name": "poNo",
+            "displayName": "PO NO",
+            "description": null,
+            "type": "computed",
+            "ormType": "varchar",
+            "isSystem": false,
+            "computedFieldValueType": "string",
+            "computedFieldTriggerConfig": [
+              {
+                "moduleName": "labour-management-system",
+                "modelName": "purchaseOrder",
+                "operations": [
+                  "before-insert"
+                ]
+              }
+            ],
+            "computedFieldValueProvider": "PurchaseOrderNumberFieldProvider",
+            "computedFieldValueProviderCtxt": "{\n  \"prefix\": \"HME-A\",\n  \"yearField\": \"year\",\n  \"padding\": 4\n}",
+            "required": true,
+            "unique": true,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "isUserKey": true,
+            "enableAuditTracking": true
           }
         ]
       },
@@ -3277,6 +3308,17 @@
         "InventoryManagementController.delete",
         "InventoryManagementController.recover",
         "InventoryManagementController.deleteMany",
+        "GovernmentSalarySlipController.create",
+        "GovernmentSalarySlipController.update",
+        "GovernmentSalarySlipController.findMany",
+        "GovernmentSalarySlipController.insertMany",
+        "GovernmentSalarySlipController.findOne",
+        "GovernmentSalarySlipController.recoverMany",
+        "GovernmentSalarySlipController.partialUpdate",
+        "GovernmentSalarySlipController.delete",
+        "GovernmentSalarySlipController.recover",
+        "GovernmentSalarySlipController.deleteMany",
+        "GovernmentSalarySlipController.generateSalarySlips",
         "PurchaseOrderItemsController.create",
         "PurchaseOrderItemsController.update",
         "PurchaseOrderItemsController.findMany",
@@ -3297,6 +3339,7 @@
         "PurchaseOrderController.delete",
         "PurchaseOrderController.recover",
         "PurchaseOrderController.deleteMany",
+        "PurchaseOrderController.generatePurchaseOrder",
         "PoConfigController.create",
         "PoConfigController.update",
         "PoConfigController.findMany",
@@ -7732,6 +7775,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "poNo"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "managerName"
             }
           },
@@ -7853,7 +7902,19 @@
         "attrs": {
           "name": "form-1",
           "label": "Purchase Order",
-          "className": "grid"
+          "className": "grid",
+          "formButtons": [
+            {
+              "attrs": {
+                "icon": "pi pi-cog",
+                "className": "p-button-sm",
+                "label": "Generate Purchase Order",
+                "action": "GeneratePurchaseOrder",
+                "actionInContextMenu": false,
+                "openInPopup": true
+              }
+            }
+          ]
         },
         "children": [
           {
@@ -8073,6 +8134,14 @@
           {
             "type": "field",
             "attrs": {
+              "name": "purchaseOrder",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "productName"
             }
           },
@@ -8135,13 +8204,13 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "productName"
+                          "name": "purchaseOrder"
                         }
                       },
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "description"
+                          "name": "hsnCode"
                         }
                       }
                     ]
@@ -8157,13 +8226,19 @@
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "prdouctQuantity"
+                          "name": "productName"
                         }
                       },
                       {
                         "type": "field",
                         "attrs": {
-                          "name": "purchaseOrder"
+                          "name": "description"
+                        }
+                      },
+                      {
+                        "type": "field",
+                        "attrs": {
+                          "name": "prdouctQuantity"
                         }
                       }
                     ]

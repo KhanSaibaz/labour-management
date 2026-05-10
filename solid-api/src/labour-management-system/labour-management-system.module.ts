@@ -35,10 +35,6 @@ import { InventoryManagement } from './entities/inventory-management.entity';
 import { InventoryManagementService } from './services/inventory-management.service';
 import { InventoryManagementController } from './controllers/inventory-management.controller';
 import { InventoryManagementRepository } from './repositories/inventory-management.repository';
-// import { InventoryAsk } from './entities/inventory-ask.entity';
-// import { InventoryAskService } from './services/inventory-ask.service';
-// import { InventoryAskController } from './controllers/inventory-ask.controller';
-// import { InventoryAskRepository } from './repositories/inventory-ask.repository';
 import { DashBoardController } from './controllers/dashboard.controller';
 import { DashBoardService } from './services/dashboard.service';
 import { LabourSequenceProvider } from './providers/labour-sequence.provider';
@@ -63,16 +59,13 @@ import { PurchaseOrderItems } from './entities/purchase-order-items.entity';
 import { PurchaseOrderItemsService } from './services/purchase-order-items.service';
 import { PurchaseOrderItemsController } from './controllers/purchase-order-items.controller';
 import { PurchaseOrderItemsRepository } from './repositories/purchase-order-items.repository';
-// import { GovernmentSalarySlip } from './entities/government-salary-slip.entity';
-// import { GovernmentSalarySlipService } from './services/government-salary-slip.service';
-// import { GovernmentSalarySlipController } from './controllers/government-salary-slip.controller';
-// import { GovernmentSalarySlipRepository } from './repositories/government-salary-slip.repository';
+import { PurchaseOrderNumberFieldProvider } from './providers/purchase-order-number-sequence.provider';
 
 
 
 @Module({
     imports: [TypeOrmModule.forFeature([WorkType]), TypeOrmModule.forFeature([AuthUser]), TypeOrmModule.forFeature([Labour]), TypeOrmModule.forFeature([Attendance]), TypeOrmModule.forFeature([Salary]), TypeOrmModule.forFeature([AdvancePayment]), TypeOrmModule.forFeature([Site]), TypeOrmModule.forFeature([InventoryManagement]), TypeOrmModule.forFeature([LabourMonthlyExpense]), TypeOrmModule.forFeature([GovernmentSalarySlip]), TypeOrmModule.forFeature([PoConfig]), TypeOrmModule.forFeature([PurchaseOrder]), TypeOrmModule.forFeature([PurchaseOrderItems]), ],
     controllers: [WorkTypeController, AuthUserController, LabourController, AttendanceController, SalaryController, AdvancePaymentController, SiteController, InventoryManagementController,DashBoardController, LabourMonthlyExpenseController, GovernmentSalarySlipController, PoConfigController, PurchaseOrderController, PurchaseOrderItemsController,],
-    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository,DashBoardService,LabourSequenceProvider, LabourMonthlyExpenseService, LabourMonthlyExpenseRepository, GovernmentSalarySlipService, GovernmentSalarySlipRepository,AuthUserCreationProvider, PoConfigService, PoConfigRepository, PurchaseOrderService, PurchaseOrderRepository, PurchaseOrderItemsService, PurchaseOrderItemsRepository],
+    providers: [WorkTypeService, WorkTypeRepository, AuthUserService, AuthUserRepository,LabourUserNameSelectionProvider , WorkTypeSelectionProvider, LabourManagerNameSelectionProvider, LabourService, LabourRepository, AttendanceService, AttendanceRepository, SalaryService, SalaryRepository, AdvancePaymentService, AdvancePaymentRepository, SiteService, SiteRepository, InventoryManagementService, InventoryManagementRepository,DashBoardService,LabourSequenceProvider, LabourMonthlyExpenseService, LabourMonthlyExpenseRepository, GovernmentSalarySlipService, GovernmentSalarySlipRepository,AuthUserCreationProvider, PoConfigService, PoConfigRepository, PurchaseOrderService, PurchaseOrderRepository, PurchaseOrderItemsService, PurchaseOrderItemsRepository,PurchaseOrderNumberFieldProvider],
 })
 export class LabourManagementSystemModule {}

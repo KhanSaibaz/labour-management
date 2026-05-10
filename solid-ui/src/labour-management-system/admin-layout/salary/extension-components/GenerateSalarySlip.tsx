@@ -46,57 +46,23 @@ const GenerateSalarySlip = (e: any): React.JSX.Element => {
     };
 
     return (
-        <div
-            style={{
-                padding: "24px",
-                width: "100%",
-                maxWidth: "500px",
-            }}
-        >
-
-            <div
-                  style={{
-                    marginBottom: "20px",
-                }}
-            >
-                <h2
-                    style={{
-                        margin: 0,
-                        fontSize: "22px",
-                        fontWeight: 700,
-                        color: "#111827",
-                    }}
-                >
+        <div style={{ padding: "24px", width: "100%", maxWidth: "500px", }} >
+            <div style={{ marginBottom: "20px", }} >
+                <h2 style={{ margin: 0, fontSize: "22px", fontWeight: 700, color: "#111827", }} >
                     Generate Salary Slip
                 </h2>
 
-                <p
-                    style={{
-                        marginTop: "8px",
-                        fontSize: "14px",
-                        color: "#6b7280",
-                    }}
-                >
-                    Please click below to generate and download the salary slip.
-                </p>
+                <p style={{ marginTop: "8px", fontSize: "14px", color: "#6b7280", }} > Please click below to generate and download the salary slip.</p>
             </div>
 
-            {/* 🔘 Buttons */}
 
-            <div
-                className="flex justify-start gap-3 pt-2"
-            >
-                {/* Cancel */}
-
+            <div className="flex justify-start gap-3 pt-2" >
                 <SolidButton
                     type="button"
                     label="Cancel"
                     variant="secondary"
                     onClick={() => dispatch(closePopup())}
                 />
-
-                {/* Generate */}
-
                 <SolidButton
                     type="button"
                     label="Generate Salary Slip"
@@ -106,7 +72,6 @@ const GenerateSalarySlip = (e: any): React.JSX.Element => {
                 />
             </div>
 
-            {/* HIDDEN SALARY SLIP */}
 
             <div
                 style={{

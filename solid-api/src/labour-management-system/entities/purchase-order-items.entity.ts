@@ -15,10 +15,10 @@ export class PurchaseOrderItems extends CommonEntity {
     purchaseOrder: PurchaseOrder;
 
 
-@Column({ type: "varchar" })
-productName: string;
+    @Column({ type: "varchar" })
+    productName: string;
 
 
-@Column({ type: "varchar", nullable: true })
-hsnCode: string;
+    @Column({ type: "varchar", nullable: true })
+    hsnCode: string;
 }

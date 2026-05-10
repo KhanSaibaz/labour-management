@@ -19,6 +19,7 @@ import { DashBoardPage } from "./custom-layout/admin/DashboardPage";
 import GenerateSalarySlip from "./admin-layout/salary/extension-components/GenerateSalarySlip";
 import AttendanceOnBeforeDataLoad from "./admin-layout/attendance/extension-functions/AttendanceOnBeforeDataLoad";
 import GovernmentSalaryOnBeforeDataLoad from "./admin-layout/governmentSalarySlip/extension-functions/GovernmentSalaryOnBeforeDataLoad";
+import GeneratePurchaseOrder from "./admin-layout/purchaseOrder/extension-functions/GeneratePurchaseOrder";
 
 
 const labourManagementSystemUiModule = {
@@ -47,9 +48,15 @@ const labourManagementSystemUiModule = {
       type: ExtensionComponentTypes.listHeaderAction,
     },
 
-      {
+    {
       name: "GenerateSalarySlip",
       component: GenerateSalarySlip,
+      type: ExtensionComponentTypes.formAction,
+    },
+
+    {
+      name: "GeneratePurchaseOrder",
+      component: GeneratePurchaseOrder,
       type: ExtensionComponentTypes.formAction,
     },
 
@@ -67,7 +74,7 @@ const labourManagementSystemUiModule = {
       type: ExtensionFunctionTypes.onFormLayoutLoad,
     },
 
-        {
+    {
       name: "GovernmentSalaryOnBeforeDataLoad",
       fn: GovernmentSalaryOnBeforeDataLoad,
       type: ExtensionFunctionTypes.onFormLayoutLoad,
