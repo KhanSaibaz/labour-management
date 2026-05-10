@@ -28,11 +28,11 @@ export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "decimal", nullable: true, precision: 10, scale: 2 })
     basicWages: number;
 
-    @Column({ type: "decimal", nullable: true, precision: 10, scale: 2 })
-    hra: number;
+    @Column({ type: "decimal", nullable: true, default: 5, precision: 10, scale: 2 })
+    hra: number = 5;
 
-    @Column({ type: "decimal", nullable: true, precision: 10, scale: 2 })
-    pf: number;
+    @Column({ type: "decimal", nullable: true, default: 12, precision: 10, scale: 2 })
+    pf: number = 12;
 
     @Column({ type: "varchar", nullable: true })
     salaryMonth: string;
@@ -72,4 +72,15 @@ export class GovernmentSalarySlip extends CommonEntity {
 
     @Column({ type: "decimal", nullable: true })
     totalDeduction: number;
+
+    @Column({ type: "boolean", nullable: true, default: false })
+    isGenerateSlip: boolean = false;
+
+
+@Column({ type: "decimal", nullable: true })
+hraAmount: number;
+
+
+@Column({ type: "decimal", nullable: true })
+pfAmount: number;
 }

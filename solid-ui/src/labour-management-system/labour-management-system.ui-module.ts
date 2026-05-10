@@ -9,7 +9,7 @@ import { AdminInfoPage } from "./custom-layout/admin/AdminInfoPage";
 import { HelloAuthPage } from "./custom-layout/auth/HelloAuthPage";
 import { AboutPage } from "./custom-layout/static/AboutPage";
 
-import CurrentMonthSalaryDataLoad from "./admin-layout/salary/extension-functions/InventoryAskOnBeforeDataLoad";
+import CurrentMonthSalaryDataLoad from "./admin-layout/salary/extension-functions/SalaryOnBeforeDataLoad";
 import { CalculateSalary } from "./admin-layout/salary/extension-components/CalculateSalary";
 import { GenerateGovernmentSalarySlip } from "./admin-layout/governmentSalarySlip/extension-components/GenerateGovernmentSalarySlip";
 
@@ -18,6 +18,8 @@ import { labourDashBoardApi } from "./redux/dasboardApi";
 import { DashBoardPage } from "./custom-layout/admin/DashboardPage";
 import GenerateSalarySlip from "./admin-layout/salary/extension-components/GenerateSalarySlip";
 import AttendanceOnBeforeDataLoad from "./admin-layout/attendance/extension-functions/AttendanceOnBeforeDataLoad";
+import GovernmentSalaryOnBeforeDataLoad from "./admin-layout/governmentSalarySlip/extension-functions/GovernmentSalaryOnBeforeDataLoad";
+
 
 const labourManagementSystemUiModule = {
   name: "labour-management-system",
@@ -60,11 +62,16 @@ const labourManagementSystemUiModule = {
     },
 
     {
-      name: "CurrentMonthSalaryDataLoad",
+      name: "SalaryOnBeforeDataLoad",
       fn: CurrentMonthSalaryDataLoad,
       type: ExtensionFunctionTypes.onFormLayoutLoad,
     },
 
+        {
+      name: "GovernmentSalaryOnBeforeDataLoad",
+      fn: GovernmentSalaryOnBeforeDataLoad,
+      type: ExtensionFunctionTypes.onFormLayoutLoad,
+    },
   ],
   reducers: {
     [governmentSalarySlipApi.reducerPath]: governmentSalarySlipApi.reducer,

@@ -1,6 +1,6 @@
 import { SolidBeforeListDataLoad, SolidListUiEventResponse } from '@solidxai/core-ui';
 
-const CurrentMonthSalaryDataLoad = async (
+const SalaryOnBeforeDataLoad = async (
     event: SolidBeforeListDataLoad
 ): Promise<SolidListUiEventResponse> => {
     const { filter, queryParams } = event;
@@ -43,4 +43,4 @@ const CurrentMonthSalaryDataLoad = async (
     };
 };
 
-export default CurrentMonthSalaryDataLoad;
+export default SalaryOnBeforeDataLoad;

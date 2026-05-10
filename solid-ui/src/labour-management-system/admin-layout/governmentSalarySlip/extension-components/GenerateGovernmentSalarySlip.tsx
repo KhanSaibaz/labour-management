@@ -1,105 +1,206 @@
-import { useRef, useState } from "react";
-import { Toast } from "primereact/toast";
-import { useDispatch } from "react-redux";
-import { Dropdown } from "primereact/dropdown";
-import { Button } from "primereact/button";
+import React, { useRef, useState } from 'react';
+import { Formik, Form } from 'formik';
+import * as Yup from 'yup';
+import { Toast } from 'primereact/toast';
+import { useDispatch } from 'react-redux';
 
-import { closePopup, showToast } from "@solidxai/core-ui";
-import { useGenerateSalarySlipsMutation } from "../../../redux/governmentSalarySlipApi";
+import {
+    closePopup,
+    SolidAutocomplete,
+    SolidButton,
+    solidPost,
+} from '@solidxai/core-ui';
+
+const months = [
+    { label: 'January', value: 'January' },
+    { label: 'February', value: 'February' },
+    { label: 'March', value: 'March' },
+    { label: 'April', value: 'April' },
+    { label: 'May', value: 'May' },
+    { label: 'June', value: 'June' },
+    { label: 'July', value: 'July' },
+    { label: 'August', value: 'August' },
+    { label: 'September', value: 'September' },
+    { label: 'October', value: 'October' },
+    { label: 'November', value: 'November' },
+    { label: 'December', value: 'December' },
+];
+
+const validationSchema = Yup.object({
+    month: Yup.object().required('Month is required'),
+    year: Yup.string()
+        .required('Year is required')
+        .matches(/^\d{4}$/, 'Enter valid 4 digit year'),
+});
 
 export const GenerateGovernmentSalarySlip = () => {
-    const toast = useRef<Toast>(null);
     const dispatch = useDispatch();
+    const toast = useRef<Toast>(null);
+
     const currentDate = new Date();
-    const [month, setMonth] = useState<string | null>(
-        currentDate.toLocaleString("default", { month: "long" })
-    );
-    const [year, setYear] = useState<number | null>(
-        currentDate.getFullYear()
-    );
-    const [generateSlips, { isLoading }] = useGenerateSalarySlipsMutation();
 
-    const months = [
-        "January", "February", "March", "April", "May", "June",
-        "July", "August", "September", "October", "November", "December"
-    ].map((m) => ({ label: m, value: m }));
+    const [suggestions, setSuggestions] = useState<any[]>([]);
 
-    const years = Array.from({ length: 10 }, (_, i) => {
-        const y = currentDate.getFullYear() - i;
-        return { label: y.toString(), value: y };
-    });
+    // 🔍 Month Search
+    const searchMonth = (e: any) => {
+        const query = e.query.toLowerCase();
 
+        const filtered = months.filter((m) =>
+            m.label.toLowerCase().includes(query)
+        );
 
-    const handleGenerate = async () => {
-        if (!month || !year) {
-            toast.current?.show({
-                severity: "error",
-                summary: "Validation Error",
-                detail: "Please select month and year"
-            }
+        setSuggestions(filtered);
+    };
 
-            );
-            return;
-        }
-
+    // 🚀 Generate Salary Slip
+    const handleGenerateSalarySlip = async (values: any) => {
         try {
-            const res = await generateSlips({ month, year }).unwrap();
-            toast.current?.show({ severity: "success", summary: "success", detail: res?.message });
+            const payload = {
+                month: values.month.value,
+                year: Number(values.year),
+            };
+
+            const response = await solidPost(
+                `/government-salary-slip/generate-slips`,
+                payload
+            );
+
+            toast.current?.show({
+                severity: 'success',
+                summary: 'Success',
+                detail:
+                    response?.data?.message ||
+                    'Government salary slip generated successfully',
+                life: 3000,
+            });
+
+            // setTimeout(() => {
+            //     window.location.reload();
+            // }, 1000);
 
         } catch (error: any) {
+            console.error(error);
+
             toast.current?.show({
                 severity: 'error',
                 summary: 'Error',
-                detail: error?.data?.message || error?.message || "Failed to verify CIF"
+                detail:
+                    error?.message ||
+                    'Failed to generate government salary slip',
+                life: 3000,
             });
-        };
+        }
     };
+
     return (
-        <div className="p-4">
+        <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 px-3 py-5" style={{height:"360px"}}>
+
             <Toast ref={toast} />
-            <h3 className="mb-3">Generate Salary Slip</h3>
 
-            {/* Month */}
-            <div className="mb-3">
-                <label className="block mb-2">Select Month</label>
-                <Dropdown
-                    value={month}
-                    options={months}
-                    onChange={(e) => setMonth(e.value)}
-                    placeholder="Select Month"
-                    className="w-full"
-                />
-            </div>
+            <Formik
+                initialValues={{
+                    month: {
+                        label: currentDate.toLocaleString('default', {
+                            month: 'long',
+                        }),
+                        value: currentDate.toLocaleString('default', {
+                            month: 'long',
+                        }),
+                    },
+                    year: currentDate.getFullYear().toString(),
+                }}
+                validationSchema={validationSchema}
+                onSubmit={async (values, { setSubmitting }) => {
+                    await handleGenerateSalarySlip(values);
+                    setSubmitting(false);
+                }}
+            >
+                {({
+                    values,
+                    setFieldValue,
+                    errors,
+                    touched,
+                    isSubmitting,
+                }) => (
+                    <Form className="flex flex-column gap-4">
 
-            {/* Year */}
-            <div className="mb-3">
-                <label className="block mb-2">Select Year</label>
-                <Dropdown
-                    value={year}
-                    options={years}
-                    onChange={(e) => setYear(e.value)}
-                    placeholder="Select Year"
-                    className="w-full"
-                />
-            </div>
+                        {/* 🔥 Title */}
+                        <h2 className="text-center text-xl m-0 font-semibold text-gray-800">
+                            Generate Government Salary Slip
+                        </h2>
 
-            {/* Actions */}
-            <div className="flex justify-content-end gap-2 mt-4">
-                <Button
-                    label="Close"
-                    icon="pi pi-times"
-                    outlined
-                    severity="secondary"
-                    onClick={() => dispatch(closePopup())}
-                />
+                        {/* 🔽 Month */}
+                        <div className="flex flex-column gap-2 w-full">
+                            <label className="text-sm font-medium text-gray-700">
+                                Select Month
+                            </label>
 
-                <Button
-                    label="Generate"
-                    onClick={handleGenerate}
-                    loading={isLoading}
-                />
-            </div>
+                            <SolidAutocomplete
+                                value={values.month}
+                                suggestions={suggestions}
+                                completeMethod={searchMonth}
+                                field="label"
+                                dropdown
+                                className="w-full"
+                                onChange={(e: any) =>
+                                    setFieldValue('month', e.value)
+                                }
+                            />
+
+                            {touched.month && errors.month && (
+                                <span className="text-red-500 text-xs">
+                                    {errors.month as any}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* 🔢 Year */}
+                        <div className="flex flex-column gap-2 w-full">
+                            <label className="text-sm font-medium text-gray-700">
+                                Enter Year
+                            </label>
+
+                            <input
+                                type="text"
+                                value={values.year}
+                                onChange={(e: any) =>
+                                    setFieldValue('year', e.target.value)
+                                }
+                                placeholder="Enter year (e.g. 2026)"
+                                className="p-inputtext p-component w-full"
+                            />
+
+                            {touched.year && errors.year && (
+                                <span className="text-red-500 text-xs">
+                                    {errors.year}
+                                </span>
+                            )}
+                        </div>
+
+                        {/* 🔘 Buttons */}
+                        <div className="flex justify-start gap-3 pt-2">
+
+                            {/* Cancel */}
+                            <SolidButton
+                                type="button"
+                                label="Cancel"
+                                variant="secondary"
+                                onClick={() => dispatch(closePopup())}
+                            />
+
+                            {/* Generate */}
+                            <SolidButton
+                                type="submit"
+                                label="Generate"
+                                loading={isSubmitting}
+                                variant="primary"
+                            />
+
+                        </div>
+
+                    </Form>
+                )}
+            </Formik>
         </div>
     );
-
-}
+};

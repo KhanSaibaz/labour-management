@@ -2267,7 +2267,7 @@
             "type": "decimal",
             "ormType": "decimal",
             "isSystem": false,
-            "defaultValue": null,
+            "defaultValue": "5",
             "min": null,
             "max": null,
             "required": false,
@@ -2287,7 +2287,7 @@
             "type": "decimal",
             "ormType": "decimal",
             "isSystem": false,
-            "defaultValue": null,
+            "defaultValue": "12",
             "min": null,
             "max": null,
             "required": false,
@@ -2547,6 +2547,63 @@
           {
             "name": "totalDeduction",
             "displayName": "Total Deduction",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "isGenerateSlip",
+            "displayName": "Is Generate Slip",
+            "description": null,
+            "type": "boolean",
+            "ormType": "boolean",
+            "isSystem": false,
+            "defaultValue": null,
+            "required": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "hraAmount",
+            "displayName": "HRA Amount",
+            "description": null,
+            "type": "decimal",
+            "ormType": "decimal",
+            "isSystem": false,
+            "defaultValue": null,
+            "min": null,
+            "max": null,
+            "required": false,
+            "unique": false,
+            "index": false,
+            "private": false,
+            "encrypt": false,
+            "encryptionType": null,
+            "decryptWhen": null,
+            "columnName": null,
+            "enableAuditTracking": true
+          },
+          {
+            "name": "pfAmount",
+            "displayName": "PF Amount",
             "description": null,
             "type": "decimal",
             "ormType": "decimal",
@@ -3346,7 +3403,9 @@
         "PurchaseOrderController.findOne",
         "PurchaseOrderController.recoverMany",
         "PurchaseOrderController.partialUpdate",
-        "PurchaseOrderController.recover"
+        "PurchaseOrderController.recover",
+        "AttendanceController.checkOut",
+        "AttendanceController.checkIn"
       ]
     },
     {
@@ -3640,7 +3699,33 @@
     },
     {
       "displayName": "Government Salary SLip List Action",
-      "name": "governmentSalarySlip-list-action",
+      "name": "all-governmentSalarySlip-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "governmentSalarySlip-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip"
+    },
+    {
+      "displayName": "Government Salary SLip List Action",
+      "name": "included-governmentSalarySlip-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "governmentSalarySlip-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip"
+    },
+    {
+      "displayName": "Government Salary SLip List Action",
+      "name": "exclude-governmentSalarySlip-list-action",
       "type": "solid",
       "domain": "",
       "context": "",
@@ -3846,7 +3931,7 @@
     {
       "displayName": "Attendance",
       "name": "attendanceMaster",
-      "sequenceNumber": 7,
+      "sequenceNumber": 6,
       "actionUserKey": "masters-root",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "",
@@ -3940,25 +4025,61 @@
       ]
     },
     {
-      "displayName": "Government Salary Slip",
-      "name": "governmentSalarySlip-menu-item",
+      "displayName": "Advance Payment",
+      "name": "advancePayment-menu-item",
       "sequenceNumber": 4,
-      "actionUserKey": "governmentSalarySlip-list-action",
+      "actionUserKey": "advancePayment-list-action",
       "moduleUserKey": "labour-management-system",
       "parentMenuItemUserKey": "salaryMaster",
+      "iconName": "payment",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Government Salary Slip",
+      "name": "governmentSalarySlipMaster",
+      "sequenceNumber": 8,
+      "actionUserKey": "masters-root",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": "attach_money",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "All Salary Slips",
+      "name": "all-government-salary-slip-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "all-governmentSalarySlip-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "governmentSalarySlipMaster",
       "iconName": "",
       "roles": [
         "Labour  Admin"
       ]
     },
     {
-      "displayName": "Advance Payment",
-      "name": "advancePayment-menu-item",
-      "sequenceNumber": 5,
-      "actionUserKey": "advancePayment-list-action",
+      "displayName": "Included Slips",
+      "name": "included-government-salary-slip-menu-item",
+      "sequenceNumber": 2,
+      "actionUserKey": "included-governmentSalarySlip-list-action",
       "moduleUserKey": "labour-management-system",
-      "parentMenuItemUserKey": "salaryMaster",
-      "iconName": "payment",
+      "parentMenuItemUserKey": "governmentSalarySlipMaster",
+      "iconName": "",
+      "roles": [
+        "Labour  Admin"
+      ]
+    },
+    {
+      "displayName": "Excluded Slips",
+      "name": "excluded-government-salary-slip-menu-item",
+      "sequenceNumber": 3,
+      "actionUserKey": "exclude-governmentSalarySlip-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "governmentSalarySlipMaster",
+      "iconName": "",
       "roles": [
         "Labour  Admin"
       ]
@@ -5009,7 +5130,7 @@
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "salary",
       "layout": {
-        "onBeforeListDataLoad": "currentMonthSalaryDataLoad",
+        "onBeforeListDataLoad": "SalaryOnBeforeDataLoad",
         "type": "list",
         "attrs": {
           "pagination": true,
@@ -6545,6 +6666,7 @@
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "governmentSalarySlip",
       "layout": {
+        "onBeforeListDataLoad": "GovernmentSalaryOnBeforeDataLoad",
         "type": "list",
         "attrs": {
           "pagination": true,
@@ -6561,7 +6683,7 @@
             {
               "attrs": {
                 "label": "Generate",
-                "action": "generateGovernmentSalarySlip",
+                "action": "GenerateGovernmentSalarySlip",
                 "actionInContextMenu": false,
                 "openInPopup": true,
                 "icon": "pi pi-file",
@@ -6580,7 +6702,21 @@
           {
             "type": "field",
             "attrs": {
-              "name": "employeeName"
+              "name": "labourCode"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "name",
+              "isSearchable": true,
+              "sortable": true
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "isGenerateSlip"
             }
           },
           {
@@ -6604,6 +6740,30 @@
           {
             "type": "field",
             "attrs": {
+              "name": "salaryMonth"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "salaryYear"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "daysWorked"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "dailyRate"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "basicWages"
             }
           },
@@ -6616,13 +6776,43 @@
           {
             "type": "field",
             "attrs": {
-              "name": "grossEarnings"
+              "name": "otherAllowance"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "incentive"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "grossEarning"
             }
           },
           {
             "type": "field",
             "attrs": {
               "name": "pf"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "professionalTax"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "esic"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "otherDeduction"
             }
           },
           {
@@ -6635,90 +6825,6 @@
             "type": "field",
             "attrs": {
               "name": "netPay"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "netPayInWords"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "salaryMonth"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "site"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "daysWorked"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "salaryYear"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "companyAddress"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "companyName"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "otherDeduction"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "esic"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "professionalTax"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "incentive"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "otherAllowance"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "dailyRate"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "salary"
             }
           }
         ]
@@ -6791,6 +6897,12 @@
           {
             "type": "field",
             "attrs": {
+              "name": "hraAmount"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
               "name": "grossEarnings"
             }
           },
@@ -6798,6 +6910,12 @@
             "type": "field",
             "attrs": {
               "name": "pf"
+            }
+          },
+          {
+            "type": "field",
+            "attrs": {
+              "name": "pfAmount"
             }
           },
           {
@@ -6921,112 +7039,221 @@
             },
             "children": [
               {
-                "type": "row",
+                "type": "notebook",
                 "attrs": {
-                  "name": "sheet-1"
+                  "name": "government-salary-slip-notebook"
                 },
                 "children": [
                   {
-                    "type": "column",
+                    "type": "page",
                     "attrs": {
-                      "name": "employee-details",
-                      "label": "Employee Details",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                      "name": "page-1",
+                      "label": "Employee Details"
                     },
                     "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "labour"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "category"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "salaryMonth"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "salaryYear"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "daysWorked"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "dailyRate"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "basicWages"
-                        }
+                          "name": "row-1"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "employee-details",
+                              "label": "Employee Details",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "labourCode"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "name"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "category"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "department"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "location"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "isGenerateSlip",
+                                  "checkboxLabel": "Select this checkbox to include this labour in the salary slip"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "salary-details",
+                              "label": "Salary Details",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "salaryMonth"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "salaryYear"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "daysWorked"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "dailyRate"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "basicWages"
+                                }
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   },
                   {
-                    "type": "column",
+                    "type": "page",
                     "attrs": {
-                      "name": "payment-details",
-                      "label": "Payment Details",
-                      "className": "col-12 sm:col-12 md:col-6 lg:col-6"
+                      "name": "page-2",
+                      "label": "Allowances & Earnings"
                     },
                     "children": [
                       {
-                        "type": "field",
+                        "type": "row",
                         "attrs": {
-                          "name": "hra"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "otherAllowance"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "incentive"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "pf"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "professionalTax"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "esic"
-                        }
-                      },
-                      {
-                        "type": "field",
-                        "attrs": {
-                          "name": "otherDeduction"
-                        }
+                          "name": "row-2"
+                        },
+                        "children": [
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "earning-column",
+                              "label": "Earnings",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "hra"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "hraAmount"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "otherAllowance"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "incentive"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "grossEarning"
+                                }
+                              }
+                            ]
+                          },
+                          {
+                            "type": "column",
+                            "attrs": {
+                              "name": "deduction-column",
+                              "label": "Deductions",
+                              "className": "col-12 md:col-6"
+                            },
+                            "children": [
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "pf"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "pfAmount"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "professionalTax"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "esic"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "otherDeduction"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "totalDeduction"
+                                }
+                              },
+                              {
+                                "type": "field",
+                                "attrs": {
+                                  "name": "netPay"
+                                }
+                              }
+                            ]
+                          }
+                        ]
                       }
                     ]
                   }

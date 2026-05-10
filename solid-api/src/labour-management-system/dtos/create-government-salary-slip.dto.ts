@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
-import { IsNotEmpty, IsInt, IsOptional, IsNumber } from 'class-validator';
+import { IsNotEmpty, IsInt, IsOptional, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateGovernmentSalarySlipDto {
     @IsOptional()
@@ -41,12 +41,12 @@ export class CreateGovernmentSalarySlipDto {
     @IsOptional()
     @IsNumber()
     @ApiProperty()
-    hra: number;
+    hra: number = 5;
 
     @IsOptional()
     @IsNumber()
     @ApiProperty()
-    pf: number;
+    pf: number = 12;
 
     @IsOptional()
     @IsString()
@@ -117,4 +117,23 @@ export class CreateGovernmentSalarySlipDto {
     @IsNumber()
     @ApiProperty()
     totalDeduction: number;
+
+    @IsOptional()
+    @IsBoolean()
+    @ApiProperty()
+    isGenerateSlip: boolean = false;
+
+
+@IsOptional()
+@IsNumber()
+@ApiProperty()
+hraAmount: number;
+
+
+
+@IsOptional()
+@IsNumber()
+@ApiProperty()
+pfAmount: number;
+
 }

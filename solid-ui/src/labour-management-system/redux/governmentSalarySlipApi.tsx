@@ -19,7 +19,7 @@ export const governmentSalarySlipApi = createApi({
                 }
             }),
 
-            invalidatesTags: ["GovernmentSalarySlip"],
+            // invalidatesTags: ["GovernmentSalarySlip"],
         }),
 
     }),

@@ -94,7 +94,7 @@ export class GovernmentSalarySlipController {
   @Public()
   @Post('/generate-slips')
   async generateSalarySlips(
-    @Body() body: { month: string; year: string }
+    @Body() body: { month: string; year: number }
   ) {
     const { month, year } = body;
     return this.service.processSalarySlips(month, year);

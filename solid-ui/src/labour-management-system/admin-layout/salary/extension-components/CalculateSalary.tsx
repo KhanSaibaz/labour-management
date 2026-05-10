@@ -42,7 +42,6 @@ export const CalculateSalary = ({ context }: any) => {
         setSuggestions(filtered);
     };
 
-    // 🚀 API Call
     const handleCalculateSalary = async (values: any) => {
         try {
             const payload = {
@@ -58,7 +57,7 @@ export const CalculateSalary = ({ context }: any) => {
                 detail: 'Salary calculated successfully',
                 life: 3000,
             });
-            
+
             setTimeout(() => {
                 window.location.reload();
             }, 1000);
@@ -74,7 +73,7 @@ export const CalculateSalary = ({ context }: any) => {
         }
     };
     return (
-        <div className=" w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 px-3 py-6">
+        <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-lg border border-gray-200 px-3 py-5" style={{height:"360px"}}>
 
             <Toast ref={toast} />
 
