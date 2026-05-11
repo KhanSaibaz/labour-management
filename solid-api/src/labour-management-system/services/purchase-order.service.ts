@@ -37,15 +37,11 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
     );
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  //  PUBLIC  ➜  generatePurchaseOrder
-  // ═══════════════════════════════════════════════════════════════════════════
 
   async generatePurchaseOrder(poNo: string, id: number): Promise<Buffer> {
 
     try {
 
-      // ── 1. Fetch data ──────────────────────────────────────────────────────
 
       const purchaseOrder = await this.repo.findOne({
         where: { id, poNo },
@@ -56,15 +52,18 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
 
       const poConfig = await this.poConfigRepo.findOne({ where: { id: 1 } });
 
-      // ── 2. Workbook & worksheet ────────────────────────────────────────────
 
       const workbook = new ExcelJS.Workbook();
       const worksheet = workbook.addWorksheet('Purchase Order');
 
-      // ── 3. Page setup — single A4 page ────────────────────────────────────
+      worksheet.views = [
+        {
+          showGridLines: false,
+        },
+      ];
 
       worksheet.pageSetup = {
-        paperSize: 9,          // A4
+        paperSize: 9,
         orientation: 'portrait',
         fitToPage: true,
         fitToWidth: 1,
@@ -81,22 +80,18 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
 
       worksheet.properties.defaultRowHeight = 18;
 
-      // ── 4. Column widths ───────────────────────────────────────────────────
-
       worksheet.columns = [
-        { width: 5 },   // A  — Sr
+        { width: 5 },
         { width: 36 },   // B  — Description
         { width: 10 },   // C  — HSN
-        { width: 11 },   // D  — Quantity
-        { width: 13 },   // E  — List Price
+        { width: 12 },   // D  — Quantity
+        { width: 14 },   // E  — List Price
         { width: 11 },   // F  — Discount
         { width: 13 },   // G  — Rate
         { width: 15 },   // H  — Amount
       ];
 
-      // ══════════════════════════════════════════════════════════════════════
       //  ROW 1 — TITLE
-      // ══════════════════════════════════════════════════════════════════════
 
       worksheet.mergeCells('A1:H1');
       this.styleCell(worksheet.getCell('A1'), {
@@ -104,25 +99,20 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         font: { name: 'Arial', size: 18, bold: false },
         alignment: { horizontal: 'center', vertical: 'middle' },
       });
+
+      worksheet.getCell('A1').border = {
+        top: { style: undefined },
+        left: { style: undefined },
+        bottom: { style: undefined },
+        right: { style: undefined },
+      };
       worksheet.getRow(1).height = 30;
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  ROWS 3–8 — COMPANY DETAILS  +  LOGO
-      // ══════════════════════════════════════════════════════════════════════
-      // ── Logo ──────────────────────────────────────────────────────────────────
-      const logoId = workbook.addImage({
-        filename: path.join(__dirname, 'logo.jpeg'),
-        extension: 'jpeg',
-      });
+      // ─────────────────────────────────────── Company rich-text and logo ───────────────────────────────────────
+      // LEFT COMPANY SECTION
+      worksheet.mergeCells('A2:E6');
 
-      worksheet.addImage(logoId, {
-        tl: { col: 6.1, row: 2.8 },
-        ext: { width: 150, height: 90 },
-      });
-
-      // ── Company rich-text block (A3:E8) ───────────────────────────────────────
-      worksheet.mergeCells('A3:E8');
-      worksheet.getCell('A3').value = {
+      worksheet.getCell('A2').value = {
         richText: [
           {
             text: `${poConfig?.compnayName ?? ''}\n`,
@@ -143,79 +133,134 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
           },
         ],
       };
-      worksheet.getCell('A3').alignment = { wrapText: true, vertical: 'top' };
-      this.applyBorderRange(worksheet, 'A3:E8');
 
-      // ── Logo region (F3:H8) — merge into ONE cell so no internal grid lines ───
-      worksheet.mergeCells('F3:H8');
-      worksheet.getCell('F3').border = {
+      worksheet.getCell('A2').alignment = {
+        wrapText: true,
+        vertical: 'middle',
+        horizontal: 'left',
+        indent: 1,
+
+      };
+
+      this.applyBorderRange(worksheet, 'A2:E6');
+
+
+      // LOGO SECTION
+      worksheet.mergeCells('F2:H6');
+
+      worksheet.getCell('F2').border = {
         top: { style: 'thin' },
         left: { style: 'thin' },
         bottom: { style: 'thin' },
         right: { style: 'thin' },
       };
 
-      worksheet.getRow(3).height = 20;
+      const logoId = workbook.addImage({
+        filename: path.join(__dirname, 'logo.jpeg'),
+        extension: 'jpeg',
+      });
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  ROWS 9–13 — SUPPLIER  |  SHIP TO  |  PO DETAILS
-      // ══════════════════════════════════════════════════════════════════════
+      worksheet.addImage(logoId, {
+        tl: { col: 6.2, row: 2.2 },
+        ext: { width: 130, height: 70 },
+      });
 
-      worksheet.mergeCells('A9:C12');
-      worksheet.mergeCells('D9:F12');
-      worksheet.mergeCells('G9:H12');
 
-      // Supplier block
+      for (let i = 2; i <= 6; i++) {
+        worksheet.getRow(i).height = 18;
+      }
+
+      //  ROWS 9–12 — SUPPLIER | SHIP TO | PO DETAILS
+
+      worksheet.mergeCells('A7:C9');
+      worksheet.mergeCells('D7:F9');
+      worksheet.mergeCells('G7:H9');
+
+
       worksheet.getCell('A9').value = {
         richText: [
           {
-            text: `Supplier Name: ${purchaseOrder.supplierName ?? ''}\n`,
-            font: { name: 'Arial', bold: true, size: 9 },
+            text: `Supplier Name: `,
+            font: { name: 'Arial', bold: false, size: 10 },
           },
-
+          {
+            text: `${purchaseOrder.supplierName ?? ''}\n`,
+            font: { name: 'Arial', bold: true, size: 10 },
+          },
         ],
       };
-      worksheet.getCell('A9').alignment = { wrapText: true, vertical: 'top' };
 
-      // Ship To block
+      worksheet.getCell('A9').alignment = {
+        wrapText: true,
+        vertical: 'middle',
+        horizontal: 'left',
+        indent: 1,
+
+      };
+
+
+      // SHIP TO BLOCK
       worksheet.getCell('D9').value = {
         richText: [
           {
-            text: `Ship To: ${purchaseOrder.shipTo ?? ''}\n`,
-            font: { name: 'Arial', bold: true, size: 9 },
+            text: `Ship To: `,
+            font: { name: 'Arial', bold: false, size: 10 },
           },
-
+          {
+            text: `${purchaseOrder.shipTo ?? ''}\n`,
+            font: { name: 'Arial', bold: true, size: 10 },
+          },
         ],
       };
-      worksheet.getCell('D9').alignment = { wrapText: true, vertical: 'top' };
 
-      // PO meta block
+      worksheet.getCell('D9').alignment = {
+        wrapText: true,
+        vertical: 'middle',
+        horizontal: 'left',
+        indent: 1,
+
+      };
+
+
+      // PO DETAILS BLOCK
       worksheet.getCell('G9').value = {
         richText: [
           {
             text: `PO No :  ${purchaseOrder.poNo ?? ''}\n\n`,
-            font: { name: 'Arial', bold: true, size: 9 },
+            font: { name: 'Arial', bold: true, size: 10 },
           },
           {
-            text: `PO Date :  ${this.fmtDate(purchaseOrder.poDate)}\n\n`,
-            font: { name: 'Arial', bold: true, size: 9 },
+            text: `PO Date : ${this.fmtDate(purchaseOrder.poDate)}\n\n`,
+            font: { name: 'Arial', bold: true, size: 10 },
           },
           {
-            text: `Req Date :  ${this.fmtDate(purchaseOrder.reqDate)}`,
-            font: { name: 'Arial', bold: true, size: 9 },
+            text: `Req Date : ${this.fmtDate(purchaseOrder.reqDate)}`,
+            font: { name: 'Arial', bold: true, size: 10 },
           },
         ],
       };
-      worksheet.getCell('G9').alignment = { wrapText: true, vertical: 'top' };
 
-      this.applyBorderRange(worksheet, 'A9:C12');
-      this.applyBorderRange(worksheet, 'D9:F12');
-      this.applyBorderRange(worksheet, 'G9:H12');
+      worksheet.getCell('G9').alignment = {
+        wrapText: true,
+        vertical: 'middle',
+        horizontal: 'left',
+        indent: 1,
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  ROW 15 — TABLE HEADER
-      // ══════════════════════════════════════════════════════════════════════
+      };
 
+
+      // SAME HEIGHT LIKE PDF
+      for (let i = 7; i <= 9; i++) {
+        worksheet.getRow(i).height = 30;
+      }
+
+
+      // BORDERS
+      this.applyBorderRange(worksheet, 'A7:C9');
+      this.applyBorderRange(worksheet, 'D7:F9');
+      this.applyBorderRange(worksheet, 'G7:H9');
+
+      //  =====================================  Tables  =======================
       const TABLE_HEADERS = [
         'Sr',
         'Description',
@@ -227,8 +272,8 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         'Amount(₹)',
       ];
 
-      const headerRow = worksheet.getRow(15);
-      headerRow.height = 28;
+      const headerRow = worksheet.getRow(10);
+      headerRow.height = 26;
 
       TABLE_HEADERS.forEach((label, i) => {
         const cell = headerRow.getCell(i + 1);
@@ -243,18 +288,12 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         this.applyBorder(cell);
       });
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  ROWS 16+ — ITEM ROWS
-      //  ✅ Pre-fill : Sr, Description, HSN, Quantity
-      //  ⬜ Leave EMPTY : List Price, Discount, Rate, Amount (user fills manually)
-      // ══════════════════════════════════════════════════════════════════════
-
-      let currentRow = 16;
+      let currentRow = 11;
 
       purchaseOrder.poItems.forEach((item, index) => {
 
         const row = worksheet.getRow(currentRow);
-        row.height = 32;
+        row.height = 26;
 
         // Col A — Sr
         this.styleCell(row.getCell(1), {
@@ -263,14 +302,12 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
           alignment: { horizontal: 'center', vertical: 'middle' },
         });
 
-        // Col B — Description
         this.styleCell(row.getCell(2), {
           value: item.description ?? '',
-          font: { name: 'Arial', size: 9 },
-          alignment: { horizontal: 'left', vertical: 'middle', wrapText: true },
+          font: { name: 'Arial', size: 9, },
+          alignment: { horizontal: 'left', vertical: 'middle', wrapText: true, indent: 1 },
         });
 
-        // Col C — HSN
         this.styleCell(row.getCell(3), {
           value: item.hsnCode ?? '',
           font: { name: 'Arial', size: 9 },
@@ -286,8 +323,7 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
           alignment: { horizontal: 'center', vertical: 'middle' },
         });
 
-        // Cols E–H — INTENTIONALLY LEFT EMPTY (user fills after download)
-        //            Only set numFmt + border so Excel formats correctly on entry
+
         const emptyColFormats: Record<number, string> = {
           5: '#,##0.00',       // List Price
           6: '0.00"%"',        // Discount
@@ -311,29 +347,6 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         currentRow++;
       });
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  5 EXTRA EMPTY ROWS — bordered placeholder rows
-      // ══════════════════════════════════════════════════════════════════════
-
-      for (let i = 0; i < 5; i++) {
-        const row = worksheet.getRow(currentRow);
-        row.height = 22;
-
-        for (let col = 1; col <= 8; col++) {
-          const cell = row.getCell(col);
-          cell.value = '';
-          cell.font = { name: 'Arial', size: 9 };
-          this.applyBorder(cell);
-        }
-
-        currentRow++;
-      }
-
-      // ══════════════════════════════════════════════════════════════════════
-      //  TOTALS SECTION
-      //  ✅ Labels pre-filled
-      //  ⬜ Amount column EMPTY — user fills manually after download
-      // ══════════════════════════════════════════════════════════════════════
 
       const TOTAL_LABELS: { label: string; isGrand: boolean }[] = [
         { label: 'Net Total', isGrand: false },
@@ -360,11 +373,10 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         this.styleCell(labelCell, {
           value: label,
           font: { name: 'Arial', bold: isGrand, size: isGrand ? 11 : 9 },
-          alignment: { horizontal: 'right', vertical: 'middle' },
+          alignment: { horizontal: 'right', vertical: 'middle', indent: 1 },
           fill: isGrand ? yellowFill : undefined,
         });
 
-        // Amount — EMPTY for manual entry
         this.styleCell(amountCell, {
           value: '',
           font: { name: 'Arial', bold: isGrand, size: isGrand ? 11 : 9 },
@@ -375,15 +387,11 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
 
         this.applyBorderRange(worksheet, `E${currentRow}:H${currentRow}`);
         worksheet.getRow(currentRow).height = isGrand ? 24 : 18;
+        worksheet.mergeCells(`A${currentRow}:D${currentRow}`);
 
         currentRow++;
       });
 
-      // ══════════════════════════════════════════════════════════════════════
-      //  IN WORDS ROW
-      //  ✅ "In Words" label pre-filled
-      //  ⬜ Content cell EMPTY — user writes after download
-      // ══════════════════════════════════════════════════════════════════════
 
       worksheet.mergeCells(`F${currentRow}:H${currentRow}`);
 
@@ -400,20 +408,108 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
       });
 
       this.applyBorderRange(worksheet, `E${currentRow}:H${currentRow}`);
+
       worksheet.getRow(currentRow).height = 28;
 
       currentRow += 2;
 
-      // ══════════════════════════════════════════════════════════════════════
       //  BOTTOM — SUB-CONTRACT TERMS & CONDITIONS
-      // ══════════════════════════════════════════════════════════════════════
+
+      const termsAndConditions = `
+1. Contractor has to take all the safety precautions with necessary tools & tackles. Provide all PPE’s Safety Helmet, Safety gloves, Safety goggles, Safety shoes, Safety Belt (full body harness), Welding apron, gloves, fire blanket, ear plugs, dust masks, flash back arrestor, trolley with lockable wheels etc. In the event of non-complying above company shall make available all PPE’s at site and cost towards providing such PPE’s shall be recovered from running bills.
+
+2. No child labour is allowed at site.
+
+3. Contractor will employ only workers with sound health and will get their medical tests done as per the client’s requirement at his cost.
+
+4. No alcohol, smoking and splitting, use of gutka, paan, etc at site is allowed. Urinating or defecating at non designated place will not be tolerated and penalties will be imposed.
+
+5. If any penalties are levied by the owners/ PMC / Safety for violation of any sort the same will be debited to the contractor.
+
+6. Contractor must make his own arrangement for travelling and local transport, accommodation, food, power drinking water arrangement for his workmen, necessary tools to Cary out his work, necessary testing equipment (duly calibrated by safety /PMC)
+
+7. Joint less cable to be used for all type of equipment’s. If joints are there it should be with weatherproof socket/ junction box arrangements. All sockets and tops used should be industrial type.
+
+8. Power supply will be given at work location however its responsibility of users to take preventive measure to work safely at site.
+
+9. We will provide ladders / scaffoldings which are approved by the client/ consultant/ PMC. Its responsibility of your team to maintain in good working conditions failure to which we reserve the right to recover cost in the event of any damages.
+
+10. Contractor has to produce necessary documents towards registration of their employees with ESIC / PF authorities and proof of payments made should be submitted. All other statutory requirements should be fulfilled at his own risk and cost. If company is making such payments the same will be deducted from the interim bills.
+
+11. Any rework due to quality shall be debited to contractor along with wasted material cost.
+
+12. The contractor should pay minimum wages to his employees and record for the same should be submitted periodically.
+
+13. The contractor should maintain attendance of his employees and should keep records of over time / advances and holidays given to his employees.
+
+14. The unit rate agreed and offered is inclusive of all taxes and incidental expenses.
+
+15. Contractor has to arrange necessary skilled / unskilled manpower at site to complete the project in stipulated time frame. Penalties will be levied if there is any delay, or the company reserve its right to employ additional contractors to complete the job / debit the cost involved to the contractor. No reason for deployment of additional contractor needs to be given to the contractor.
+
+16. If the work is held up due to insufficient tools and tackles, material handling equipment’s, scaffolding, etc. the same may be provided by the company at the cost of the contractor to ensure that work is not suffering. This will be the sole decision of the company.
+
+17. The contractor will strictly adhere to the standard operating procedure and work method statements and quality assurance plan. Any rework due to poor quality of work will not be paid and the cost of rework will be recovered from the final bill.
+
+18. The contractor will submit monthly (before 25th of every month) bills along with measurement sheet properly certified by the project manager/ site in charge. No delayed bills will be accepted. Payments for the same will be made within 30 days of submission of the certified bills.
+
+19. Contractor will strictly follow good housekeeping norms at workplace as well as stores. Any penalties or stoppage of work due to poor house keeping the contractor will be solely responsible for the same.
+
+Payment Terms:
+Immediate
+
+Applicable Law:
+It is intended that this Agreement be valid and enforceable under the laws of the state of Maharashtra, and that the laws of this state shall govern the agreement's interpretation.
+
+Non-Disclosure:
+Contractor / Associate will keep all trade secrets and/or proprietary information of the Company in strict confidence. A trade secret is any information, process or idea that is not generally known to persons outside the Company, which the Company considers confidential, and which gives the Company a competitive advantage.
+`;
+      // TITLE
+      worksheet.mergeCells(`A${currentRow}:H${currentRow}`);
 
       this.styleCell(worksheet.getCell(`A${currentRow}`), {
         value: 'Sub-Contract Terms & Conditions:',
-        font: { name: 'Arial', bold: true, size: 10 },
+        font: {
+          name: 'Arial',
+          bold: true,
+          size: 12,
+        },
+        alignment: {
+          horizontal: 'left',
+          vertical: 'middle',
+          indent: 1
+        },
       });
 
-      // ── Write & return buffer ──────────────────────────────────────────────
+      // REMOVE ALL BORDERS
+      worksheet.getCell(`A${currentRow}`).border = {};
+
+      worksheet.getRow(currentRow).height = 24;
+
+      currentRow += 1;
+
+
+      worksheet.mergeCells(`A${currentRow}:H${currentRow + 10}`);
+
+      const termsCell = worksheet.getCell(`A${currentRow}`);
+
+      termsCell.value = termsAndConditions;
+
+      termsCell.font = {
+        name: 'Arial',
+        size: 10,
+      };
+
+      termsCell.alignment = {
+        wrapText: true,
+        vertical: 'top',
+        horizontal: 'left',
+        indent: 1
+      };
+
+      termsCell.border = {};
+
+      // HEIGHT
+      worksheet.getRow(currentRow).height = 640;
 
       const buffer = await workbook.xlsx.writeBuffer();
       return buffer as unknown as Buffer;
