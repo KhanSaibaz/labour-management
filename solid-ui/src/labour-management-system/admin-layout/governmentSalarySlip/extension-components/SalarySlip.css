@@ -1,0 +1,205 @@
+.salary-slip-wrapper {
+    margin: 0;
+    padding: 12px;
+    background: #f2f2f2;
+    font-family: Arial, Helvetica, sans-serif;
+    word-spacing: 2px;
+    display: none;
+}
+
+
+
+/* PDF WRAPPER */
+#salary-slip-pdf {
+    width: 210mm;
+    margin: auto;
+    background: #fff;
+    padding: 4mm;
+    box-sizing: border-box;
+}
+
+/* SALARY SLIP */
+.salary-slip {
+    width: 100%;
+    min-height: 138mm;
+    background: #fff;
+    margin-bottom: 5mm;
+    padding: 5mm;
+    box-sizing: border-box;
+    border: 1px solid #777;
+    position: relative;
+    overflow: hidden;
+    page-break-inside: avoid;
+    break-inside: avoid;
+}
+
+/* HEADER */
+.company-header {
+    text-align: center;
+}
+
+.company-header h1 {
+    margin: 0;
+    color: red;
+    font-size: 17px;
+    font-weight: 700;
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.company-header p {
+    margin-top: 6px;
+    margin-bottom: 0;
+    font-size: 10px;
+    color: #000000;
+    line-height: 1.2;
+}
+
+.company-header h2 {
+    margin-top: 12px;
+    margin-bottom: 12px;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    line-height: 1.2;
+}
+
+/* TABLE COMMON */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* EMPLOYEE TABLE */
+.employee-table {
+    margin-top: 5px;
+}
+
+.employee-table td {
+    border: 1px solid #555;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.1;
+    text-align: right;
+    color: #000;
+}
+
+.employee-table td:first-child {
+    width: 25%;
+    font-weight: 700;
+    color: #000;
+    text-align: start;
+}
+
+/* SALARY TABLE */
+.salary-table {
+    margin-top: 0;
+}
+
+.salary-table th,
+.salary-table td {
+    border: 1px solid #555;
+    text-align: start;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.1;
+    color: #000;
+}
+
+.salary-table th {
+    text-align: start;
+    font-weight: 700;
+    color: #000;
+}
+
+.salary-table td:nth-child(2),
+.salary-table td:nth-child(4) {
+    text-align: start;
+}
+
+/* IN WORDS */
+.words {
+    border-left: 1px solid #555;
+    border-right: 1px solid #555;
+    border-bottom: 1px solid #555;
+    padding: 4px 6px;
+    font-size: 10px;
+    line-height: 1.1;
+    text-align: left;
+    color: #000;
+}
+
+/* NOTE */
+.note {
+    margin-top: 22px;
+    text-align: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: #444;
+    color: #000;
+}
+
+/* PDF SETTINGS */
+@page {
+    size: A4;
+    margin: 4mm;
+}
+
+/* PRINT */
+@media print {
+    body {
+        background: #fff;
+        padding: 0;
+    }
+
+    .download-btn {
+        display: none;
+    }
+
+    #salary-slip-pdf {
+        width: 210mm;
+        padding: 4mm;
+    }
+
+    .salary-slip {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+}
+
+/* LOADER */
+.loader-wrapper {
+    position: fixed;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.9);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 99999;
+}
+
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 5px solid #ddd;
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+.loader-wrapper p {
+    margin-top: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}

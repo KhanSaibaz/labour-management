@@ -414,55 +414,122 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
       currentRow += 2;
 
       //  BOTTOM — SUB-CONTRACT TERMS & CONDITIONS
+      const termsAndConditions = [
+        {
+          text: `1. Contractor has to take all the safety precautions with necessary tools & tackles. Provide all PPE’s Safety Helmet, Safety gloves, Safety goggles, Safety shoes, Safety Belt (full body harness), Welding apron, gloves, fire blanket, ear plugs, dust masks, flash back arrestor, trolley with lockable wheels etc. In the event of non-complying above company shall make available all PPE’s at site and cost towards providing such PPE’s shall be recovered from running bills.`,
+          height: 50
+        },
 
-      const termsAndConditions = `
-1. Contractor has to take all the safety precautions with necessary tools & tackles. Provide all PPE’s Safety Helmet, Safety gloves, Safety goggles, Safety shoes, Safety Belt (full body harness), Welding apron, gloves, fire blanket, ear plugs, dust masks, flash back arrestor, trolley with lockable wheels etc. In the event of non-complying above company shall make available all PPE’s at site and cost towards providing such PPE’s shall be recovered from running bills.
+        {
+          text: `2. No child labour is allowed at site.`,
+          height: 20
+        },
 
-2. No child labour is allowed at site.
+        {
+          text: `3. Contractor will employ only workers with sound health and will get their medical tests done as per the client’s requirement at his cost.`,
+          height: 20
+        },
 
-3. Contractor will employ only workers with sound health and will get their medical tests done as per the client’s requirement at his cost.
+        {
+          text: `4. No alcohol, smoking and splitting, use of gutka, paan, etc at site is allowed. Urinating or defecating at non designated place will not be tolerated and penalties will be imposed.`,
+          height: 32
+        },
 
-4. No alcohol, smoking and splitting, use of gutka, paan, etc at site is allowed. Urinating or defecating at non designated place will not be tolerated and penalties will be imposed.
+        {
+          text: `5. If any penalties are levied by the owners/ PMC / Safety for violation of any sort the same will be debited to the contractor.`,
+          height: 20
+        },
 
-5. If any penalties are levied by the owners/ PMC / Safety for violation of any sort the same will be debited to the contractor.
+        {
+          text: `6. Contractor must make his own arrangement for travelling and local transport, accommodation, food, power drinking water arrangement for his workmen, necessary tools to Cary out his work, necessary testing equipment (duly calibrated by safety /PMC)`,
+          height: 32
+        },
 
-6. Contractor must make his own arrangement for travelling and local transport, accommodation, food, power drinking water arrangement for his workmen, necessary tools to Cary out his work, necessary testing equipment (duly calibrated by safety /PMC)
+        {
+          text: `7. Joint less cable to be used for all type of equipment’s. If joints are there it should be with weatherproof socket/ junction box arrangements. All sockets and tops used should be industrial type.`,
+          height: 32
+        },
 
-7. Joint less cable to be used for all type of equipment’s. If joints are there it should be with weatherproof socket/ junction box arrangements. All sockets and tops used should be industrial type.
+        {
+          text: `8. Power supply will be given at work location however its responsibility of users to take preventive measure to work safely at site.`,
+          height: 20
+        },
 
-8. Power supply will be given at work location however its responsibility of users to take preventive measure to work safely at site.
+        {
+          text: `9. We will provide ladders / scaffoldings which are approved by the client/ consultant/ PMC. Its responsibility of your team to maintain in good working conditions failure to which we reserve the right to recover cost in the event of any damages.`,
+          height: 32
+        },
 
-9. We will provide ladders / scaffoldings which are approved by the client/ consultant/ PMC. Its responsibility of your team to maintain in good working conditions failure to which we reserve the right to recover cost in the event of any damages.
+        {
+          text: `10. Contractor has to produce necessary documents towards registration of their employees with ESIC / PF authorities and proof of payments made should be submitted. All other statutory requirements should be fulfilled at his own risk and cost. If company is making such payments the same will be deducted from the interim bills.`,
+          height: 47
+        },
 
-10. Contractor has to produce necessary documents towards registration of their employees with ESIC / PF authorities and proof of payments made should be submitted. All other statutory requirements should be fulfilled at his own risk and cost. If company is making such payments the same will be deducted from the interim bills.
+        {
+          text: `11. Any rework due to quality shall be debited to contractor along with wasted material cost.`,
+          height: 20
+        },
 
-11. Any rework due to quality shall be debited to contractor along with wasted material cost.
+        {
+          text: `12. The contractor should pay minimum wages to his employees and record for the same should be submitted periodically.`,
+          height: 20
+        },
 
-12. The contractor should pay minimum wages to his employees and record for the same should be submitted periodically.
+        {
+          text: `13. The contractor should maintain attendance of his employees and should keep records of over time / advances and holidays given to his employees.`,
+          height: 32
+        },
 
-13. The contractor should maintain attendance of his employees and should keep records of over time / advances and holidays given to his employees.
+        {
+          text: `14. The unit rate agreed and offered is inclusive of all taxes and incidental expenses.`,
+          height: 20
+        },
 
-14. The unit rate agreed and offered is inclusive of all taxes and incidental expenses.
+        {
+          text: `15. Contractor has to arrange necessary skilled / unskilled manpower at site to complete the project in stipulated time frame. Penalties will be levied if there is any delay, or the company reserve its right to employ additional contractors to complete the job / debit the cost involved to the contractor. No reason for deployment of additional contractor needs to be given to the contractor.`,
+          height: 45
+        },
 
-15. Contractor has to arrange necessary skilled / unskilled manpower at site to complete the project in stipulated time frame. Penalties will be levied if there is any delay, or the company reserve its right to employ additional contractors to complete the job / debit the cost involved to the contractor. No reason for deployment of additional contractor needs to be given to the contractor.
+        {
+          text: `16. If the work is held up due to insufficient tools and tackles, material handling equipment’s, scaffolding, etc. the same may be provided by the company at the cost of the contractor to ensure that work is not suffering. This will be the sole decision of the company.`,
+          height: 32
+        },
 
-16. If the work is held up due to insufficient tools and tackles, material handling equipment’s, scaffolding, etc. the same may be provided by the company at the cost of the contractor to ensure that work is not suffering. This will be the sole decision of the company.
+        {
+          text: `17. The contractor will strictly adhere to the standard operating procedure and work method statements and quality assurance plan. Any rework due to poor quality of work will not be paid and the cost of rework will be recovered from the final bill.`,
+          height: 32
+        },
 
-17. The contractor will strictly adhere to the standard operating procedure and work method statements and quality assurance plan. Any rework due to poor quality of work will not be paid and the cost of rework will be recovered from the final bill.
+        {
+          text: `18. The contractor will submit monthly (before 25th of every month) bills along with measurement sheet properly certified by the project manager/ site in charge. No delayed bills will be accepted. Payments for the same will be made within 30 days of submission of the certified bills.`,
+          height: 45
+        },
 
-18. The contractor will submit monthly (before 25th of every month) bills along with measurement sheet properly certified by the project manager/ site in charge. No delayed bills will be accepted. Payments for the same will be made within 30 days of submission of the certified bills.
+        {
+          text: `19. Contractor will strictly follow good housekeeping norms at workplace as well as stores. Any penalties or stoppage of work due to poor house keeping the contractor will be solely responsible for the same.`,
+          height: 35
+        },
 
-19. Contractor will strictly follow good housekeeping norms at workplace as well as stores. Any penalties or stoppage of work due to poor house keeping the contractor will be solely responsible for the same.
+        {
+          text: `Payment Terms:
+Immediate`,
+          height: 35
+        },
 
-Payment Terms:
-Immediate
+        {
+          text: `Applicable Law:
+It is intended that this Agreement be valid and enforceable under the laws of the state of Maharashtra, and that the laws of this state shall govern the agreement's interpretation.`,
+          height: 45
+        },
 
-Applicable Law:
-It is intended that this Agreement be valid and enforceable under the laws of the state of Maharashtra, and that the laws of this state shall govern the agreement's interpretation.
+        {
+          text: `Non-Disclosure:
+Contractor / Associate will keep all trade secrets and/or proprietary information of the Company in strict confidence. A trade secret is any information, process or idea that is not generally known to persons outside the Company, which the Company considers confidential, and which gives the Company a competitive advantage.`,
+          height: 50
+        }
+      ];
 
-Non-Disclosure:
-Contractor / Associate will keep all trade secrets and/or proprietary information of the Company in strict confidence. A trade secret is any information, process or idea that is not generally known to persons outside the Company, which the Company considers confidential, and which gives the Company a competitive advantage.
-`;
+
       // TITLE
       worksheet.mergeCells(`A${currentRow}:H${currentRow}`);
 
@@ -480,49 +547,49 @@ Contractor / Associate will keep all trade secrets and/or proprietary informatio
         },
       });
 
-      // REMOVE ALL BORDERS
       worksheet.getCell(`A${currentRow}`).border = {};
-
       worksheet.getRow(currentRow).height = 24;
 
       currentRow += 1;
 
 
-      worksheet.mergeCells(`A${currentRow}:H${currentRow + 10}`);
+      // EACH POINT IN NEW CELL/ROW
+      termsAndConditions.forEach((item) => {
 
-      const termsCell = worksheet.getCell(`A${currentRow}`);
+        worksheet.mergeCells(`A${currentRow}:H${currentRow}`);
 
-      termsCell.value = termsAndConditions;
+        const cell = worksheet.getCell(`A${currentRow}`);
 
-      termsCell.font = {
-        name: 'Arial',
-        size: 10,
-      };
+        cell.value = item.text;
 
-      termsCell.alignment = {
-        wrapText: true,
-        vertical: 'top',
-        horizontal: 'left',
-        indent: 1
-      };
+        cell.font = {
+          name: 'Arial',
+          size: 10,
+        };
 
-      termsCell.border = {};
+        cell.alignment = {
+          wrapText: true,
+          vertical: 'top',
+          horizontal: 'left',
+          indent: 1
+        };
 
-      // HEIGHT
-      worksheet.getRow(currentRow).height = 640;
+        cell.border = {};
+
+        // DIFFERENT HEIGHT PER CELL
+        worksheet.getRow(currentRow).height = item.height;
+
+        currentRow += 1;
+      });
 
       const buffer = await workbook.xlsx.writeBuffer();
       return buffer as unknown as Buffer;
-
     } catch (error: any) {
       this.logger.error(`generatePurchaseOrder failed: ${error?.message}`);
       throw error;
     }
   }
 
-  // ═══════════════════════════════════════════════════════════════════════════
-  //  PRIVATE HELPERS
-  // ═══════════════════════════════════════════════════════════════════════════
 
   /**
    * Apply a uniform thin border on all four sides of a single cell.
@@ -585,36 +652,5 @@ Contractor / Associate will keep all trade secrets and/or proprietary informatio
     return new Date(value).toLocaleDateString('en-GB');
   }
 
-  /**
- * Apply a thin border only on the outer edges of a rectangular range.
- * Inner cells get NO borders — ideal for merged logo/image regions.
- *
- * @param ws     ExcelJS Worksheet
- * @param range  e.g. 'F3:H8'
- */
-  private applyOuterBorder(ws: WS, range: string): void {
-    const [startRef, endRef] = range.split(':');
-    const startCell = ws.getCell(startRef);
-    const endCell = ws.getCell(endRef);
 
-    const rowStart = Number(startCell.row);
-    const rowEnd = Number(endCell.row);
-    const colStart = Number(startCell.col);
-    const colEnd = Number(endCell.col);
-
-    const thin: ExcelJS.BorderStyle = 'thin';
-
-    for (let r = rowStart; r <= rowEnd; r++) {
-      for (let c = colStart; c <= colEnd; c++) {
-        const cell = ws.getCell(r, c);
-
-        cell.border = {
-          top: r === rowStart ? { style: thin } : {},
-          bottom: r === rowEnd ? { style: thin } : {},
-          left: c === colStart ? { style: thin } : {},
-          right: c === colEnd ? { style: thin } : {},
-        };
-      }
-    }
-  }
 }
