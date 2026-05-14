@@ -1978,38 +1978,6 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": true
-          },
-          {
-            "name": "externalId",
-            "displayName": "External Id",
-            "description": null,
-            "type": "computed",
-            "ormType": "varchar",
-            "isSystem": false,
-            "computedFieldValueType": "string",
-            "computedFieldTriggerConfig": [
-              {
-                "moduleName": "labour-management-system",
-                "modelName": "inventoryManagement",
-                "operations": [
-                  "before-insert",
-                  "before-update"
-                ]
-              }
-            ],
-            "computedFieldValueProvider": "ConcatEntityComputedFieldProvider",
-            "computedFieldValueProviderCtxt": "{\n  \"separator\": \"-\",\n  \"fields\": [\n    \"hsnCode\",\n    \"productName\"\n  ],\n  \"slugify\": false\n}",
-            "required": true,
-            "unique": true,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "isUserKey": true,
-            "enableAuditTracking": false,
-            "isMarkedForRemoval": true
           }
         ]
       },
