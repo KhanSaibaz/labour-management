@@ -29,7 +29,6 @@ export class UpdatePurchaseOrderDto {
     @ApiProperty()
     reqDate: Date;
 
-    @IsNotEmpty()
     @IsOptional()
     @IsString()
     @ApiProperty()

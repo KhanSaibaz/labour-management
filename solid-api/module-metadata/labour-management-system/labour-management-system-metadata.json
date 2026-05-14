@@ -2967,7 +2967,7 @@
             "defaultValue": null,
             "min": null,
             "max": null,
-            "required": true,
+            "required": false,
             "unique": false,
             "index": false,
             "private": false,

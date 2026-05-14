@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, Logger } from '@nestjs/common';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ModuleRef } from '@nestjs/core';
 import { EntityManager } from 'typeorm';
@@ -9,6 +9,8 @@ import * as path from 'path';
 import { PurchaseOrder } from '../entities/purchase-order.entity';
 import { PurchaseOrderRepository } from '../repositories/purchase-order.repository';
 import { PoConfigRepository } from '../repositories/po-config.repository';
+import { CreatePurchaseOrderDto } from '../dtos/create-purchase-order.dto';
+import { AuthUserRepository } from '../repositories/auth-user.repository';
 
 // ─────────────────────────────────────────────────────────────────────────────
 //  Convenience type aliases
@@ -27,6 +29,8 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
     readonly repo: PurchaseOrderRepository,
     readonly moduleRef: ModuleRef,
     private readonly poConfigRepo: PoConfigRepository,
+    private readonly authUserRepo: AuthUserRepository,
+
   ) {
     super(
       entityManager,
@@ -35,6 +39,30 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
       'labour-management-system',
       moduleRef,
     );
+  }
+
+  async create(
+    createDto: CreatePurchaseOrderDto,
+    files?: Array<Express.Multer.File>,
+    solidRequestContext?: any,
+  ): Promise<any> {
+    const userId = solidRequestContext?.user?.id;
+    const authUser = await this.authUserRepo.findOne({
+      where: { id: userId } as any,
+      relations: { labour: true },
+    });
+
+    if (!authUser || !authUser.labour) {
+      throw new BadRequestException('Labour not found');
+    }
+
+    const labour = authUser.labour;
+
+    if(!createDto?.managerName){
+      createDto.managerName = labour.name;
+    }
+
+    return super.create(createDto, files, solidRequestContext);
   }
 
 

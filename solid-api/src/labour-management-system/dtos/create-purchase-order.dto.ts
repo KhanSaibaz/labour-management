@@ -25,7 +25,7 @@ export class CreatePurchaseOrderDto {
     @ApiProperty()
     reqDate: Date;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     @ApiProperty()
     managerName: string;

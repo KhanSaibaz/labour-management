@@ -236,3 +236,39 @@ many-to-one to
 
 
 
+
+
+curl --location 'http://localhost:3000/api/purchase-order' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsInVzZXJuYW1lIjoiOTg3NjU0MzIxIiwiZW1haWwiOm51bGwsInJvbGVzIjpbIkludGVybmFsIFVzZXIiLCJNYW5hZ2VyIl0sImlhdCI6MTc3ODc4MzgzOCwiZXhwIjoxNzc4ODcwMjM4LCJhdWQiOiJodHRwPS8vbG9jYWxob3N0PTMwMDAiLCJpc3MiOiJsYl9tYW5hZ2VyIn0.7CA8Vsk7Y79IAdDH4ZjB6et91OOltE1sB7nOVJKMC1E' \
+--header 'Content-Type: application/json' \
+--data '{
+  "poDate": "2026-05-15",
+  "reqDate": "2026-05-20",
+  "poItemsCommand": "create",
+  "poItems": [
+    {
+      "prdouctQuantity": "10",
+      "description": "Steel Rods",
+      "productName": "TMT Steel",
+      "hsnCode": "7214"
+    },
+      {
+      "prdouctQuantity": "10",
+      "description": "Steel Rods",
+      "productName": "TMT Steel",
+      "hsnCode": "7214"
+    },
+      {
+      "prdouctQuantity": "10",
+      "description": "Steel Rods",
+      "productName": "TMT Steel",
+      "hsnCode": "7214"
+    },
+      {
+      "prdouctQuantity": "10",
+      "description": "Steel Rods",
+      "productName": "TMT Steel",
+      "hsnCode": "7214"
+    }
+  ]
+}'

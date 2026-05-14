@@ -17,7 +17,7 @@ export class PurchaseOrder extends CommonEntity {
     @Column({ type: "date", nullable: true })
     reqDate: Date;
 
-    @Column({ type: "varchar" })
+    @Column({ type: "varchar", nullable: true })
     managerName: string;
 
     @ManyToOne(() => Site, { onDelete: "CASCADE", nullable: true })
