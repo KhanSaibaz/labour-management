@@ -135,12 +135,12 @@ export class AttendanceService extends CRUDService<Attendance> {
     const now = new Date();
     console.log(now);
 
-    const attendanceDate = this.resolveAttendanceDate(now);
+    // const attendanceDate = this.resolveAttendanceDate(now);
 
     const existing = await this.attendanceRepo.findOne({
       where: {
         labourCode: { id: labour.id },
-        attendanceDate,
+        attendanceDate:now,
       },
     });
 
@@ -155,7 +155,7 @@ export class AttendanceService extends CRUDService<Attendance> {
     const attendance = this.attendanceRepo.create({
       labourCode: labour,
       name: labour.name,
-      attendanceDate,
+      attendanceDate:now,
       checkIn: now,
       checkInLocation: location,
       noOfTries: 1,
