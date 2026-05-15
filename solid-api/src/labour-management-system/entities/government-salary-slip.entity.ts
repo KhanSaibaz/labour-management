@@ -47,10 +47,6 @@ export class GovernmentSalarySlip extends CommonEntity {
     @Column({ type: "decimal", precision: 10, scale: 2, nullable: true })
     dailyRate: number;
 
-    @ManyToOne(() => Salary, { onDelete: "CASCADE", nullable: true })
-    @JoinColumn()
-    salary: Salary;
-
     @ManyToOne(() => Labour, { onDelete: "CASCADE", nullable: false })
     @JoinColumn()
     labourCode: Labour;

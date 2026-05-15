@@ -43,7 +43,4 @@ export class Salary extends CommonEntity {
     @Index()
     @Column({ type: "varchar" })
     name: string;
-
-    @OneToMany(() => GovernmentSalarySlip, governmentSalarySlip => governmentSalarySlip.salary, { cascade: true })
-    governmentSalarySlip: GovernmentSalarySlip[];
 }

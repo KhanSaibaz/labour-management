@@ -57,23 +57,6 @@ export class CreateSalaryDto {
     salaryMonth: string;
 
     @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    @IsArray()
-    @ValidateNested({ each: true })
-    @Type(() => UpdateGovernmentSalarySlipDto)
-    governmentSalarySlip: UpdateGovernmentSalarySlipDto[];
-
-    @IsOptional()
-    @IsArray()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    governmentSalarySlipIds: number[];
-
-    @IsString()
-    @IsOptional()
-    @ApiProperty({ description: "GovernmentSalarySlip" })
-    governmentSalarySlipCommand: string;
-
-    @IsOptional()
     @IsInt()
     @ApiProperty()
     labourCodeId: number;

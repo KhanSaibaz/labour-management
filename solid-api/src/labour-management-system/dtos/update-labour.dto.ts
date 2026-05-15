@@ -7,6 +7,7 @@ import { UpdateAttendanceDto } from 'src/labour-management-system/dtos/update-at
 import { UpdateAuthUserDto } from 'src/labour-management-system/dtos/update-auth-user.dto';
 import { UpdateSalaryDto } from 'src/labour-management-system/dtos/update-salary.dto';
 import { UpdateAdvancePaymentDto } from 'src/labour-management-system/dtos/update-advance-payment.dto';
+
 // import { UpdateInventoryAskDto } from 'src/labour-management-system/dtos/update-inventory-ask.dto';
 
 export class UpdateLabourDto {
@@ -189,19 +190,16 @@ export class UpdateLabourDto {
     @IsOptional()
     @ApiProperty({ description: "GovernmentSalarySlip" })
     governmentSalarySlipCommand: string;
-
     // @IsOptional()
     // @ApiProperty({ description: "ManagerInventoryAsk" })
     // @IsArray()
     // @ValidateNested({ each: true })
     // @Type(() => UpdateInventoryAskDto)
     // managerInventoryAsk: UpdateInventoryAskDto[];
-
     // @IsOptional()
     // @IsArray()
     // @ApiProperty({ description: "ManagerInventoryAsk" })
     // managerInventoryAskIds: number[];
-
     // @IsString()
     // @IsOptional()
     // @ApiProperty({ description: "ManagerInventoryAsk" })
@@ -222,10 +220,8 @@ export class UpdateLabourDto {
     @ApiProperty()
     uanNumber: string;
 
-
-@IsOptional()
-@IsString()
-@ApiProperty()
-password: string;
-
+    @IsOptional()
+    @IsString()
+    @ApiProperty()
+    password: string;
 }

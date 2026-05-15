@@ -1224,33 +1224,6 @@
             "isMultiSelect": false
           },
           {
-            "name": "governmentSalarySlip",
-            "displayName": "GovernmentSalarySlip",
-            "description": "GovernmentSalarySlip",
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "one-to-many",
-            "relationCoModelFieldName": "salary",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "governmentSalarySlip",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false
-          },
-          {
             "name": "labourCode",
             "displayName": "Labour Code",
             "description": null,
@@ -2351,34 +2324,6 @@
             "decryptWhen": null,
             "columnName": null,
             "enableAuditTracking": false
-          },
-          {
-            "name": "salary",
-            "displayName": "Salary",
-            "description": "Salary",
-            "type": "relation",
-            "ormType": "integer",
-            "isSystem": false,
-            "relationType": "many-to-one",
-            "relationCoModelFieldName": "governmentSalarySlip",
-            "relationCreateInverse": true,
-            "relationCoModelSingularName": "salary",
-            "relationCoModelColumnName": null,
-            "relationModelModuleName": "labour-management-system",
-            "relationCascade": "cascade",
-            "required": false,
-            "unique": false,
-            "index": false,
-            "private": false,
-            "encrypt": false,
-            "encryptionType": null,
-            "decryptWhen": null,
-            "columnName": null,
-            "relationJoinTableName": null,
-            "isRelationManyToManyOwner": null,
-            "relationFieldFixedFilter": "",
-            "enableAuditTracking": false,
-            "isMarkedForRemoval": true
           },
           {
             "name": "labourCode",
@@ -3877,6 +3822,19 @@
       "viewUserKey": "purchaseOrderItems-tree-view",
       "moduleUserKey": "labour-management-system",
       "modelUserKey": "purchaseOrderItems"
+    },
+    {
+      "displayName": "Government Salary SLip List Action",
+      "name": "governmentSalarySlip-list-action",
+      "type": "solid",
+      "domain": "",
+      "context": "",
+      "customComponent": "",
+      "customIsModal": true,
+      "serverEndpoint": "",
+      "viewUserKey": "governmentSalarySlip-list-view",
+      "moduleUserKey": "labour-management-system",
+      "modelUserKey": "governmentSalarySlip"
     }
   ],
   "menus": [
@@ -4143,6 +4101,24 @@
       "roles": [
         "Labour  Admin"
       ]
+    },
+    {
+      "displayName": "Salary",
+      "name": "salary-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "salary-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
+    },
+    {
+      "displayName": "Government Salary SLip",
+      "name": "governmentSalarySlip-menu-item",
+      "sequenceNumber": 1,
+      "actionUserKey": "governmentSalarySlip-list-action",
+      "moduleUserKey": "labour-management-system",
+      "parentMenuItemUserKey": "",
+      "iconName": ""
     }
   ],
   "views": [
@@ -5990,12 +5966,6 @@
             "type": "field",
             "attrs": {
               "name": "productQuantity"
-            }
-          },
-          {
-            "type": "field",
-            "attrs": {
-              "name": "externalId"
             }
           },
           {

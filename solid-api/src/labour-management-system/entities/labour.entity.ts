@@ -7,8 +7,8 @@ import { Attendance } from 'src/labour-management-system/entities/attendance.ent
 import { AuthUser } from 'src/labour-management-system/entities/auth-user.entity';
 import { Salary } from 'src/labour-management-system/entities/salary.entity';
 import { AdvancePayment } from 'src/labour-management-system/entities/advance-payment.entity';
-// import { InventoryAsk } from 'src/labour-management-system/entities/inventory-ask.entity';
 
+// import { InventoryAsk } from 'src/labour-management-system/entities/inventory-ask.entity';
 // import { GovernmentSalarySlip } from 'src/labour-management-system/entities/government-salary-slip.entity'
 @Entity('labour')
 export class Labour extends CommonEntity {
@@ -87,7 +87,6 @@ export class Labour extends CommonEntity {
     @Column({ type: "varchar", nullable: true })
     uanNumber: string;
 
-
-@Column({ type: "varchar", nullable: true })
-password: string;
+    @Column({ type: "varchar", nullable: true })
+    password: string;
 }
