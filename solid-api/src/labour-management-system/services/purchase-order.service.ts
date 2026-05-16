@@ -58,7 +58,7 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
 
     const labour = authUser.labour;
 
-    if(!createDto?.managerName){
+    if (!createDto?.managerName) {
       createDto.managerName = labour.name;
     }
 
@@ -183,8 +183,10 @@ export class PurchaseOrderService extends CRUDService<PurchaseOrder> {
         right: { style: 'thin' },
       };
 
+      const logoPath = path.join(process.cwd(), 'src/labour-management-system/services/logo.jpeg');
+
       const logoId = workbook.addImage({
-        filename: path.join(__dirname, 'logo.jpeg'),
+        filename: logoPath,
         extension: 'jpeg',
       });
 

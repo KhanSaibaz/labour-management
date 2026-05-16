@@ -2043,8 +2043,8 @@
       {
         "singularName": "governmentSalarySlip",
         "pluralName": "governmentSalarySlips",
-        "displayName": "Government Salary SLip",
-        "description": "These Model is for government salary slip",
+        "displayName": "Government Salary Slip",
+        "description": "These Model is for Government Salary Slip",
         "dataSource": "default",
         "dataSourceType": "postgres",
         "tableName": "government_salary_slip",
@@ -3655,7 +3655,7 @@
       "modelUserKey": "labourMonthlyExpense"
     },
     {
-      "displayName": "Government Salary SLip List Action",
+      "displayName": "Government Salary Slip List Action",
       "name": "all-governmentSalarySlip-list-action",
       "type": "solid",
       "domain": "",
@@ -3668,7 +3668,7 @@
       "modelUserKey": "governmentSalarySlip"
     },
     {
-      "displayName": "Government Salary SLip List Action",
+      "displayName": "Government Salary Slip List Action",
       "name": "included-governmentSalarySlip-list-action",
       "type": "solid",
       "domain": "",
@@ -3681,7 +3681,7 @@
       "modelUserKey": "governmentSalarySlip"
     },
     {
-      "displayName": "Government Salary SLip List Action",
+      "displayName": "Government Salary Slip List Action",
       "name": "exclude-governmentSalarySlip-list-action",
       "type": "solid",
       "domain": "",
@@ -3694,7 +3694,7 @@
       "modelUserKey": "governmentSalarySlip"
     },
     {
-      "displayName": "Government Salary SLip Tree View Action",
+      "displayName": "Government Salary Slip Tree View Action",
       "name": "governmentSalarySlip-tree-view-action",
       "type": "solid",
       "domain": "",
@@ -3824,7 +3824,7 @@
       "modelUserKey": "purchaseOrderItems"
     },
     {
-      "displayName": "Government Salary SLip List Action",
+      "displayName": "Government Salary Slip List Action",
       "name": "governmentSalarySlip-list-action",
       "type": "solid",
       "domain": "",
@@ -4112,7 +4112,7 @@
       "iconName": ""
     },
     {
-      "displayName": "Government Salary SLip",
+      "displayName": "Government Salary Slip",
       "name": "governmentSalarySlip-menu-item",
       "sequenceNumber": 1,
       "actionUserKey": "governmentSalarySlip-list-action",
@@ -6814,7 +6814,7 @@
     },
     {
       "name": "governmentSalarySlip-tree-view",
-      "displayName": "Government Salary SLip",
+      "displayName": "Government Salary Slip",
       "type": "tree",
       "context": "{}",
       "moduleUserKey": "labour-management-system",
@@ -7001,7 +7001,7 @@
     },
     {
       "name": "governmentSalarySlip-form-view",
-      "displayName": "Government Salary SLip",
+      "displayName": "Government Salary Slip",
       "type": "form",
       "context": "{}",
       "moduleUserKey": "labour-management-system",
@@ -7010,7 +7010,7 @@
         "type": "form",
         "attrs": {
           "name": "form-1",
-          "label": "Government Salary SLip",
+          "label": "Government Salary Slip",
           "className": "grid"
         },
         "children": [
